@@ -24,11 +24,3 @@ function testEmail(tEmail) {
 $().ready(function() {
 
 });
-function f (){
-	$.post("register", {
-		"action" : "testEmail",
-		"email" : tEmail
-	}, function(data) {
-		alert(data);
-	}, "application/json");
-}
