@@ -19,7 +19,7 @@
 						type="text"
 						style="width: 640px; height: 50px; background-color: #FAFFBD; font-family: 'MS Serif', 'New York', serif; font-size: 3em;" />
 					<br /> <label> E-mail:</label> <br /> <input type="text"
-						name="register_email" onclick = "testEmail('fff');"
+						name="register_email" id="register_email" onchange = "testEmail();"
 						style="width: 640px; height: 50px; background-color: #FAFFBD; font-family: 'MS Serif', 'New York', serif; font-size: 3em;" />
 					<br /> <label> Password:</label> <br /> <input type="password"
 						name="register_password"
