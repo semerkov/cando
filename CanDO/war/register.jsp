@@ -2,6 +2,10 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- JQuery Framework -->
+	  	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
+<!-- CanDO Javascript -->
+	  	<script type="text/javascript" src="js/cando.js"></script>
 <title>CanDO - Register</title>
 </head>
 <body>
@@ -15,7 +19,7 @@
 						type="text"
 						style="width: 640px; height: 50px; background-color: #FAFFBD; font-family: 'MS Serif', 'New York', serif; font-size: 3em;" />
 					<br /> <label> E-mail:</label> <br /> <input type="text"
-						name="register_email"
+						name="register_email" onclick = "testEmail('fff');"
 						style="width: 640px; height: 50px; background-color: #FAFFBD; font-family: 'MS Serif', 'New York', serif; font-size: 3em;" />
 					<br /> <label> Password:</label> <br /> <input type="password"
 						name="register_password"

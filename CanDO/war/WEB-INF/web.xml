@@ -8,7 +8,7 @@
 		<url-pattern>/cando</url-pattern>
 	</servlet-mapping>
 	<welcome-file-list>
-		<welcome-file>index.html</welcome-file>
+		<welcome-file>index.jsp</welcome-file>
 	</welcome-file-list>
  <servlet>
   <servlet-name>SystemServiceServlet</servlet-name>
@@ -22,4 +22,12 @@
   <servlet-name>SystemServiceServlet</servlet-name>
   <url-pattern>/_ah/spi/*</url-pattern>
  </servlet-mapping>
+ 	<servlet>
+		<servlet-name>Register</servlet-name>
+		<servlet-class>com.appspot.i_can_do.server.servlets.RegisterServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Register</servlet-name>
+		<url-pattern>/register</url-pattern>
+	</servlet-mapping>
 </web-app>

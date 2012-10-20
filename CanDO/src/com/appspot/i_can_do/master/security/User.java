@@ -1,26 +1,40 @@
 package com.appspot.i_can_do.master.security;
 
+import java.io.Serializable;
+import java.util.Date;
+
+import javax.persistence.Basic;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
 @Entity
 @NamedQueries({
 		@NamedQuery(name = "User.getUsers", query = "SELECT u FROM User u"),
-		@NamedQuery(name = "User.getUser", query = "SELECT u FROM User u WHERE u.email = :email AND u.password = :password"), })
-public class User {
+		@NamedQuery(name = "User.getUser", query = "SELECT u FROM User u WHERE u.email = :email"), })
+public class User implements Serializable {
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
 	private String name;
 	private String sername;
 	private String email;
-	private String password;
+	@Column(nullable = false)
+	private byte[] passwordHash;
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date lastLogin;
 	private int timeZone;
+	@Basic
+	private boolean disabled;
 
 	@Transient
 	public static final User NULL_USER = new User();
@@ -57,12 +71,20 @@ public class User {
 		this.email = email;
 	}
 
-	public String getPassword() {
-		return password;
+	public byte[] getPasswordHash() {
+		return passwordHash;
 	}
 
-	public void setPassword(String password) {
-		this.password = password;
+	public void setPasswordHash(byte[] passwordHash) {
+		this.passwordHash = passwordHash;
+	}
+
+	public Date getLastLogin() {
+		return lastLogin;
+	}
+
+	public void setLastLogin(Date lastLogin) {
+		this.lastLogin = lastLogin;
 	}
 
 	public int getTimeZone() {
@@ -73,4 +95,11 @@ public class User {
 		this.timeZone = timeZone;
 	}
 
+	public boolean isDisabled() {
+		return disabled;
+	}
+
+	public void setDisabled(boolean disabled) {
+		this.disabled = disabled;
+	}
 }
