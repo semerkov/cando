@@ -10,11 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.mortbay.log.Log;
-
 import com.appspot.i_can_do.master.security.User;
 import com.appspot.i_can_do.service.CanDOSecurityService;
-import com.appspot.i_can_do.service.utils.Crypto;
 import com.google.gson.Gson;
 
 public class RegisterServlet extends HttpServlet {
@@ -56,7 +53,6 @@ public class RegisterServlet extends HttpServlet {
 	private void testEmail(HttpServletRequest request,
 			HttpServletResponse response) throws IOException {
 		String email = request.getParameter("email");
-		log.warning(email);
 		// if (email != null && security.findUser(email).equals(User.NULL_USER))
 		// {
 		if (email != null) {
@@ -69,11 +65,8 @@ public class RegisterServlet extends HttpServlet {
 
 	private static void writeJson(HttpServletResponse response, Object object)
 			throws IOException {
-		log.warning("create json");
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
-		String gson = new Gson().toJson(object);
-		log.warning(gson);
-		response.getWriter().write(gson);
+		response.getWriter().write(new Gson().toJson(object));
 	}
 }
