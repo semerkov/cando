@@ -4,6 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>CanDO - Terms of use</title>
 </head>
+<body>
 <div class="container">
 	<div class="header"><jsp:include page="header.jsp" flush="true" /></div>
 	<div class="content">
@@ -194,6 +195,5 @@
 		</div>
 	</div>
 </div>
-<body>
 </body>
 </html>

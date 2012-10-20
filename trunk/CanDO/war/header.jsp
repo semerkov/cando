@@ -24,7 +24,7 @@
 
 	<div
 		style="float: left; display: table-cell; margin-left: 3px; width: 100%">
-		<span style="font-style: oblique;""> Please, <a
+		<span style="font-style: oblique;"> Please, <a
 			href="login.jsp">Login</a>!
 		</span>
 		<hr noshade="noshade" style="border-radius: 3px; height: 5px;" />
