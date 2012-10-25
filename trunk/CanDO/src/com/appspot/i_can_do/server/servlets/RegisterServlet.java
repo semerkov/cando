@@ -24,7 +24,8 @@ public class RegisterServlet extends HttpServlet {
 
 	@Override
 	public void init(ServletConfig config) {
-		// security = CanDOSecurityService.instance();
+		security = CanDOSecurityService.instance();
+		log.info("Servlet created");
 	}
 
 	protected boolean isLoginState(HttpServletRequest request) {
@@ -37,27 +38,24 @@ public class RegisterServlet extends HttpServlet {
 
 		String action = request.getParameter("action");
 
-		/*
-		if (!SECURITY_ACTIONS.contains(action) || !isLoginState(request)) {
-			response.sendError(HttpServletResponse.SC_UNAUTHORIZED,
-					"Only authorized user can perform this action");
-			return;
+		if (!SECURITY_ACTIONS.contains(action)) {
+			if ("testEmail".equals(action)) {
+				testEmail(request, response);
+			} else if (!isLoginState(request)) {
+				response.sendError(HttpServletResponse.SC_UNAUTHORIZED,
+						"Only authorized user can perform this action");
+				return;
+			}
 
-		}*/
-
-		if ("testEmail".equals(action)) {
-			testEmail(request, response);
 		}
 	}
 
 	private void testEmail(HttpServletRequest request,
 			HttpServletResponse response) throws IOException {
 		String email = request.getParameter("email");
-		// if (email != null && security.findUser(email).equals(User.NULL_USER))
-		// {
-		if (email != null) {
+		if (email != null && security.findUser(email).equals(User.NULL_USER)) {
 			writeJson(response, "free");
-			
+
 		} else {
 			writeJson(response, "occuped");
 		}

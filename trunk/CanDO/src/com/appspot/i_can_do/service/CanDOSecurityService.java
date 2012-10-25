@@ -19,7 +19,7 @@ import com.appspot.i_can_do.service.utils.Crypto;
 
 public class CanDOSecurityService implements ICanDOSecurityService {
 	private static final EntityManagerFactory fcr = Persistence
-			.createEntityManagerFactory("CanDO");
+			.createEntityManagerFactory("CanDO-Service");
 	private static final EntityManager em = fcr.createEntityManager();
 	private static final CanDOSecurityService security = new CanDOSecurityService();
 	private static final Logger log = Logger
