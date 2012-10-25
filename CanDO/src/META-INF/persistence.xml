@@ -12,4 +12,16 @@
             <property name="datanucleus.ConnectionURL" value="appengine"/>
         </properties>
     </persistence-unit>
+    
+    
+    <persistence-unit name="CanDO-Service">
+        <provider>org.datanucleus.api.jpa.PersistenceProviderImpl</provider>
+        <class>com.appspot.i_can_do.master.security.User</class>
+        <properties>
+            <property name="datanucleus.ConnectionURL" value="appengine"/>   
+        </properties>
+    </persistence-unit>
+
+ 
 </persistence>
+	
