@@ -46,27 +46,29 @@ public class RegisterServlet extends HttpServlet {
 		user.setSername("Gavani");
 		try {
 			security.addNewUser(user, "password");
-		} catch (LoginNameExistException e) { log.warning("Test user exist");}
+		} catch (LoginNameExistException e) {
+			log.warning("Test user exist");
+		}
 		boolean b = !security.findUser("user@email.com").equals(User.NULL_USER);
 		log.warning("Create user succes: " + Boolean.toString(b));
-		
+
 		if (SECURITY_ACTIONS.contains(action)) {
 			// block for actions without log in
 			if ("testEmail".equals(action)) {
 				testEmail(request, response);
-			} 
-			
+			}
+
 			else if (!isLoginState(request)) {
 				response.sendError(HttpServletResponse.SC_UNAUTHORIZED,
 						"Only authorized user can perform this action");
 				return;
 			}
 			// block for actions with log in
-			else{
-				
+			else {
+
 			}
 
-		}else{
+		} else {
 			response.sendError(HttpServletResponse.SC_METHOD_NOT_ALLOWED,
 					"Not existing action!");
 			return;
@@ -76,12 +78,17 @@ public class RegisterServlet extends HttpServlet {
 	private void testEmail(HttpServletRequest request,
 			HttpServletResponse response) throws IOException {
 		String email = request.getParameter("email");
-		if (email != null && security.findUser(email).equals(User.NULL_USER)) {
+		boolean freeEmail = false;
+		if (email != null) {
+			freeEmail = security.findUser(email).equals(User.NULL_USER);
+		}
+		if (freeEmail) {
 			writeJson(response, "free");
 
 		} else {
 			writeJson(response, "occuped");
 		}
+
 	}
 
 	private static void writeJson(HttpServletResponse response, Object object)
@@ -90,5 +97,5 @@ public class RegisterServlet extends HttpServlet {
 		response.setCharacterEncoding("UTF-8");
 		response.getWriter().write(new Gson().toJson(object));
 	}
-	
+
 }
