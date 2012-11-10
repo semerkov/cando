@@ -1,9 +1,7 @@
 package com.appspot.i_can_do.master.security;
 
-import java.io.Serializable;
 import java.util.Date;
 
-import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,41 +9,26 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
 @Entity
 @NamedQueries({
 		@NamedQuery(name = "User.getUsers", query = "SELECT u FROM User u"),
-		@NamedQuery(name = "User.getUser", query = "SELECT u FROM User u WHERE u.email = :email"), })
-public class User implements Serializable {
-	private static final long serialVersionUID = 1L;
-
+		@NamedQuery(name = "User.getUser", query = "SELECT u FROM User u WHERE u.email = :userEmail"), })
+public class User{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
+	private String email;
 	private String name;
 	private String sername;
-	private String email;
-	@Column(nullable = false)
-	private byte[] passwordHash;
-	@Temporal(TemporalType.TIMESTAMP)
 	private Date lastLogin;
 	private int timeZone;
-	@Basic
 	private boolean disabled;
-
+	@Column(nullable = false)
+	private byte[] passwordHash;
+	 
 	@Transient
 	public static final User NULL_USER = new User();
-
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
 
 	public String getName() {
 		return name;

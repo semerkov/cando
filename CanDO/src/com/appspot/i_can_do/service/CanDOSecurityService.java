@@ -29,12 +29,13 @@ public class CanDOSecurityService implements ICanDOSecurityService {
 	public User addNewUser(User user, String password)
 			throws LoginNameExistException {
 		User userToAdd = findUser(user.getEmail());
-		if (userToAdd == User.NULL_USER) {
+		if (userToAdd.equals(User.NULL_USER)) {
 			userToAdd = user;
 			byte[] pHash = Crypto.hashPassword(password);
 			userToAdd.setPasswordHash(pHash);
 
 			em.persist(userToAdd);
+			em.refresh(userToAdd);
 			
 		} else {
 			throw new LoginNameExistException();
@@ -45,7 +46,7 @@ public class CanDOSecurityService implements ICanDOSecurityService {
 	@Override
 	public User findUser(String email) {
 		Query query = em.createNamedQuery("User.getUser");
-		query.setParameter("email", email);
+		query.setParameter("userEmail", email);
 		User u = User.NULL_USER;
 		try {
 			u = (User) query.getSingleResult();
@@ -63,7 +64,7 @@ public class CanDOSecurityService implements ICanDOSecurityService {
 
 	@Override
 	public User saveUser(User user) {
-		em.merge(user);
+		em.refresh(user);
 		return user;
 	}
 
@@ -74,7 +75,7 @@ public class CanDOSecurityService implements ICanDOSecurityService {
 		User user = doLogin(username, password);
 
 		user.setLastLogin(new Date());
-		em.merge(user);
+		em.refresh(user);
 
 		return user;
 	}
