@@ -3,9 +3,10 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <!-- JQuery Framework -->
-	  	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
+<script
+	src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
 <!-- CanDO Javascript -->
-	  	<script type="text/javascript" src="js/cando.js"></script>
+<script type="text/javascript" src="js/cando.js"></script>
 <title>CanDO - Register</title>
 </head>
 <body>
@@ -19,7 +20,7 @@
 						type="text"
 						style="width: 640px; height: 50px; background-color: #FAFFBD; font-family: 'MS Serif', 'New York', serif; font-size: 3em;" />
 					<br /> <label> E-mail:</label> <br /> <input type="text"
-						name="register_email" id="register_email" onchange = "testEmail();"
+						name="register_email" id="register_email"
 						style="width: 640px; height: 50px; background-color: #FAFFBD; font-family: 'MS Serif', 'New York', serif; font-size: 3em;" />
 					<br /> <label> Password:</label> <br /> <input type="password"
 						name="register_password"
@@ -32,7 +33,8 @@
 							of use</a>!
 					</span> <br /> <input name="register_submit" type="button" tabIndex="4"
 						; style="font-size: 3em; border-radius: 10px; margin: 15px;"
-						value="Register" onclick="alert('This functional is not completed yet. Its a gag'); self.location='login.jsp';" />
+						value="Register"
+						onclick="alert('This functional is not completed yet. Its a gag'); self.location='login.jsp';" />
 				</form>
 			</div>
 		</div>

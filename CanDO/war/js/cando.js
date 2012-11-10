@@ -32,5 +32,8 @@ function testEmail(){
 };
 
 $().ready(function() {
-
+	
+	$('#register_email').bind('input', function() { 
+		testEmail();
+	});
 });
