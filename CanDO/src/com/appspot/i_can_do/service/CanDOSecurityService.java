@@ -6,9 +6,7 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 import javax.persistence.NoResultException;
-import javax.persistence.Persistence;
 import javax.persistence.Query;
 
 import com.appspot.i_can_do.master.security.User;
@@ -18,9 +16,7 @@ import com.appspot.i_can_do.service.exceptions.LoginNameNotFoundException;
 import com.appspot.i_can_do.service.utils.Crypto;
 
 public class CanDOSecurityService implements ICanDOSecurityService {
-	private static final EntityManagerFactory fcr = Persistence
-			.createEntityManagerFactory("CanDO-Service");
-	private static final EntityManager em = fcr.createEntityManager();
+	private static final EntityManager em = EMF.get().createEntityManager();
 	private static final CanDOSecurityService security = new CanDOSecurityService();
 	private static final Logger log = Logger
 			.getLogger(CanDOSecurityService.class.getName());
@@ -46,7 +42,6 @@ public class CanDOSecurityService implements ICanDOSecurityService {
 
 			em.persist(userToAdd);
 		}
-
 		return userToAdd;
 	}
 
@@ -54,10 +49,13 @@ public class CanDOSecurityService implements ICanDOSecurityService {
 	public User findUser(String email) {
 		Query query = em.createNamedQuery("User.getUser");
 		query.setParameter("email", email);
-		User u = (User) query.getSingleResult();
-		return u != null ? u : User.NULL_USER;
+		User u = User.NULL_USER;
+		try{
+		 u = (User) query.getSingleResult();
+		}catch(NoResultException e){}
+		return u;
 	}
-
+	
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<User> getUsers() {
@@ -76,10 +74,10 @@ public class CanDOSecurityService implements ICanDOSecurityService {
 			throws LoginNameNotFoundException, LoginFailedException {
 		log.info("Login Attempt: " + username);
 		User user = doLogin(username, password);
-		
+
 		user.setLastLogin(new Date());
 		em.merge(user);
-		
+
 		return user;
 	}
 
@@ -89,17 +87,17 @@ public class CanDOSecurityService implements ICanDOSecurityService {
 		try {
 			user = findUser(useremail);
 		} catch (NoResultException e) {
-			log.info("User not found: "+ useremail);
+			log.info("User not found: " + useremail);
 			throw new LoginNameNotFoundException();
 		}
 		if (user == null) {
-			log.info("User not found: "+ useremail);
+			log.info("User not found: " + useremail);
 			throw new LoginNameNotFoundException();
 		} else {
 			byte[] hashPassword = Crypto.hashPassword(password);
 			if (user.isDisabled()
 					|| !Arrays.equals(hashPassword, user.getPasswordHash())) {
-				log.info("Login Failed! "+useremail );
+				log.info("Login Failed! " + useremail);
 				throw new LoginFailedException();
 			}
 		}

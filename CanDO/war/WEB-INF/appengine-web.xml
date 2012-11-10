@@ -27,5 +27,10 @@
     stale session data. For details, see
     http://code.google.com/appengine/docs/java/config/appconfig.html#Enabling_Sessions
   -->
+  
+  <!-- for email services -->
+  <inbound-services>
+    <service>mail</service>
+  </inbound-services>
 
 </appengine-web-app>
