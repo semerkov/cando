@@ -28,19 +28,16 @@ public class CanDOSecurityService implements ICanDOSecurityService {
 	@Override
 	public User addNewUser(User user, String password)
 			throws LoginNameExistException {
-		User userToAdd = null;
-		try {
-			userToAdd = findUser(user.getEmail());
-
-			if (userToAdd != User.NULL_USER) {
-				throw new LoginNameExistException();
-			}
-		} catch (NoResultException nre) {
+		User userToAdd = findUser(user.getEmail());
+		if (userToAdd == User.NULL_USER) {
 			userToAdd = user;
 			byte[] pHash = Crypto.hashPassword(password);
 			userToAdd.setPasswordHash(pHash);
 
 			em.persist(userToAdd);
+			
+		} else {
+			throw new LoginNameExistException();
 		}
 		return userToAdd;
 	}
@@ -50,12 +47,13 @@ public class CanDOSecurityService implements ICanDOSecurityService {
 		Query query = em.createNamedQuery("User.getUser");
 		query.setParameter("email", email);
 		User u = User.NULL_USER;
-		try{
-		 u = (User) query.getSingleResult();
-		}catch(NoResultException e){}
+		try {
+			u = (User) query.getSingleResult();
+		} catch (NoResultException e) {
+		}
 		return u;
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<User> getUsers() {
@@ -83,23 +81,17 @@ public class CanDOSecurityService implements ICanDOSecurityService {
 
 	private User doLogin(String useremail, String password)
 			throws LoginNameNotFoundException, LoginFailedException {
-		User user = null;
-		try {
-			user = findUser(useremail);
-		} catch (NoResultException e) {
-			log.info("User not found: " + useremail);
-			throw new LoginNameNotFoundException();
-		}
-		if (user == null) {
-			log.info("User not found: " + useremail);
-			throw new LoginNameNotFoundException();
-		} else {
+		User user = findUser(useremail);
+		if (!user.equals(User.NULL_USER)) {
 			byte[] hashPassword = Crypto.hashPassword(password);
 			if (user.isDisabled()
 					|| !Arrays.equals(hashPassword, user.getPasswordHash())) {
 				log.info("Login Failed! " + useremail);
 				throw new LoginFailedException();
 			}
+		} else {
+			log.info("User not found: " + useremail);
+			throw new LoginNameNotFoundException();
 		}
 
 		return user;
