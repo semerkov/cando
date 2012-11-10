@@ -78,15 +78,13 @@ public class RegisterServlet extends HttpServlet {
 	private void testEmail(HttpServletRequest request,
 			HttpServletResponse response) throws IOException {
 		String email = request.getParameter("email");
-		boolean freeEmail = false;
 		if (email != null) {
-			freeEmail = security.findUser(email).equals(User.NULL_USER);
-		}
-		if (freeEmail) {
-			writeJson(response, "free");
+			if (security.findUser(email).equals(User.NULL_USER)) {
+				writeJson(response, "free");
 
-		} else {
-			writeJson(response, "occuped");
+			} else {
+				writeJson(response, "occuped");
+			}
 		}
 
 	}

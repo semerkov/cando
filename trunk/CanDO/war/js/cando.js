@@ -16,10 +16,10 @@ function testEmail(){
 			dataType: 'json',
 			success : function(data) {
 				if(data=="free"){
-					//alert("11");
+					//email free;
 					$('#register_email').css('border-color','green');
 				}else{
-					alert("22");
+					alert("Email occuped");
 				}
 			},
 			error : function(data) {
