@@ -19,7 +19,8 @@ function testEmail(){
 					//email free;
 					$('#register_email').css('border-color','green');
 				}else{
-					alert("Email occuped");
+					alert("Email occuped");//TODO change to some label 
+					$('#register_email').css('border-color','red')
 				}
 			},
 			error : function(data) {
