@@ -36,6 +36,6 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>WarningEventsServlet</servlet-name>
-		<url-pattern>/WarningEventsServlet</url-pattern>
+		<url-pattern>/warning_events</url-pattern>
 	</servlet-mapping>
 </web-app>

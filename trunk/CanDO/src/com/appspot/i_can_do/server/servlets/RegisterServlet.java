@@ -34,7 +34,7 @@ public class RegisterServlet extends HttpServlet {
 		return userObj != null;
 	}
 
-	public void service(HttpServletRequest request, HttpServletResponse response)
+	public void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws IOException {
 
 		String action = request.getParameter("action");
