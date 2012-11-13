@@ -13,6 +13,7 @@
 </style>
 
 
+
 <%
 	for (Event event : events) {
 %>
