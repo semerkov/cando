@@ -1,7 +1,10 @@
-<%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
+<%@page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
 
 <%@page
 	import="java.util.ArrayList,com.appspot.i_can_do.master.security.Event"%>
+<%@page import="java.util.Date"%>
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.util.Calendar"%>
 
 <%
 	ArrayList<Event> events = (ArrayList<Event>) request
@@ -13,14 +16,15 @@
 </style>
 
 
-
 <%
-	for (Event event : events) {
+	SimpleDateFormat df = new SimpleDateFormat();
+		for (Event event : events) {
+			String string = df.format(event.getStart().getTime());
 %>
-<div>
-	<span class="event_name"><%=event.getName()%></span> <span
-		class="event_description"><%=event.getDescription()%></span> <span
-		class="start_time"><%=event.getStart().toString()%></span>
+<div class="singleEvent">
+	<div class="event_name"><%=event.getName()%></div>
+	<div class="event_description"><%=event.getDescription()%></div>
+	<div class="start_time"><%=string%></div>
 </div>
 <%
 	}
