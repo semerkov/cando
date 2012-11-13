@@ -30,4 +30,12 @@
 		<servlet-name>Register</servlet-name>
 		<url-pattern>/register</url-pattern>
 	</servlet-mapping>
+	<servlet>
+		<servlet-name>WarningEventsServlet</servlet-name>
+		<servlet-class>com.appspot.i_can_do.server.servlets.WarningEventsServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>WarningEventsServlet</servlet-name>
+		<url-pattern>/WarningEventsServlet</url-pattern>
+	</servlet-mapping>
 </web-app>
