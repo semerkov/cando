@@ -20,9 +20,12 @@ public class WarningEventsServlet extends HttpServlet {
 		 Calendar c = Calendar.getInstance();
 		 Calendar c1= Calendar.getInstance();
 		 Calendar c2= Calendar.getInstance();
-		 c.set(2012, 12, 15, 15, 0);
-		 c1.set(2012, 12, 17, 12, 0);
-		 c2.set(2012, 12, 18, 21, 0);
+		 c.clear();
+		 c1.clear();
+		 c2.clear();
+		 c.set(13, 11, 14, 15, 0);
+		 c1.set(12, 11, 1, 12, 0);
+		 c2.set(12, 11, 18, 21, 0);
 		 events.add(new Event("Собеседование", "это собеседование ёпт",c,c));
 		 events.add(new Event("Сдача проекта", "этот ёпт проект",c1,c1));
 		 events.add(new Event("КР Саенко", "это ёпт Саенко",c2,c2));
