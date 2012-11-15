@@ -77,8 +77,10 @@ a:hover,a:active,a:focus {
 
 /* ~~ верхнему колонтитулу не задана ширина. Он растянется на всю ширину макета. Он содержит заполнитель для изображения, который должен быть заменен логотипом по ссылке ~~ */
 .header {
+	/*
 	background: #FFF;
-	height: 10%;
+	height: 10%;*/
+	display: none;
 }
 
 #logo {
@@ -100,6 +102,7 @@ a:hover,a:active,a:focus {
 
 .content {
 	height: 90%;
+	margin-top: 20px;
 }
 
 #nextMonth {
@@ -175,7 +178,24 @@ a:hover,a:active,a:focus {
 	width: 100%;
 	table-layout: fixed;
 }
-
+.calendar .day{
+	text-align: left;
+	vertical-align: top;
+	padding: 5px;
+}
+.calendar .day.active{
+	background-color: #FFF;
+}
+.calendar .day.nonactive{
+	background-color: #F5F4DE;
+}
+.calendar .day.active{
+	background-color: #FFF;
+}
+.calendar .day.today{
+	background-color: #EAEAEA;
+	border-width: 2px;
+}
 .todoWrapper {
 	height: 99%;
 	position: relative;
