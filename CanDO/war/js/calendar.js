@@ -1,6 +1,7 @@
 $(document).ready(function() {
 	
-	$("li").prepend('<span class="arrow-u navarrows">&nbsp;</span>');
+	$(".calendarSidebar li").prepend('<span class="arrow-u navarrows">&nbsp;</span>');
+	$(".todoSidebar li").prepend('<span class="arrow-u navarrows">&nbsp;</span>');
 
 	$('.todoArrows').click(function() {
 		var calendar = $('.calendar');
