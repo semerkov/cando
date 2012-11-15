@@ -15,9 +15,11 @@
 			String string = df.format(event.getStart().getTime());
 %>
 <div class="single_event">
-	<div class="event_name"><%=event.getName()%></div>
+	<div class="event_name">
+    <%=event.getName()%>
+    	<div class="start_time"><%=string%></div>
+	</div>
 	<div class="event_description"><%=event.getDescription()%></div>
-	<div class="start_time"><%=string%></div>
 </div>
 <%
 		}
