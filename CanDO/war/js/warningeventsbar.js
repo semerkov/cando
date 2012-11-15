@@ -1,14 +1,15 @@
 $(document).ready(function() {
 	$.ajax({
 		url : 'warning_events',
-		type : 'POST',
+		type : 'GET',
 		dataType : 'html',
 		data : {
-			'action' : 'getWarningEvents'
+			'action':'getWarningEvents'
 		},
 		success : function(data) {
-			if (data != "") {
-				$('#warning_events_bar').html(data).fadeIn("slow");
+			if (data != "notFoundWarningEvents") {
+				$('#warning_events').empty().html(data);
+				$('#warning_events_bar').fadeIn("slow");
 			} else {
 				$('#warning_events_bar').style.display = 'none';
 			}
