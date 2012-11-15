@@ -10,23 +10,16 @@
 	ArrayList<Event> events = (ArrayList<Event>) request
 			.getAttribute("events");
 	if (events != null) {
-%>
-
-<style type="text/css">
-</style>
-
-
-<%
 	SimpleDateFormat df = new SimpleDateFormat();
 		for (Event event : events) {
 			String string = df.format(event.getStart().getTime());
 %>
-<div class="singleEvent">
+<div class="single_event">
 	<div class="event_name"><%=event.getName()%></div>
 	<div class="event_description"><%=event.getDescription()%></div>
 	<div class="start_time"><%=string%></div>
 </div>
 <%
-	}
+		}
 	}
 %>
