@@ -1,10 +1,5 @@
 @charset "utf-8";
 
-@font-face {
-	font-family: Decor;
-	src: url('decor.ttf') format('truetype');
-}
-
 html {
 	height: 100%;
 	width: 100%;
@@ -19,7 +14,7 @@ body {
 	width: 100%;
 	margin: 0px;
 	padding: 0px;
-	font: 100%/1.4 Decor;
+	font: 100%/1.4Arial;
 	overflow: hidden;
 }
 
@@ -123,7 +118,7 @@ a:hover,a:active,a:focus {
 	position: relative;
 	right: 10%;
 	height: 60%;
-	font: Decor;
+	font:Arial;
 	font-size: 18px;
 }
 
@@ -180,7 +175,7 @@ a:hover,a:active,a:focus {
 }
 .calendar ul,.calendar ol {
 	padding: 0 5px 5px 15px;
-	font: 75%/1.2 Decor;
+	font: 75%/1.2Arial;
 }
 
 .calendar .day.active{
