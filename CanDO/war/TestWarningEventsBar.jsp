@@ -9,7 +9,7 @@
 <style type="text/css">
 	#warning_events_bar
 	{
-	display:block;
+	display: none;
 	width: 200px;
 	height: 300px;
 	background-color: #DFDFDF;
