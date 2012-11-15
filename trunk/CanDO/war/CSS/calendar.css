@@ -184,20 +184,19 @@ a:hover,a:active,a:focus {
 	width: 15%;
 }
 
-.todoArrows {
+.todoWrapper .todoArrows {
 	position: absolute;
 	left: -22px;
 	top: -1px;
 }
 
-.arrows {
+.todoWrapper .todoArrows .arrows {
 	position: absolute;
 	top: -2px;
 	width: 26px;
 	height: 42px;
 }
-
-.todoSidebar {
+.todoWrapper .todoSidebar {
 	height: 100%;
 	display: block;
 	width: 100%;
@@ -209,7 +208,17 @@ a:hover,a:active,a:focus {
 	left: 0;
 }
 
-.todoSidebar .todoActions {
+.todoWrapper .todoSidebar .close{
+	position: relative;
+	float: right;
+	top: -15px;
+	background: url(../IMG/close_icon.png) no-repeat 0 center;
+	width: 13px;
+	height: 13px;
+	cursor: pointer;
+}
+
+.todoWrapper .todoSidebar .todoActions {
 	position: absolute;
 	bottom: 0;
 }

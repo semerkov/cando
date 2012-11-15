@@ -79,5 +79,9 @@ $(document).ready(function() {
 			calendar.css('width', '83%');
 		}
 	});
+	
+	$('.todoWrapper .todoSidebar .close').click(function() {
+		$("#myTodoItem").click();
+	});
 
 });
