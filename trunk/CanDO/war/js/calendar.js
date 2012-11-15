@@ -68,8 +68,12 @@ $(document).ready(function() {
 		var calendar = $('.calendar');
 		if ($(this).hasClass('active')) {
 			$(".todoWrapper").css('display',"block");
-			$('.todoSidebar').css('display',"block");
-			calendar.css('width', '68%');
+			if($('.todoSidebar').css('display') == 'block'){
+				calendar.css('width', '68%');
+			}else{
+				calendar.css('width', '82%');
+			}
+			
 		} else {
 			$(".todoWrapper").css('display',"none");
 			calendar.css('width', '83%');
