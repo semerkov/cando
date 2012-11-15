@@ -17,7 +17,7 @@ function loading(){
 				$('#warning_events_bar').fadeIn("slow");
 				init();
 			} else {
-				$('#warning_events_bar').style.display = 'none';
+				$('#warning_events_bar').css('display', 'none');
 			}
 		},
 		error : function(data) {
@@ -43,4 +43,9 @@ function init(){
 		}
 		e.stopPropagation();
 	});
+}
+
+function close_events_bar(){
+	$('#warning_events_bar').fadeOut("slow");
+	$('#warning_events').empty();
 }
