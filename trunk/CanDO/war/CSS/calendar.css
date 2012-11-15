@@ -2,9 +2,9 @@
 
 html {
 	height: 100%;
-	width: 100%;
-	max-width: 2560px;
+	width: 100%; max-width : 2560px;
 	min-width: 1280px;
+	max-width: 2560px;
 }
 
 body {
@@ -14,7 +14,7 @@ body {
 	width: 100%;
 	margin: 0px;
 	padding: 0px;
-	font: 100%/1.4Arial;
+	font: 100%/1.4 Arial;
 	overflow: hidden;
 }
 
@@ -65,8 +65,7 @@ a:hover,a:active,a:focus {
 }
 
 /* ~~ верхнему колонтитулу не задана ширина. Он растянется на всю ширину макета. Он содержит заполнитель для изображения, который должен быть заменен логотипом по ссылке ~~ */
-.header {
-	/*
+.header { /*
 	background: #FFF;
 	height: 10%;*/
 	display: none; /* remove when header will be*/
@@ -118,7 +117,7 @@ a:hover,a:active,a:focus {
 	position: relative;
 	right: 10%;
 	height: 60%;
-	font:Arial;
+	font: Arial;
 	font-size: 18px;
 }
 
@@ -165,32 +164,39 @@ a:hover,a:active,a:focus {
 	width: 100%;
 	table-layout: fixed;
 }
-.calendar #calendarTable tr{
+
+.calendar #calendarTable tr {
 	height: 20%;
 }
-.calendar .day{
+
+.calendar .day {
 	text-align: left;
 	vertical-align: top;
 	padding: 5px;
 }
+
 .calendar ul,.calendar ol {
 	padding: 0 5px 5px 15px;
-	font: 75%/1.2Arial;
+	font: 75%/1.2 Arial;
 }
 
-.calendar .day.active{
+.calendar .day.active {
 	background-color: #FFF;
 }
-.calendar .day.nonactive{
+
+.calendar .day.nonactive {
 	background-color: #F5F4DE;
 }
-.calendar .day.active{
+
+.calendar .day.active {
 	background-color: #FFF;
 }
-.calendar .day.today{
+
+.calendar .day.today {
 	background-color: #EAEAEA;
 	border-width: 2px;
 }
+
 .todoWrapper {
 	height: 100%;
 	width: 15%;
@@ -211,6 +217,7 @@ a:hover,a:active,a:focus {
 	width: 26px;
 	height: 42px;
 }
+
 .todoWrapper .todoSidebar {
 	height: 100%;
 	display: block;
@@ -219,7 +226,7 @@ a:hover,a:active,a:focus {
 	float: right;
 }
 
-.todoWrapper .todoSidebar .close{
+.todoWrapper .todoSidebar .close {
 	position: relative;
 	float: right;
 	top: -15px;
@@ -248,35 +255,42 @@ ul.nav li {
 	background-color: #CCC;
 }
 
-ul.nav li .navarrows{
-	position:relative;
-	float:left;
-	width:20px;
+ul.nav li .navarrows {
+	position: relative;
+	float: left;
+	width: 20px;
 	top: 4px;
 	left: 6px;
 }
-ul.nav li .active{
+
+ul.nav li .active {
+	
 }
-ul.nav div{
-	margin-left:10px;
+
+ul.nav div {
+	margin-left: 10px;
 }
-ul.nav div .item{
+
+ul.nav div .item {
 	display: block;
 	cursor: pointer;
 }
-ul.nav div .item .square{
-	position:relative;
+
+ul.nav div .item .square {
+	position: relative;
 	top: 5px;
 	float: left;
-	margin:0px 5px;
+	margin: 0px 5px;
 	width: 10px;
 	height: 10px;
 	border: 1px solid #CCC;
 	background-color: #FFF;
 }
-ul.nav div .item .active{	
+
+ul.nav div .item .active {
 	background-color: #FA573C;
 }
+
 ul.nav a,ul.nav a:visited {
 	/* группировка этих селекторов гарантирует, что ссылки будут выглядеть как кнопки даже после того, как пользователь перейдет по ним */
 	padding: 5px 5px 5px 25px;
