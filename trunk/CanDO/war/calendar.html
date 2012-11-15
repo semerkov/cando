@@ -1,0 +1,198 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>CanDO - Calendar</title>
+<link rel="stylesheet" type="text/css" href="CSS/calendar.css" />
+<!-- JQuery Framework 
+<link
+	href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css"
+	rel="stylesheet" type="text/css" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+<script
+	src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>-->
+<link href="js/jquery-ui-1.9.1.custom.min.css" rel="stylesheet"
+	type="text/css" />
+<script src="js/jquery-1.8.2.js" type="text/javascript" charset="utf-8"></script>
+<script src="js/jquery-ui-1.9.1.custom.min.js"></script>
+
+<script type="text/javascript" src="js/calendar.js"></script>
+<script type="text/javascript" src="js/jqueryQuickfit.js"></script>
+<script type="text/javascript" charset="utf-8">
+	$(function() {
+		$(window).on('resize', function() {
+			$('#logo').quickfit({
+				max : 64,
+				min : 24,
+				truncate : false
+			});
+		});
+		$(window).trigger('resize');
+	});
+
+	$(document).ready(function() {
+
+	});
+</script>
+</head>
+
+<body>
+	<div class="container">
+
+		<div class="header">
+			<div class="account">
+				<span class="header_login_area;"
+					style="vertical-align: bottom; text-height: 14; font-style: oblique;">
+					<a href="login.jsp">Login</a>/<a href="register.jsp">Register</a>
+				</span>
+			</div>
+
+			<div id="logo" onclick="self.location='home.jsp'">CanDO</div>
+
+			<div class="clearfloat"></div>
+		</div>
+
+		<div class="content">
+			<div class="calendarWrapper">
+				<div class="calendarSidebar">
+					<ul class="nav">
+						<li class="active"><a href="#">My calendars</a></li>
+						<div class="#myCalendar">
+							<div class="item active" id="myCalendarItem">
+								<div class="square active"></div>
+								Sergey Lihoman calendar
+							</div>
+							<div class="item active" id="myTodoItem">
+								<div class="square active"></div>
+								Sergey Lihoman to-do
+							</div>
+							<div class="item">
+								<div class="square"></div>
+								Sprints
+							</div>
+						</div>
+						<li class="active"><a href="#">Others calendars</a></li>
+						<div class="#othersCalendar">
+							<div class="item active">
+								<div class="square active"></div>
+								New Year Parties!
+							</div>
+							<div class="item">
+								<div class="square"></div>
+								Happy Birthday`s
+							</div>
+							<div class="item">
+								<div class="square"></div>
+								Study calendar
+							</div>
+							<div class="item active">
+								<div class="square active"></div>
+								Work calendar
+							</div>
+						</div>
+					</ul>
+					<div class="clearfloat"></div>
+				</div>
+			</div>
+			<div class="calendar">
+				<div class="calendarHeader">
+					<input type="button" name="todayButton" id="todayButton"
+						style="float: left;" value="Today"> <input type="submit"
+						name="prevMonth" id="prevMonth" value="&lt;"> <input
+						type="button" name="nextMonth" id="nextMonth" value="&gt;">
+					<span id="currentMonth">November 2012</span>
+				</div>
+				<table id="daysNameTable" width="100%" border="0" cellspacing="0"
+					cellpadding="0">
+					<tr>
+						<th>Mon</th>
+						<th>Tue</th>
+						<th>Wed</th>
+						<th>Thu</th>
+						<th>Fri</th>
+						<th>Sat</th>
+						<th>Sun</th>
+					</tr>
+				</table>
+				<table id="calendarTable" width="100%" border="0" cellspacing="0"
+					cellpadding="0" rules="all">
+					<tr>
+						<td>&nbsp;</td>
+						<td>&nbsp;</td>
+						<td>&nbsp;</td>
+						<td>&nbsp;</td>
+						<td>&nbsp;</td>
+						<td>&nbsp;</td>
+						<td>&nbsp;</td>
+					</tr>
+					<tr>
+						<td>&nbsp;</td>
+						<td>&nbsp;</td>
+						<td>&nbsp;</td>
+						<td>&nbsp;</td>
+						<td>&nbsp;</td>
+						<td>&nbsp;</td>
+						<td>&nbsp;</td>
+					</tr>
+					<tr>
+						<td>&nbsp;</td>
+						<td>&nbsp;</td>
+						<td>&nbsp;</td>
+						<td>&nbsp;</td>
+						<td>&nbsp;</td>
+						<td>&nbsp;</td>
+						<td>&nbsp;</td>
+					</tr>
+					<tr>
+						<td>&nbsp;</td>
+						<td>&nbsp;</td>
+						<td>&nbsp;</td>
+						<td>&nbsp;</td>
+						<td>&nbsp;</td>
+						<td>&nbsp;</td>
+						<td>&nbsp;</td>
+					</tr>
+					<tr>
+						<td>&nbsp;</td>
+						<td>&nbsp;</td>
+						<td>&nbsp;</td>
+						<td>&nbsp;</td>
+						<td>&nbsp;</td>
+						<td>&nbsp;</td>
+						<td>&nbsp;</td>
+					</tr>
+				</table>
+			</div>
+
+			<div class="todoWrapper">
+				<div class="todoArrows">
+					<span class="arrow-r arrows"></span>
+				</div>
+				<div class="todoSidebar">
+					<ul class="nav">
+						<li class="active"><a href="#">My to-do`s</a></li>
+						<div class="#myTodos">
+							<div class="item">
+								<div class="square"></div>
+								Sergey to-do
+							</div>
+							<div class="item active">
+								<div class="square active"></div>
+								Read books
+							</div>
+						</div>
+						<li class="active"><a href="#">Others to-do`s</a></li>
+						<div class="#othersTodos">
+							<div class="item">
+								<div class="square"></div>
+								See films
+							</div>
+						</div>
+					</ul>
+					<div class="todoActions"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
