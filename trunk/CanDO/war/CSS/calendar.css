@@ -7,26 +7,20 @@
 
 html {
 	height: 100%;
+	width: 100%;
 	max-width: 2560px;
-	/* желательно задать максимальную ширину, чтобы макет не стал слишком широким на большом экране. Это повышает удобство чтения строк. В IE6 это объявление не соблюдается. */
 	min-width: 1280px;
-	/* желательно задать минимальную ширину, чтобы макет не стал слишком узким. Это повышает удобство чтения строк в боковых столбцах. В IE6 это объявление не соблюдается. */
-	background: #FFF;
-	/* автоматическое задание величин по бокам в совокупности с шириной центрирует макет. Это необязательно, если ширина контейнера составляет 100 %. */
-	width: auto;
-	margin-top: 0;
-	margin-right: auto;
-	margin-bottom: 0;
-	margin-left: auto;
 }
 
 body {
-	font: 100%/1.4 Decor;
-	margin: 0;
-	padding: 0;
-	color: #000;
 	background-color: #FFF;
+	color: #000;
 	height: 100%;
+	width: 100%;
+	margin: 0px;
+	padding: 0px;
+	font: 100%/1.4 Decor;
+	overflow: hidden;
 }
 
 /* ~~ Селекторы элементов/тегов ~~ */
@@ -34,10 +28,6 @@ ul,ol,dl {
 	/* Из-за различий между браузерами рекомендуется обнулять поля в списках. Для согласованности можно указать нужные величины либо здесь, либо в элементах списка (LI, DT, DD), которые они содержат. Помните, что сделанное здесь последовательно включается в список .nav, если только не будет прописан более конкретный селектор. */
 	padding: 0;
 	margin: 0;
-}
-
-ul li {
-	background-color: #CCC;
 }
 
 h1,h2,h3,h4,h5,h6,p {
@@ -73,6 +63,10 @@ a:hover,a:active,a:focus {
 /* ~~ этот контейнер окружает все остальные контейнеры DIV, задавая их ширину на процентной основе ~~ */
 .container {
 	height: 100%;
+	overflow: none;
+	width: 100%;
+	margin: 0px auto;
+	padding-top: 20px;
 }
 
 /* ~~ верхнему колонтитулу не задана ширина. Он растянется на всю ширину макета. Он содержит заполнитель для изображения, который должен быть заменен логотипом по ссылке ~~ */
@@ -80,7 +74,7 @@ a:hover,a:active,a:focus {
 	/*
 	background: #FFF;
 	height: 10%;*/
-	display: none;
+	display: none; /* remove when header will be*/
 }
 
 #logo {
@@ -101,8 +95,7 @@ a:hover,a:active,a:focus {
 }
 
 .content {
-	height: 90%;
-	margin-top: 20px;
+	height: 100%;
 }
 
 #nextMonth {
@@ -135,7 +128,7 @@ a:hover,a:active,a:focus {
 }
 
 .calendarWrapper {
-	height: 99%;
+	height: 100%;
 	width: 15%;
 	float: left;
 }
@@ -149,9 +142,8 @@ a:hover,a:active,a:focus {
 
 .calendar {
 	height: 100%;
-	padding: 0px;
 	width: 68%;
-	margin: 0 1%;
+	padding: 0 1%;
 	float: left;
 }
 
@@ -178,11 +170,19 @@ a:hover,a:active,a:focus {
 	width: 100%;
 	table-layout: fixed;
 }
+.calendar #calendarTable tr{
+	height: 20%;
+}
 .calendar .day{
 	text-align: left;
 	vertical-align: top;
 	padding: 5px;
 }
+.calendar ul,.calendar ol {
+	padding: 0 5px 5px 15px;
+	font: 75%/1.2 Decor;
+}
+
 .calendar .day.active{
 	background-color: #FFF;
 }
@@ -197,11 +197,11 @@ a:hover,a:active,a:focus {
 	border-width: 2px;
 }
 .todoWrapper {
-	height: 99%;
+	height: 100%;
+	width: 15%;
 	position: relative;
 	float: left;
 	background-color: #FFF;
-	width: 15%;
 }
 
 .todoWrapper .todoArrows {
@@ -222,10 +222,6 @@ a:hover,a:active,a:focus {
 	width: 100%;
 	border: solid 1px #CCC;
 	float: right;
-	position: absolute;
-	bottom: 0;
-	left: 0;
-	left: 0;
 }
 
 .todoWrapper .todoSidebar .close{
@@ -242,11 +238,6 @@ a:hover,a:active,a:focus {
 	position: absolute;
 	bottom: 0;
 }
-/* ~~ Этот сгруппированный селектор выдает списки в пространстве .content ~~ */
-.calendar ul,.calendar ol {
-	padding: 0 15px 15px 40px;
-	/* это поле зеркально повторяет правое поле в правиле для заголовков и параграфов выше. Внизу поле помещено как граница между элементами списков, а слева — как отступ. Поля можно настраивать по желанию. */
-}
 
 /* ~~ Стили списка навигации (можно убрать, если решено использовать готовое подменю, например Spry) ~~ */
 ul.nav {
@@ -259,7 +250,9 @@ ul.nav {
 
 ul.nav li {
 	border-bottom: 1px solid #666; /* разделяет кнопки */
+	background-color: #CCC;
 }
+
 ul.nav li .navarrows{
 	position:relative;
 	float:left;
