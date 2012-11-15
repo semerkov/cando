@@ -267,7 +267,7 @@ ul.nav div .item .square{
 	background-color: #FFF;
 }
 ul.nav div .item .active{	
-	background-color: #941616;
+	background-color: #FA573C;
 }
 ul.nav a,ul.nav a:visited {
 	/* группировка этих селекторов гарантирует, что ссылки будут выглядеть как кнопки даже после того, как пользователь перейдет по ним */
