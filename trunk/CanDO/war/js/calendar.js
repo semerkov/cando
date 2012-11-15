@@ -1,12 +1,3 @@
-function hideShowTodo() {
-	var sidebar = $('.todoSidebar');
-	if (sidebar.css('display') == 'block') {
-		sidebar.css('display', 'none');
-	} else {
-		sidebar.css('display', 'block');
-	}
-};
-
 $(document).ready(function() {
 	
 	$("li").prepend('<span class="arrow-u navarrows">&nbsp;</span>');
@@ -42,14 +33,14 @@ $(document).ready(function() {
 			arrow.toggleClass('arrow-d', true);
 			div.hide("slide", {
 				direction : "up"
-			}, 1000);
+			}, 300);
 		} else {
 			$(this).toggleClass('active', true);
 			arrow.toggleClass('arrow-u', true);
 			arrow.toggleClass('arrow-d', false);
 			div.show("slide", {
 				direction : "up"
-			}, 1000);
+			}, 300);
 		}
 	});
 	
