@@ -9,42 +9,51 @@
 <style type="text/css">
 	#warning_events_bar
 	{
-	display: none;
+	/*display: none;*/
 	width: 200px;
-	height: 300px;
-	background-color: #DFDFDF;
+	height: 350px;
+	background-color: #FFFFFF;
 	color: #1A1A1A;
 	position: fixed;
-	padding: 6px;
+	padding: 0px;
 	z-index: 3000;
-	margin: 2px;
+	margin: 0px;
 	border: 1px solid #2D2D2D;
 	overflow: auto;
 	}
 	.single_event
 	{
+	margin: 0px;
+	padding: 0px;
 	border-top-width: 1px;
-	border-right-width: 0px;
-	border-bottom-width: 1px;
-	border-left-width: 0px;
-	border-top-color: #333;
-	border-right-color: #333;
-	border-bottom-color: #333;
-	border-left-color: #333;
-	margin: 1px;
-	padding: 1px;
+	border-top-color: #000;
+	border-top-style: groove;
 	}
 	.event_name
 	{
-	
+	background-color: #CCC;
+	border-bottom-color: #000;
+	font-family: "Comic Sans MS", cursive;
+	font-size: 18px;
+	font-weight: 500;
+	text-align: center;
+	border-bottom-width: 1px;
+	border-bottom-style: dotted;
 	}
 	.event_description
 	{
-		
+	font-family: Verdana, Geneva, sans-serif;
+	font-size: 13px;
+	padding-right: 10px;
+	padding-top: 3px;
+	padding-bottom: 10px;
+	padding-left: 5px;
 	}
 	.start_time
 	{
-	
+	font-family: "Comic Sans MS", cursive;
+	font-size: 15px;
+	text-align: right;
 	}
 </style>
 
@@ -53,13 +62,16 @@
 <!-- CanDO Javascript -->
 <script src="js/warningeventsbar.js"></script>
 </head>
-<body>
+<body style="padding:0px!important;">
 <div id="warning_events_bar">
+	<div>Immediate events
+    <img src="IMG/close_icon.png" style="float:right;"/></div>
 	<div id="warning_events" >
         <div class="single_event">
-            <div class="event_name">dsfgsdfg</div>
-            <div class="event_description">sdfg</div>
-            <div class="start_time">20.10.2012</div>
+            <div class="event_name">Саенко контрольная работа
+           		<div class="start_time">20.10.2012</div>
+          </div>
+            <div class="event_description">это ёпт Саенко</div>
         </div>
     </div>
 </div>
