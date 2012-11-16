@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.appspot.i_can_do.master.security.Event;
+import com.appspot.i_can_do.master.model.Event;
 
 @SuppressWarnings("serial")
 public class WarningEventsServlet extends HttpServlet {

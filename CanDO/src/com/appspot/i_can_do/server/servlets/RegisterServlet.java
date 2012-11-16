@@ -45,7 +45,7 @@ public class RegisterServlet extends HttpServlet {
 			log.warning("Test user exist");
 		}
 		boolean b = !security.findUser("user@email.com").equals(User.NULL_USER);
-		log.warning("Create user succes: " + Boolean.toString(b));
+		log.warning("Create user success: " + Boolean.toString(b));
 
 		if (SECURITY_ACTIONS.contains(action)) {
 			// block for actions without log in

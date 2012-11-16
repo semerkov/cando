@@ -11,13 +11,17 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Transient;
 
+import com.google.appengine.api.datastore.Key;
+
 @Entity
 @NamedQueries({
 		@NamedQuery(name = "User.getUsers", query = "SELECT u FROM User u"),
-		@NamedQuery(name = "User.getUser", query = "SELECT u FROM User u WHERE u.email = :userEmail"), })
+		@NamedQuery(name = "User.getUser", query = "SELECT u FROM User u WHERE u.email = :userEmail") })
 public class User{
+	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Key key;
 	private String email;
 	private String name;
 	private String sername;
@@ -84,5 +88,9 @@ public class User{
 
 	public void setDisabled(boolean disabled) {
 		this.disabled = disabled;
+	}
+	
+	public Key getKey(){
+		return key;
 	}
 }

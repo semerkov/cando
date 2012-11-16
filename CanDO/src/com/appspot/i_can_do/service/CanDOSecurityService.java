@@ -33,10 +33,8 @@ public class CanDOSecurityService implements ICanDOSecurityService {
 			userToAdd = user;
 			byte[] pHash = Crypto.hashPassword(password);
 			userToAdd.setPasswordHash(pHash);
-
 			em.persist(userToAdd);
-			em.refresh(userToAdd);
-			
+			em.persist(userToAdd);
 		} else {
 			throw new LoginNameExistException();
 		}
