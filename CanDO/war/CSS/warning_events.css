@@ -1,10 +1,10 @@
 #warning_events_bar {
 	display: none;
-	width: 200px;
-	height: 350px;
+	/*width: 200px;
+	height: 350px;*/
 	background-color: #FFFFFF;
 	color: #1A1A1A;
-	position: absolute;
+	position: fixed;
 	padding: 0px;
 	z-index: 2000;
 	margin: 0px;
@@ -12,6 +12,9 @@
 	overflow: auto;
 	left:5px;
 	bottom:5px;
+	max-height:350px;
+	min-width:172px;
+	width:14%;
 }
 
 #warning_events_header {
