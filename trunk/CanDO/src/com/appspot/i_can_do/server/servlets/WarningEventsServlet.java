@@ -28,9 +28,9 @@ public class WarningEventsServlet extends HttpServlet {
 		c.set(13, 11, 14, 15, 0);
 		c1.set(12, 11, 1, 12, 0);
 		c2.set(12, 11, 18, 21, 0);
-		events.add(new Event("Собеседование", "это собеседование ёпт", c, c));
-		events.add(new Event("Сдача проекта", "этот ёпт проект", c1, c1));
-		events.add(new Event("КР Саенко", "это ёпт Саенко", c2, c2));
+		events.add(new Event("Buy a latter", "Buy a latter for Natik", c, c));
+		events.add(new Event("Train from Lviv", "Meet Natik from Lviv", c1, c1));
+		events.add(new Event("Meeting", "Buy flowers", c2, c2));
 
 		try {
 			if (events.size() != 0) {

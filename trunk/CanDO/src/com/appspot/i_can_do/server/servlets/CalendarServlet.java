@@ -65,7 +65,6 @@ public class CalendarServlet extends HttpServlet {
 		
 		request.getRequestDispatcher("/WEB-INF/pages/audioLogsFragment.jsp").forward(request, response);*/
 		request.getRequestDispatcher("/WEB-INF/pages/createMonth.jsp").forward(request, response);
-
 	}
 
 }
