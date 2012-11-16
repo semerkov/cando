@@ -1,4 +1,4 @@
-package com.appspot.i_can_do.service;
+package com.appspot.i_can_do.server.servlets;
 
 import java.io.IOException;
 
@@ -13,7 +13,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.Properties;
 
 @SuppressWarnings("serial")
-public class SendMail extends HttpServlet {
+public class SendMailServlet extends HttpServlet {
 	String ENCODING = "UTF-8";
 
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -59,5 +59,20 @@ public class SendMail extends HttpServlet {
 		//transport.connect("smtp.gmail.com", 25, "semerkoff", "26september1992");
 		transport.sendMessage(msg, msg.getAllRecipients());
 		transport.close();
+	}
+	
+	private class MyAuthenticator extends Authenticator {
+		private String user;		private String password;
+
+		MyAuthenticator(String user, String password) {
+			this.user = user;
+			this.password = password;
+		}
+
+		public PasswordAuthentication getPasswordAuthentication() {
+			String user = this.user;
+			String password = this.password;
+			return new PasswordAuthentication(user, password);
+		}
 	}
 }
