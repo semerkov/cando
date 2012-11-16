@@ -158,14 +158,18 @@ a:hover,a:active,a:focus {
 	height: 5%;
 	table-layout: fixed;
 }
-
-.calendar #calendarTable {
+.calendar #calendarTableWrapper {
 	height: 90%;
 	width: 100%;
 	table-layout: fixed;
 }
+.calendar #calendarTableWrapper table {
+	height: 100%;
+	width: 100%;
+	table-layout: fixed;
+}
 
-.calendar #calendarTable tr {
+.calendar #calendarTableWrapper table tr {
 	height: 20%;
 }
 
