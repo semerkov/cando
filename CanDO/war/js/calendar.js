@@ -82,9 +82,10 @@ $(document).ready(function() {
 
 function init(){
 	retrieveCalenderTable("Novemer", "Next");
-}
+};
+
 function retrieveCalenderTable(month, monthAction){
-	$('#calendarTableWrapper').html("Please wait...");
+	$('#calendarTableWrapper').html("<table><tr><td style='text-align:center;'>Please wait...</td></tr></table>");
 	$.ajax({
 		url : 'calendar',
 		type : 'POST',
@@ -93,7 +94,6 @@ function retrieveCalenderTable(month, monthAction){
 			'currentMonth' : month,
 			'monthAction' : monthAction
 		},
-		dataType: 'text',
 		success : function(data) {
 			$('#calendarTableWrapper').html(data);
 		},

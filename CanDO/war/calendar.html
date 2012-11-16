@@ -1,4 +1,4 @@
-﻿<!DOCTYPE HTML>
+﻿<!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -8,7 +8,6 @@
 <!-- JQuery Framework 
 <link
 	href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css"
-	rel="stylesheet" type="text/css" />
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript" charset="utf-8"></script>
 <script
 	src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>-->
@@ -21,8 +20,8 @@
 <script type="text/javascript" src="js/warningeventsbar.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
-	retrieveCalenderTable("November");
-}
+	retrieveCalenderTable("November","this");
+});
 </script>
 
 
@@ -108,9 +107,7 @@ $(document).ready(function() {
 						<th>Sat</th>
 					</tr>
 				</table>
-				<div id="calendarTableWrapper">
-					
-				</div>
+				<div id="calendarTableWrapper"></div>
 			</div>
 
 			<div class="todoWrapper">
@@ -145,17 +142,17 @@ $(document).ready(function() {
 
 		</div>
 	</div>
-	
-	
+
+  
 	<!-- events bar -->
 	<div id="warning_events_bar">
 		<div id="warning_events_header">
 			Immediate events <img src="IMG/close_icon.png"
-				style="float: right; background-color: #FFF; cursor:pointer;" onClick="close_events_bar();" />
+				style="float: right; background-color: #FFF; cursor: pointer;"
+				onClick="close_events_bar();" />
 		</div>
-		<div id="warning_events">
-        </div>
+		<div id="warning_events"></div>
 	</div>
-	
+
 </body>
 </html>
