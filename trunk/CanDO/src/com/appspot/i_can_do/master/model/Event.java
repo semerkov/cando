@@ -1,4 +1,4 @@
-package com.appspot.i_can_do.master.security;
+package com.appspot.i_can_do.master.model;
 
 import java.util.Calendar;
 
