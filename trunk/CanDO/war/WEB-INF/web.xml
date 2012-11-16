@@ -38,4 +38,12 @@
 		<servlet-name>WarningEventsServlet</servlet-name>
 		<url-pattern>/warning_events</url-pattern>
 	</servlet-mapping>
+		<servlet>
+		<servlet-name>CalendarServlet</servlet-name>
+		<servlet-class>com.appspot.i_can_do.server.servlets.CalendarServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>CalendarServlet</servlet-name>
+		<url-pattern>/calendar</url-pattern>
+	</servlet-mapping>
 </web-app>

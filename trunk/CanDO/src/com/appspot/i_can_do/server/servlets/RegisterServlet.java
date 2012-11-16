@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.appspot.i_can_do.master.security.User;
 import com.appspot.i_can_do.service.CanDOSecurityService;
 import com.appspot.i_can_do.service.exceptions.LoginNameExistException;
-import com.google.gson.Gson;
+import com.appspot.i_can_do.service.utils.ServletUtils;
 
 @SuppressWarnings("serial")
 public class RegisterServlet extends HttpServlet {
@@ -27,11 +27,6 @@ public class RegisterServlet extends HttpServlet {
 	public void init(ServletConfig config) {
 		security = CanDOSecurityService.instance();
 		log.info("Servlet created");
-	}
-
-	protected boolean isLoginState(HttpServletRequest request) {
-		User userObj = (User) request.getSession().getAttribute("User");
-		return userObj != null;
 	}
 
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -57,17 +52,7 @@ public class RegisterServlet extends HttpServlet {
 			if ("testEmail".equals(action)) {
 				testEmail(request, response);
 			}
-
-			else if (!isLoginState(request)) {
-				response.sendError(HttpServletResponse.SC_UNAUTHORIZED,
-						"Only authorized user can perform this action");
-				return;
-			}
-			// block for actions with log in
-			else {
-
-			}
-
+			
 		} else {
 			response.sendError(HttpServletResponse.SC_METHOD_NOT_ALLOWED,
 					"Not existing action!");
@@ -80,20 +65,13 @@ public class RegisterServlet extends HttpServlet {
 		String email = request.getParameter("email");
 		if (email != null) {
 			if (security.findUser(email).equals(User.NULL_USER)) {
-				writeJson(response, "free");
+				ServletUtils.writeJson(response, "free");
 
 			} else {
-				writeJson(response, "occuped");
+				ServletUtils.writeJson(response, "occuped");
 			}
 		}
 
-	}
-
-	private static void writeJson(HttpServletResponse response, Object object)
-			throws IOException {
-		response.setContentType("application/json");
-		response.setCharacterEncoding("UTF-8");
-		response.getWriter().write(new Gson().toJson(object));
 	}
 
 }
