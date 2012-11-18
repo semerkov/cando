@@ -80,6 +80,15 @@ $(document).ready(function() {
 	
 });
 
+
+function viewAddCalendarForm(){
+	var addform = $('#calendarAddForm');
+	showPopupDialog('calendarAddForm',100,200);
+	/*$('#calendarAddForm').css('display', 'none');*/
+}
+
+
+
 function init(){
 	retrieveCalenderTable("Novemer", "this");
 };
@@ -111,15 +120,15 @@ var showPopupDialog = function (dialogId, height, width) {
     var maskWidth = $(window).width();
  
     $('#popupMask').css({'width':maskWidth,'height':maskHeight});
-    $('#popupMask').fadeIn(700);    
-    $('#popupMask').fadeTo("slow",0.8);     
+    $('#popupMask').fadeIn(300);    
+    $('#popupMask').fadeTo("slow",0.2);     
     
         
     $("#" + dialogId).css('top',  height);
     $("#" + dialogId).css('left', width);
-    	
+    $("#" + dialogId).toggleClass('popupDialog',true);
 
-    $("#" + dialogId).fadeIn(700);
+    $("#" + dialogId).fadeIn(300);
 };
 
 var hidePopupDialog = function (){
@@ -128,5 +137,6 @@ var hidePopupDialog = function (){
 	var pD = $(".popupDialog");
     if(pD != null) {
     	pD.fadeOut(700);
+		pD.toggleClass('popupDialog',false);
     }
 };
