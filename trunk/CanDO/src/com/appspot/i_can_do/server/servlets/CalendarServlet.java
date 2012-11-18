@@ -2,6 +2,7 @@ package com.appspot.i_can_do.server.servlets;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
@@ -50,7 +51,7 @@ public class CalendarServlet extends HttpServlet {
 			} catch (LoginNameExistException e) {
 				log.warning("Test user exist");
 			}
-		}else{
+		} else {
 			log.warning("Test user exist");
 		}
 	}
@@ -85,6 +86,15 @@ public class CalendarServlet extends HttpServlet {
 		}
 	}
 
+	private static final List<String> SECURITY_MONTH_ACTIONS = Arrays
+			.asList(new String[] { "this", "next", "previous" });
+	private static final List<Integer> SECURITY_MONTH = Arrays
+			.asList(new Integer[] { Calendar.JANUARY, Calendar.FEBRUARY,
+					Calendar.MARCH, Calendar.APRIL, Calendar.MAY,
+					Calendar.JUNE, Calendar.JULY, Calendar.AUGUST,
+					Calendar.SEPTEMBER, Calendar.OCTOBER, Calendar.NOVEMBER,
+					Calendar.DECEMBER });
+
 	private void retrieveCalenderTable(HttpServletRequest request,
 			HttpServletResponse response) throws IOException, ServletException {
 		/*
@@ -98,8 +108,32 @@ public class CalendarServlet extends HttpServlet {
 		 * request.getRequestDispatcher("/WEB-INF/pages/audioLogsFragment.jsp").
 		 * forward(request, response);
 		 */
-		request.getRequestDispatcher("/WEB-INF/pages/createMonth.jsp").forward(
-				request, response);
+
+		Integer month = Integer.parseInt(request.getParameter("currentMonth"));
+		String monthAction = request.getParameter("monthAction");
+		Calendar calendar = Calendar.getInstance();
+		if (SECURITY_MONTH_ACTIONS.contains(monthAction)
+				&& SECURITY_MONTH.contains(month)) {
+			if (month.equals(Calendar.JANUARY)
+					&& monthAction.equals("previous")) {
+				int year = calendar.get(Calendar.YEAR);
+				calendar.set(Calendar.YEAR, year - 1);
+				calendar.set(Calendar.MONTH, Calendar.DECEMBER);
+
+			} else if (month.equals(Calendar.DECEMBER)
+					&& monthAction.equals("next")) {
+				int year = calendar.get(Calendar.YEAR);
+				calendar.set(Calendar.YEAR, year + 1);
+				calendar.set(Calendar.MONTH, Calendar.JANUARY);
+
+			} else {
+				// common case
+				calendar.set(Calendar.MONTH, calendar.get(Calendar.MONTH)+1);
+			}
+			request.getRequestDispatcher("/WEB-INF/pages/createMonth.jsp")
+					.forward(request, response);
+		}
+
 	}
 
 	public void addCalendar(HttpServletRequest request,
@@ -113,7 +147,7 @@ public class CalendarServlet extends HttpServlet {
 		Event event2 = new Event("A letter", "Buy a letter", c1, c1, c1);
 		calendar.getEvents().add(event);
 		calendar.getEvents().add(event2);
-		canDOService.addCalendar(calendar,testUser.getKey());
+		canDOService.addCalendar(calendar, testUser.getKey());
 		calendar.getEvents().get(0).setName("Changed");
 		calendar.setName("new name!");
 		calendar = canDOService.saveCalendar(calendar);

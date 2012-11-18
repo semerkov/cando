@@ -346,3 +346,11 @@ ul.nav a:hover,ul.nav a:active,ul.nav a:focus {
 .arrow-l {
 	background: url(../IMG/arrow_grey_left.png) no-repeat 0 center;
 }
+.popupMask {
+    background-color: #000000;
+    display: none;
+    left: 0;
+    position: absolute;
+    top: 0;
+    z-index: 100;
+}
