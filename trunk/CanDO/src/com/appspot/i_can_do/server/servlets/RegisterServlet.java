@@ -44,7 +44,8 @@ public class RegisterServlet extends HttpServlet {
 		} catch (LoginNameExistException e) {
 			log.warning("Test user exist");
 		}
-		boolean b = !security.findUser("user@email.com").equals(User.NULL_USER);
+		boolean b = false;
+		b = (security.findUser("user@email.com") != null);
 		log.warning("Create user success: " + Boolean.toString(b));
 
 		if (SECURITY_ACTIONS.contains(action)) {
@@ -64,7 +65,7 @@ public class RegisterServlet extends HttpServlet {
 			HttpServletResponse response) throws IOException {
 		String email = request.getParameter("email");
 		if (email != null) {
-			if (security.findUser(email).equals(User.NULL_USER)) {
+			if (security.findUser(email) == null) {
 				ServletUtils.writeJson(response, "free");
 
 			} else {

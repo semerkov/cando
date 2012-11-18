@@ -9,7 +9,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.Transient;
 
 import com.google.appengine.api.datastore.Key;
 
@@ -30,9 +29,6 @@ public class User{
 	private boolean disabled;
 	@Column(nullable = false)
 	private byte[] passwordHash;
-	 
-	@Transient
-	public static final User NULL_USER = new User();
 
 	public String getName() {
 		return name;
