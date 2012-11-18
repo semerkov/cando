@@ -1,3 +1,6 @@
+var calendar_id='';
+
+
 $(document).ready(function() {
 	
 	retrieveCalender("this");
@@ -83,8 +86,6 @@ $(document).ready(function() {
 			showPopupDialog('calendarAddForm',t.offset().top + t.height(),t.offset().left);
 			e.stopPropagation();
 	});
-	
-	
 	
 	$('.calendarEdit').click( function(e){
 			var t = $(this);

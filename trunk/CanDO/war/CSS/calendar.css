@@ -441,3 +441,7 @@ ul.nav a:hover,ul.nav a:active,ul.nav a:focus {
 	cursor:pointer;
 	background-color:#D5DFE1;
 }
+
+.calendar_id{
+	display:none;
+}
