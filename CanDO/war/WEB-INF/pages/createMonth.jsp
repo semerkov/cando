@@ -3,7 +3,8 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
-<%@ page import="java.util.Calendar"%>
+<%@ page
+	import="java.text.SimpleDateFormat,java.util.Calendar,java.util.List,java.util.ArrayList, com.appspot.i_can_do.master.model.EventCalendar, com.appspot.i_can_do.master.model.Event"%>
 <%
 	final Calendar calendar = (Calendar) request
 			.getAttribute("calendar");
@@ -31,8 +32,17 @@
 			.getActualMaximum(Calendar.DAY_OF_MONTH);
 	int endOffsetVariable = 0;
 	int weeks = offset + lastDayOfMonth <= 35 ? 5 : 6;
-%>
 
+	final List<EventCalendar> calendars = (List<EventCalendar>) request
+			.getAttribute("calendars");
+	ArrayList<Event> events = new ArrayList<Event>();
+	for (EventCalendar c : calendars) {
+		for (Event e : c.getEvents())
+			events.add(e);
+	}
+
+	SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+%>
 <table width="100%" border="0" cellspacing="0" cellpadding="0"
 	rules="all">
 	<tr>
@@ -42,7 +52,18 @@
 		</c:forEach>
 		<c:forEach var="i" begin="<%=dayOfMonth%>" end="<%=7 - offset%>"
 			step="1" varStatus="status">
-			<td class="day active"><%=dayOfMonth++%></td>
+			<td class="day active"><%=dayOfMonth%><ul>
+				<%
+					calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+				for(Event e : events){
+					if(formatter.format(e.getStart()).equals(formatter.format(calendar.getTime()))){
+						%>
+						<li><%=e.getName()%></li>
+						<%
+					}
+				}
+						dayOfMonth++;
+				%></ul></td>
 		</c:forEach>
 	</tr>
 
@@ -51,14 +72,36 @@
 		<tr>
 			<c:forEach var="i" begin="<%=dayOfMonth%>" end="<%=dayOfMonth + 6%>"
 				step="1" varStatus="status">
-				<td class="day active"><%=dayOfMonth++%></td>
+				<td class="day active"><%=dayOfMonth%><ul>
+				<%
+					calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+				for(Event e : events){
+					if(formatter.format(e.getStart()).equals(formatter.format(calendar.getTime()))){
+						%>
+						<li><%=e.getName()%></li>
+						<%
+					}
+				}
+						dayOfMonth++;
+				%></ul></td>
 			</c:forEach>
 		</tr>
 	</c:forEach>
 	<tr>
 		<c:forEach var="i" begin="<%=dayOfMonth%>" end="<%=lastDayOfMonth%>"
 			step="1" varStatus="status">
-			<td class="day active"><%=dayOfMonth++%></td>
+			<td class="day active"><%=dayOfMonth%><ul>
+				<%
+					calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+				for(Event e : events){
+					if(formatter.format(e.getStart()).equals(formatter.format(calendar.getTime()))){
+						%>
+						<li><%=e.getName()%></li>
+						<%
+					}
+				}
+						dayOfMonth++;
+				%></ul></td>
 			<%
 				endOffsetVariable++;
 			%>
@@ -69,8 +112,10 @@
 		</c:forEach>
 	</tr>
 </table>
-<div id="currMonth" style="display:none;"> <%= calendar.get(Calendar.MONTH) %></div>
-<div id="currYear" style="display:none;"> <%= calendar.get(Calendar.YEAR) %></div>
+<div id="currMonth" style="display: none;">
+	<%=calendar.get(Calendar.MONTH)%></div>
+<div id="currYear" style="display: none;">
+	<%=calendar.get(Calendar.YEAR)%></div>
 
 <!-- 
 <table width="100%" border="0" cellspacing="0" cellpadding="0"

@@ -132,6 +132,8 @@ public class CalendarServlet extends HttpServlet {
 				calendar.set(Calendar.MONTH, month + offset);
 			}
 			request.setAttribute("calendar", calendar);
+			List<EventCalendar> calendars = canDOService.getCalendars(testUser);
+			request.setAttribute("calendars", calendars);
 			request.getRequestDispatcher("/WEB-INF/pages/createMonth.jsp")
 					.forward(request, response);
 		}
@@ -142,13 +144,13 @@ public class CalendarServlet extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		String name = request.getParameter("calendarName");
 		String color = "#EAEAEA";
-		//String color = request.getParameter("calendarName");
+		// String color = request.getParameter("calendarName");
 		if (!("".equals(name) && "".equals(color))) {
 			EventCalendar calendar = new EventCalendar();
 			calendar.setName(name);
 			calendar.setColor(color);
 			canDOService.addCalendar(calendar, testUser.getKey());
-			fillEventCalendarMenu(request,response);
+			fillEventCalendarMenu(request, response);
 		}
 		return;
 	}
@@ -184,7 +186,6 @@ public class CalendarServlet extends HttpServlet {
 		Event event4 = new Event("Natik birthday", "Buy a gift", c2, c2, c2);
 		calendar1.getEvents().add(event3);
 		calendar1.getEvents().add(event4);
-
 		canDOService.addCalendar(calendar1, testUser.getKey());
 		return;
 	}
