@@ -156,26 +156,30 @@
 		</div>
 		<div id="warning_events"></div>
 	</div>
-	
 
 <div id="popupMask" class="popupMask" onclick="hidePopupDialog();" ></div>
 
 
 	<!-- add new calendar -->
 	<div id="calendarAddForm">
-		<form action="/calendar" method="post">
-        	<input type="text" name="calendarName" id="calendarName"> 
-            <input type="submit" name="addCalendarSubmit" id="addCalendarSubmit">
-        </form>
+    	<div style="text-align:center">Add new calendar</div>
+        <div class="editForm">
+            <form action="/calendar" method="post" name="addCalendar">
+                <input type="text" name="calendarName" id="calendarName" value="dsf">
+                <input type="submit" name="addCalendarSubmit" id="addCalendarSubmit">
+            </form>
+        <div>
 	</div>
-    
+ </div>
+</div>
     <!-- edit calendar -->
-	<div class="calendarEditForm">
-		<form action="/calendar" method="post">
-        	<input type="text" name="calendarName" id="calendarName"> 
-            <input type="submit" name="addCalendarSubmit" id="addCalendarSubmit">
-        </form>
-        <input type="submit" name="addCalendarSubmit" id="addCalendarSubmit">
+	<div id="calendarEditForm">
+    	<div class="editForm">
+            <form action="/calendar" method="post" name="editCalendar">
+                <input type="text" name="calendarNewName" id="calendarNewName"> 
+                <input type="submit" name="editCalendarSubmit" id="editCalendarSubmit" title="Confirm">
+            </form>
+       	<div>
 	</div>
 </body>
 </html>
