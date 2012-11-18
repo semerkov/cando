@@ -8,6 +8,9 @@
 	<persistence-unit name="transactions-optional">
 		<provider>org.datanucleus.api.jpa.PersistenceProviderImpl</provider>
 		<class>com.appspot.i_can_do.master.security.User</class>
+		<class>com.appspot.i_can_do.master.model.Event</class>
+		<class>com.appspot.i_can_do.master.model.EventCalendar</class>
+		<class>com.appspot.i_can_do.master.model.CalendarKeeper</class>	
 		<exclude-unlisted-classes />
 		<properties>
 			<property name="datanucleus.NontransactionalRead" value="true" />

@@ -29,12 +29,13 @@ public class CanDOSecurityService implements ICanDOSecurityService {
 	public User addNewUser(User user, String password)
 			throws LoginNameExistException {
 		User userToAdd = findUser(user.getEmail());
-		if (userToAdd.equals(User.NULL_USER)) {
+		if (userToAdd == null) {
 			userToAdd = user;
 			byte[] pHash = Crypto.hashPassword(password);
 			userToAdd.setPasswordHash(pHash);
 			em.persist(userToAdd);
-			em.persist(userToAdd);
+			em.refresh(userToAdd);
+			log.info("User created: "+user.getEmail());
 		} else {
 			throw new LoginNameExistException();
 		}
@@ -42,16 +43,15 @@ public class CanDOSecurityService implements ICanDOSecurityService {
 	}
 
 	@Override
-	public User findUser(String email) {
+	public User findUser(String email) throws NoResultException{
 		Query query = em.createNamedQuery("User.getUser");
 		query.setParameter("userEmail", email);
-		User u = User.NULL_USER;
-		try {
-			u = (User) query.getSingleResult();
-		} catch (NoResultException e) {
-		}
-		return u;
-	}
+		User u = null;
+		try{
+		u = (User) query.getSingleResult();
+		} catch(NoResultException ex){}
+		return u;	
+	}	
 
 	@SuppressWarnings("unchecked")
 	@Override
@@ -62,7 +62,7 @@ public class CanDOSecurityService implements ICanDOSecurityService {
 
 	@Override
 	public User saveUser(User user) {
-		em.refresh(user);
+		em.merge(user);
 		return user;
 	}
 
@@ -73,7 +73,7 @@ public class CanDOSecurityService implements ICanDOSecurityService {
 		User user = doLogin(username, password);
 
 		user.setLastLogin(new Date());
-		em.refresh(user);
+		em.merge(user);
 
 		return user;
 	}
@@ -81,7 +81,7 @@ public class CanDOSecurityService implements ICanDOSecurityService {
 	private User doLogin(String useremail, String password)
 			throws LoginNameNotFoundException, LoginFailedException {
 		User user = findUser(useremail);
-		if (!user.equals(User.NULL_USER)) {
+		if (user != null) {
 			byte[] hashPassword = Crypto.hashPassword(password);
 			if (user.isDisabled()
 					|| !Arrays.equals(hashPassword, user.getPasswordHash())) {
