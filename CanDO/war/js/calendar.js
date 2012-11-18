@@ -81,7 +81,7 @@ $(document).ready(function() {
 });
 
 function init(){
-	retrieveCalenderTable("Novemer", "Next");
+	retrieveCalenderTable("Novemer", "this");
 };
 
 function retrieveCalenderTable(month, monthAction){
@@ -104,4 +104,29 @@ function retrieveCalenderTable(month, monthAction){
 		}
 	});
 	$("body").css("cursor", "auto");
+};
+
+var showPopupDialog = function (dialogId, height, width) {
+    var maskHeight = $(document).height();
+    var maskWidth = $(window).width();
+ 
+    $('#popupMask').css({'width':maskWidth,'height':maskHeight});
+    $('#popupMask').fadeIn(700);    
+    $('#popupMask').fadeTo("slow",0.8);     
+    
+        
+    $("#" + dialogId).css('top',  height);
+    $("#" + dialogId).css('left', width);
+    	
+
+    $("#" + dialogId).fadeIn(700);
+};
+
+var hidePopupDialog = function (){
+	$('#popupMask').fadeOut(700);    
+	$('#popupMask').fadeTo("slow",0.8);
+	var pD = $(".popupDialog");
+    if(pD != null) {
+    	pD.fadeOut(700);
+    }
 };
