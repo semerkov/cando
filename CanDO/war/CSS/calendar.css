@@ -372,7 +372,7 @@ ul.nav a:hover,ul.nav a:active,ul.nav a:focus {
 #calendarAddForm {
 	z-index:300;
 	position:absolute;
-	border: #333 dotted 1px;
+	border: #333 solid 1px;
 	background-color:#FFF;
 	height:100px;
 	width:200px;
@@ -380,6 +380,38 @@ ul.nav a:hover,ul.nav a:active,ul.nav a:focus {
 	left:100px;
 	display:none;
 }
+
+
+.calendarEdit:hover {
+	border: #333 solid 1px;
+	color: #333;
+	cursor: pointer;
+}
+
+.calendarEdit {
+	position:relative;
+	border: #666 solid 1px;
+	color: #666;
+	float: right;
+	top:4px;
+	right:4px;
+	text-align: center;
+	vertical-align: central;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 8px;
+}
+
+#calendarEditForm {
+	z-index:301;
+	position:absolute;
+	border: #333 solid 1px;
+	background-color:#FFF;
+	width:200px;
+	top:100px;
+	left:100px;
+	display:none;
+}
+
 .popupMask {
 	opacity:0;
 	background-color: #FFFFFF;
@@ -390,10 +422,22 @@ ul.nav a:hover,ul.nav a:active,ul.nav a:focus {
 	z-index: 100;
 }
 
-.editForm {
+.addForm {
 	margin: 5px;
-	padding: 5px;
-	border: 1px dotted #999;
 	background-color: #FFF;
 	text-align: center;
+	padding-top: 10px;
+	padding-right: 5px;
+	padding-bottom: 10px;
+	padding-left: 5px;
+}
+.editForm{
+	padding-top: 5px;
+	padding-right: 10px;
+	padding-bottom: 5px;
+	padding-left: 25px;	
+}
+.editForm:hover{
+	cursor:pointer;
+	background-color:#D5DFE1;
 }
