@@ -1,6 +1,6 @@
 $(document).ready(function() {
 	
-	init();
+	retrieveCalender("this");
 	
 	$(".calendarSidebar li").prepend('<span class="arrow-u navarrows">&nbsp;</span>');
 	$(".todoSidebar li").prepend('<span class="arrow-u navarrows">&nbsp;</span>');
@@ -83,26 +83,44 @@ $(document).ready(function() {
 			showPopupDialog('calendarAddForm',t.offset().top + t.height(),t.offset().left);
 			e.stopPropagation();
 	});
+	
+	$("#nextMonth").click(function() {
+		retrieveCalender("next");
+	});
+	$("#prevMonth").click(function() {
+		retrieveCalender("previous");
+	});
+	$("#todayButton").click(function() {
+		retrieveCalender("this");
+	});
 });
 
+function retrieveCalender(monthAction){
+	if(monthAction == "this"){
+		retrieveCalenderTable((new Date()).getFullYear(), (new Date()).getMonth(), monthAction);
+	}else if(monthAction == "next"){
+		retrieveCalenderTable( $('#currYear').text(), $('#currMonth').text() ,monthAction);
+	}else if(monthAction == "previous"){
+		retrieveCalenderTable( $('#currYear').text(), $('#currMonth').text(), monthAction);
+	}
+}
 
-function init(){
-	retrieveCalenderTable(10, "this");
-};
-
-function retrieveCalenderTable(month, monthAction){
+function retrieveCalenderTable(year, month, monthAction){
 	$('#calendarTableWrapper').html("<table><tr><td style='text-align:center;'>Please wait...</td></tr></table>");
 	$.ajax({
 		url : 'calendar',
 		type : 'POST',
 		data : {
-			//'action' : 'addCalendar'
+			// 'action' : 'addCalendar'
 			'action' : 'retrieveCalenderTable',
 			'currentMonth' : month,
-			'monthAction' : monthAction
+			'monthAction' : monthAction,
+			'currentYear' : year
 		},
 		success : function(data) {
 			$('#calendarTableWrapper').html(data);
+			var calendarHeaderText = getMonthNameByNumber(parseInt($('#currMonth').text())) + $('#currYear').text();
+			$('#currentMonth').html(calendarHeaderText);
 		},
 		error : function(data) {
 			$('#calendarTableWrapper').html("<table><tr><td style='text-align:center;'>Can't load calendar</td></tr></table>");
@@ -134,3 +152,20 @@ var hidePopupDialog = function (){
 		pD.toggleClass('popupDialog',false);
     }
 };
+
+var month=new Array();
+month[0]="January";
+month[1]="February";
+month[2]="March";
+month[3]="April";
+month[4]="May";
+month[5]="June";
+month[6]="July";
+month[7]="August";
+month[8]="September";
+month[9]="October";
+month[10]="November";
+month[11]="December";
+function getMonthNameByNumber(number){
+	return month[number];
+}

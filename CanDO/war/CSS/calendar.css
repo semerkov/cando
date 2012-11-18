@@ -173,7 +173,6 @@ a:hover,a:active,a:focus {
 }
 
 .calendar #calendarTableWrapper table tr {
-	height: 20%;
 }
 
 .calendar .day {
@@ -192,11 +191,11 @@ a:hover,a:active,a:focus {
 }
 
 .calendar .day.nonactive {
-	background-color: #F5F4DE;
+	background-color: #FFF;
 }
 
 .calendar .day.active {
-	background-color: #FFF;
+	background-color: #DFE1FF;
 }
 
 .calendar .day.today {
