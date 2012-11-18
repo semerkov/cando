@@ -84,14 +84,17 @@ $(document).ready(function() {
 			e.stopPropagation();
 	});
 	
-	$("#nextMonth").click(function() {
+	$("#nextMonth").click(function(e) {
 		retrieveCalender("next");
+		e.stopPropagation();
 	});
-	$("#prevMonth").click(function() {
+	$("#prevMonth").click(function(e) {
 		retrieveCalender("previous");
+		e.stopPropagation();
 	});
-	$("#todayButton").click(function() {
+	$("#todayButton").click(function(e) {
 		retrieveCalender("this");
+		e.stopPropagation();
 	});
 });
 
