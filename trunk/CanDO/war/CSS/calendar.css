@@ -445,3 +445,9 @@ ul.nav a:hover,ul.nav a:active,ul.nav a:focus {
 .calendar_id{
 	display:none;
 }
+
+#editSettingsCalendarForm{
+	text-align:center;
+	padding:10px;
+	
+	}
