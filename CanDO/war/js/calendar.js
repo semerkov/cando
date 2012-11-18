@@ -89,7 +89,7 @@ $(document).ready(
 						success : function(data) {
 							retrieveEventCalendarMenu();
 							hidePopupDialog();
-							
+
 						},
 						error : function(data) {
 							alert("Error addCalendar")
@@ -102,6 +102,21 @@ $(document).ready(
 
 function showOnlyThisCalendar() {
 	alert(calendar_id.text());
+}
+
+function removeCalendarConfirm() {
+	$("#confirm").dialog({
+		position : [ "center", "center" ],
+		title: "Remove this calendar",
+		buttons : {
+			"Yes" : function() {
+				alert("remove"+calendar_id.text());
+			},
+			"No" : function() {
+				$(this).dialog("close");
+			}
+		}
+	});
 }
 
 function retrieveCalender(monthAction) {
