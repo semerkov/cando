@@ -90,7 +90,7 @@ function viewAddCalendarForm(){
 
 
 function init(){
-	retrieveCalenderTable("Novemer", "this");
+	retrieveCalenderTable(10, "this");
 };
 
 function retrieveCalenderTable(month, monthAction){

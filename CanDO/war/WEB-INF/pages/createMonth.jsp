@@ -3,6 +3,73 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
+<%@ page import="java.util.Calendar"%>
+<%
+	final Calendar calendar = (Calendar) request
+			.getAttribute("calendar");
+	calendar.set(Calendar.DATE, 1);
+	int firstDayOfTheWeek = calendar.get(Calendar.DAY_OF_WEEK);
+	int offset = 0;
+	if (firstDayOfTheWeek == Calendar.SUNDAY) {
+		offset = 0;
+	} else if (firstDayOfTheWeek == Calendar.MONDAY) {
+		offset = 1;
+	} else if (firstDayOfTheWeek == Calendar.TUESDAY) {
+		offset = 2;
+	} else if (firstDayOfTheWeek == Calendar.WEDNESDAY) {
+		offset = 3;
+	} else if (firstDayOfTheWeek == Calendar.THURSDAY) {
+		offset = 4;
+	} else if (firstDayOfTheWeek == Calendar.FRIDAY) {
+		offset = 5;
+	} else if (firstDayOfTheWeek == Calendar.SATURDAY) {
+		offset = 6;
+	}
+	
+	int dayOfMonth=1;
+%>
+
+<table width="100%" border="0" cellspacing="0" cellpadding="0"
+	rules="all">
+	<tr>
+		<c:forEach var="i" begin="0" end="${offset}" step="1" varStatus ="status">
+			<td class="day nonactive"></td>
+		</c:forEach>
+		<c:forEach var="i" begin="${dayOfMonth}" end="${6-offset}" step="1" varStatus ="status">
+			<td class="day active">${i}</td>
+		</c:forEach>
+	</tr>
+	<tr>
+		<c:forEach var="i" begin="1" end="${dayOfMonth+7}" step="1" varStatus ="status">
+			<td class="day active">${i}</td>
+		</c:forEach>
+	</tr>
+	<tr>
+		<c:forEach var="i" begin="1" end="${dayOfMonth+7}" step="1" varStatus ="status">
+			<td class="day active">${i}</td>
+		</c:forEach>
+	</tr>
+	<tr>
+		<c:forEach var="i" begin="1" end="${dayOfMonth+7}" step="1" varStatus ="status">
+			<td class="day active">${i}</td>
+		</c:forEach>
+	</tr>
+	<tr>
+		<td class="day active">25</td>
+		<td class="day active">26</td>
+		<td class="day active">27</td>
+		<td class="day active">28</td>
+		<td class="day active">29</td>
+		<td class="day active">30</td>
+		<td class="day nonactive">1
+			<ul>
+				<li>First Winter day</li>
+			</ul>
+		</td>
+	</tr>
+</table>
+
+<!-- 
 <table width="100%" border="0" cellspacing="0" cellpadding="0"
 	rules="all">
 	<tr>
@@ -74,3 +141,4 @@
 		</td>
 	</tr>
 </table>
+ -->
