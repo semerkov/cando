@@ -50,14 +50,17 @@
 						<div class="#myCalendar">
 							<div class="item active" id="myCalendarItem">
 								<div class="square active"></div>
+                                <div class="calendarEdit">▼</div>
 								Sergey Lihoman
 							</div>
 							<div class="item active" id="myTodoItem">
 								<div class="square active"></div>
+                                <div class="calendarEdit">▼</div>
 								Tasks
 							</div>
 							<div class="item">
 								<div class="square"></div>
+                                <div class="calendarEdit">▼</div>
 								Sprints
 							</div>
 						</div>
@@ -141,7 +144,6 @@
 		</div>
 	</div>
 
-
 	<!-- events bar -->
 	<div id="warning_events_bar">
 		<div id="warning_events_header">
@@ -158,23 +160,25 @@
 	<!-- add new calendar -->
 	<div id="calendarAddForm">
     	<div style="text-align:center">Add new calendar</div>
-        <div class="editForm">
+        <div class="addForm">
             <form action="/calendar" method="post" name="addCalendar">
-                <input type="text" name="calendarName" id="calendarName" value="dsf">
-                <input type="submit" name="addCalendarSubmit" id="addCalendarSubmit">
+                <input type="text" name="calendarName" id="calendarName"/>
+                <input type="submit" name="addCalendarSubmit" id="addCalendarSubmit"/>
             </form>
-        <div>
-	</div>
- </div>
-</div>
+        </div>
+    </div>
+    
     <!-- edit calendar -->
 	<div id="calendarEditForm">
-    	<div class="editForm">
-            <form action="/calendar" method="post" name="editCalendar">
-                <input type="text" name="calendarNewName" id="calendarNewName"> 
-                <input type="submit" name="editCalendarSubmit" id="editCalendarSubmit" title="Confirm">
-            </form>
-       	<div>
+    	<div class="editForm" >
+        	Show calendar
+       	</div>
+        <div class="editForm" >
+			Edit settings
+       	</div>
+        <div class="editForm" >
+			Remove calendar
+       	</div>
 	</div>
 </body>
 </html>

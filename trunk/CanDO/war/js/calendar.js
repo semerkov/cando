@@ -84,6 +84,14 @@ $(document).ready(function() {
 			e.stopPropagation();
 	});
 	
+	
+	
+	$('.calendarEdit').click( function(e){
+			var t = $(this);
+			showPopupDialog('calendarEditForm',t.offset().top + t.height(),t.offset().left);
+			e.stopPropagation();
+	});
+	
 	$("#nextMonth").click(function(e) {
 		retrieveCalender("next");
 		e.stopPropagation();
