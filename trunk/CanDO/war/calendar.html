@@ -46,7 +46,7 @@
 						<li class="active">
 							<div class="calendarAdd">▼</div> <a href="#">My calendars</a>
 						</li>
-						<div class="#myCalendar">
+						<div class="myCalendar">
 							<div class="item active" id="myCalendarItem">
 								<div class="square active"></div>
                                 <div class="calendarEdit">▼</div>
@@ -161,11 +161,11 @@
 
 	<!-- add new calendar -->
 	<div id="calendarAddForm">
-    	<div style="text-align:center">Add new calendar</div>
+    	<div style="text-align:center; margin-top: 10px;">Add new calendar</div>
         <div class="addForm">
             <form action="/calendar" method="post" name="addCalendar">
-                <input type="text" name="calendarName" id="calendarName"/>
-                <input type="submit" name="addCalendarSubmit" id="addCalendarSubmit"/>
+                <input type="text" name="calendarName" id="calendarName" placeholder="Calendar name"/>
+                <input type="button" name="addCalendarButton" id="addCalendarSubmit" value="Create"/>
             </form>
         </div>
     </div>

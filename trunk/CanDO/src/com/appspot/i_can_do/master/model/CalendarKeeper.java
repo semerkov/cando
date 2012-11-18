@@ -6,16 +6,20 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 
 import com.appspot.i_can_do.master.security.Permission;
 import com.google.appengine.api.datastore.Key;
 
 @Entity
+@NamedQueries({
+	@NamedQuery(name = "CalendarKeeper.getCalendarsKeysByUserKey", query = "SELECT c.eventCalendarKey FROM CalendarKeeper c WHERE c.userKey = :userKey") })
 public class CalendarKeeper {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Key key;
-	private Key ownerKey;
+	private Key userKey;
 	private Key eventCalendarKey;
 	@Enumerated(EnumType.STRING)
 	private Permission permission;
@@ -23,18 +27,18 @@ public class CalendarKeeper {
 	public CalendarKeeper() {
 	}
 
-	public CalendarKeeper(Key eventCalendarKey, Key ownerKey,
+	public CalendarKeeper(Key eventCalendarKey, Key userKey,
 			Permission permission) {
 		this.eventCalendarKey = eventCalendarKey;
-		this.ownerKey = ownerKey;
+		this.userKey = userKey;
 		this.permission = permission;
 	}
 
 	@Override
 	public String toString() {
 		return String
-				.format("CalendarKeeper [key=%s, ownerKey=%s, eventCalendarKey=%s, permission=%s]",
-						key, ownerKey, eventCalendarKey, permission);
+				.format("CalendarKeeper [key=%s, userKey=%s, eventCalendarKey=%s, permission=%s]",
+						key, userKey, eventCalendarKey, permission);
 	}
 
 	public Permission getPermission() {
@@ -53,12 +57,12 @@ public class CalendarKeeper {
 		this.key = key;
 	}
 
-	public Key getOwnerKey() {
-		return ownerKey;
+	public Key getUserKey() {
+		return userKey;
 	}
 
-	public void setOwnerKey(Key ownerKey) {
-		this.ownerKey = ownerKey;
+	public void setUserKey(Key userKey) {
+		this.userKey = userKey;
 	}
 	public Key getEventCalendarKey() {
 		return eventCalendarKey;
