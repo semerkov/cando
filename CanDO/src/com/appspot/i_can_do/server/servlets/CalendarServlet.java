@@ -26,7 +26,7 @@ public class CalendarServlet extends HttpServlet {
 			.getName());
 	private static final List<String> SECURITY_ACTIONS = Arrays
 			.asList(new String[] { "retrieveCalenderTable", "addCalendar",
-					"retrieveEventCalendarMenu" });
+					"retrieveEventCalendarMenu", "removeCalendar" });
 	private CanDOService canDOService;
 
 	private User testUser;// TODO remove test user when complete registration
@@ -86,6 +86,8 @@ public class CalendarServlet extends HttpServlet {
 			retrieveCalenderTable(request, response);
 		} else if (action.equals("addCalendar")) {
 			addCalendar(request, response);
+		} else if (action.equals("removeCalendar")) {
+			removeCalendar(request, response);
 		}
 	}
 
@@ -152,7 +154,6 @@ public class CalendarServlet extends HttpServlet {
 			canDOService.addCalendar(calendar, testUser.getKey());
 			fillEventCalendarMenu(request, response);
 		}
-		return;
 	}
 
 	public void fillEventCalendarMenu(HttpServletRequest request,
@@ -162,7 +163,15 @@ public class CalendarServlet extends HttpServlet {
 		request.getRequestDispatcher(
 				"/WEB-INF/pages/createEventCalendarMenu.jsp").forward(request,
 				response);
-		return;
+	}
+
+	public void removeCalendar(HttpServletRequest request,
+			HttpServletResponse response) {
+		String calendarKey = request.getParameter("calendarKey");
+		if (!"".equals(calendarKey)) {
+			canDOService.removeCalendarByKey(calendarKey);
+		}
+
 	}
 
 	public void initTestCalendars() {

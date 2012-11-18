@@ -14,6 +14,7 @@ import com.appspot.i_can_do.master.model.EventCalendar;
 import com.appspot.i_can_do.master.security.Permission;
 import com.appspot.i_can_do.master.security.User;
 import com.google.appengine.api.datastore.Key;
+import com.google.appengine.api.datastore.KeyFactory;
 
 public class CanDOService {
 	private static final EntityManager em = EMF.get().createEntityManager();
@@ -34,19 +35,19 @@ public class CanDOService {
 			throw new NullPointerException("User cannot be null!");
 		if (user.getKey() == null)
 			throw new IllegalArgumentException("Not persiste user!");
-		
+
 		Query query = em
 				.createNamedQuery("CalendarKeeper.getCalendarsKeysByUserKey");
 
 		query.setParameter("userKey", user.getKey());
-		
+
 		List<Key> calendarsKeys = (List<Key>) query.getResultList();
 		List<EventCalendar> calendars = new ArrayList<EventCalendar>();
-		for(Key key : calendarsKeys){
+		for (Key key : calendarsKeys) {
 			Query calendarQuery = em
 					.createNamedQuery("EventCalendar.getCalendarsByKey");
 			calendarQuery.setParameter("key", key);
-			EventCalendar c = (EventCalendar)calendarQuery.getSingleResult();
+			EventCalendar c = (EventCalendar) calendarQuery.getSingleResult();
 			calendars.add(c);
 		}
 		return calendars;
@@ -126,6 +127,42 @@ public class CanDOService {
 		}
 	}
 
+	public void removeCalendarByKey(String calendarKey) {
+		Key key = KeyFactory.stringToKey(calendarKey);
+		removeCalendarKeeper(key);
+		EntityTransaction txn = em.getTransaction();		
+		txn.begin();
+		try {
+			EventCalendar cal = em.find(EventCalendar.class, key);
+			em.remove(cal);
+			em.flush();
+			txn.commit();
+			log.warning("Calendar removed with key: " + key);
+		} finally {
+			if (txn.isActive()) {
+				txn.rollback();
+			}
+		}
+	}
+
+	private void removeCalendarKeeper(Key calendarKey){
+		EntityTransaction txn = em.getTransaction();
+		txn.begin();
+		try {
+			Query query = em
+					.createNamedQuery("CalendarKeeper.getCalendarKeeperByCalendarKey");
+			query.setParameter("eventCalendarKey", calendarKey);
+			CalendarKeeper c =(CalendarKeeper) query.getSingleResult();
+			em.remove(c);
+			em.flush();
+			txn.commit();
+			log.warning("CalendarKeeper removed with key: " + calendarKey);
+		} finally {
+			if (txn.isActive()) {
+				txn.rollback();
+			}
+		}
+	}
 	private void addEvent(Event event) {
 		EntityTransaction txn = em.getTransaction();
 		txn.begin();

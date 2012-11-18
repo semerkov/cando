@@ -110,7 +110,24 @@ function removeCalendarConfirm() {
 		title: "Remove this calendar",
 		buttons : {
 			"Yes" : function() {
-				alert("remove"+calendar_id.text());
+				$.ajax({
+					url : 'calendar',
+					type : 'POST',
+					async : 'false',
+					data : {
+						'action' : 'removeCalendar',
+						'calendarKey' : calendar_id.text()
+					},
+					success : function(data) {
+						retrieveEventCalendarMenu();
+						hidePopupDialog();
+
+					},
+					error : function(data) {
+						alert("Error remove calendar")
+					}
+				});
+				$(this).dialog("close");
 			},
 			"No" : function() {
 				$(this).dialog("close");
