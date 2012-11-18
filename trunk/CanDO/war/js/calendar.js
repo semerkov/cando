@@ -90,8 +90,8 @@ function retrieveCalenderTable(month, monthAction){
 		url : 'calendar',
 		type : 'POST',
 		data : {
-			//'action' : 'retrieveCalenderTable',
-			'action' : 'addCalendar',
+			//'action' : 'addCalendar'
+			'action' : 'retrieveCalenderTable',
 			'currentMonth' : month,
 			'monthAction' : monthAction
 		},
