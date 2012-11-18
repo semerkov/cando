@@ -1,4 +1,4 @@
-var calendar_id='';
+var calendar_id="";
 
 
 $(document).ready(function() {
@@ -89,6 +89,7 @@ $(document).ready(function() {
 	
 	$('.calendarEdit').click( function(e){
 			var t = $(this);
+			calendar_id=t.next('.calendar_id').first();
 			showPopupDialog('calendarEditForm',t.offset().top + t.height(),t.offset().left);
 			e.stopPropagation();
 	});
@@ -106,6 +107,10 @@ $(document).ready(function() {
 		e.stopPropagation();
 	});
 });
+
+function showOnlyThisCalendar(){
+	alert(calendar_id.text());
+}
 
 function retrieveCalender(monthAction){
 	if(monthAction == "this"){
