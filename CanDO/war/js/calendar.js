@@ -83,7 +83,7 @@ $(document).ready(function() {
 
 function viewAddCalendarForm(){
 	var addform = $('#calendarAddForm');
-	showPopupDialog('calendarAddForm',100,200);
+	showPopupDialog('calendarAddForm',200,200);
 	/*$('#calendarAddForm').css('display', 'none');*/
 }
 
@@ -115,20 +115,20 @@ function retrieveCalenderTable(month, monthAction){
 	$("body").css("cursor", "auto");
 };
 
-var showPopupDialog = function (dialogId, height, width) {
+var showPopupDialog = function (dialogId, topPosition, leftPosition) {
     var maskHeight = $(document).height();
     var maskWidth = $(window).width();
  
     $('#popupMask').css({'width':maskWidth,'height':maskHeight});
-    $('#popupMask').fadeIn(300);    
-    $('#popupMask').fadeTo("slow",0.2);     
+    $('#popupMask').css('display',  'block');  
+        
     
         
-    $("#" + dialogId).css('top',  height);
-    $("#" + dialogId).css('left', width);
+    $("#" + dialogId).css('top',  topPosition);
+    $("#" + dialogId).css('left', leftPosition);
     $("#" + dialogId).toggleClass('popupDialog',true);
 
-    $("#" + dialogId).fadeIn(300);
+    $("#" + dialogId).fadeIn(200);
 };
 
 var hidePopupDialog = function (){
@@ -136,7 +136,7 @@ var hidePopupDialog = function (){
 	$('#popupMask').fadeTo("slow",0.2);
 	var pD = $(".popupDialog");
     if(pD != null) {
-    	pD.fadeOut(700);
+    	pD.fadeOut(200);
 		pD.toggleClass('popupDialog',false);
     }
 };
