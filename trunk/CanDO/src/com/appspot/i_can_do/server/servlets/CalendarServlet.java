@@ -97,39 +97,34 @@ public class CalendarServlet extends HttpServlet {
 
 	private void retrieveCalenderTable(HttpServletRequest request,
 			HttpServletResponse response) throws IOException, ServletException {
-		/*
-		 * Long storeId = Long.parseLong(request.getParameter("storeId"));
-		 * 
-		 * List<Object[]> listAlog = sk.getAudioLog(storeId, 100L);
-		 * request.setAttribute("EMPTY_MESSAGE", "Audio log is empty");
-		 * request.setAttribute("audioItems", listAlog);
-		 * request.setAttribute("storeId", storeId);
-		 * 
-		 * request.getRequestDispatcher("/WEB-INF/pages/audioLogsFragment.jsp").
-		 * forward(request, response);
-		 */
-
 		Integer month = Integer.parseInt(request.getParameter("currentMonth"));
 		String monthAction = request.getParameter("monthAction");
 		Calendar calendar = Calendar.getInstance();
 		if (SECURITY_MONTH_ACTIONS.contains(monthAction)
 				&& SECURITY_MONTH.contains(month)) {
-			if (month.equals(Calendar.JANUARY)
-					&& monthAction.equals("previous")) {
-				int year = calendar.get(Calendar.YEAR);
-				calendar.set(Calendar.YEAR, year - 1);
-				calendar.set(Calendar.MONTH, Calendar.DECEMBER);
-
-			} else if (month.equals(Calendar.DECEMBER)
-					&& monthAction.equals("next")) {
+			if (month.equals(Calendar.DECEMBER) && monthAction.equals("next")) {
+				// next year case
 				int year = calendar.get(Calendar.YEAR);
 				calendar.set(Calendar.YEAR, year + 1);
 				calendar.set(Calendar.MONTH, Calendar.JANUARY);
 
+			} else if (month.equals(Calendar.JANUARY)
+					&& monthAction.equals("previous")) {
+				// previous year case
+				int year = calendar.get(Calendar.YEAR);
+				calendar.set(Calendar.YEAR, year - 1);
+				calendar.set(Calendar.MONTH, Calendar.DECEMBER);
+
 			} else {
 				// common case
-				calendar.set(Calendar.MONTH, calendar.get(Calendar.MONTH)+1);
+				int offset = 0;// if "this" case
+				if(monthAction.equals("next")){
+					offset++;
+				}else if(monthAction.equals("previous")){
+					offset--;				}
+				calendar.set(Calendar.MONTH, calendar.get(Calendar.MONTH) + offset);
 			}
+			request.setAttribute("calendar", calendar);
 			request.getRequestDispatcher("/WEB-INF/pages/createMonth.jsp")
 					.forward(request, response);
 		}
