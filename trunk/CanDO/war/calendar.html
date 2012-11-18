@@ -50,7 +50,7 @@
 					<ul class="nav">
 						<li class="active">
 							<!-- значёк добавления календаря -->
-							<div class="calendarAdd" onClick="viewAddCalendarForm();">▼</div> <a href="#">My calendars</a>
+							<div class="calendarAdd">▼</div> <a href="#">My calendars</a>
 						</li>
 						<div class="#myCalendar">
 							<div class="item active" id="myCalendarItem">
@@ -164,10 +164,18 @@
 	<!-- add new calendar -->
 	<div id="calendarAddForm">
 		<form action="/calendar" method="post">
-        	<input type="text" name="calendarName" id="calendarName" value="Имя календаря" onFocus="" > 
+        	<input type="text" name="calendarName" id="calendarName"> 
             <input type="submit" name="addCalendarSubmit" id="addCalendarSubmit">
         </form>
 	</div>
-
+    
+    <!-- edit calendar -->
+	<div class="calendarEditForm">
+		<form action="/calendar" method="post">
+        	<input type="text" name="calendarName" id="calendarName"> 
+            <input type="submit" name="addCalendarSubmit" id="addCalendarSubmit">
+        </form>
+        <input type="submit" name="addCalendarSubmit" id="addCalendarSubmit">
+	</div>
 </body>
 </html>

@@ -78,15 +78,12 @@ $(document).ready(function() {
 		$("#myTodoItem").click();
 	});
 	
+	$('.calendarAdd').click( function(e){
+			var t = $(this);
+			showPopupDialog('calendarAddForm',t.offset().top + t.height(),t.offset().left);
+			e.stopPropagation();
+	});
 });
-
-
-function viewAddCalendarForm(){
-	var addform = $('#calendarAddForm');
-	showPopupDialog('calendarAddForm',200,200);
-	/*$('#calendarAddForm').css('display', 'none');*/
-}
-
 
 
 function init(){
@@ -120,20 +117,17 @@ var showPopupDialog = function (dialogId, topPosition, leftPosition) {
     var maskWidth = $(window).width();
  
     $('#popupMask').css({'width':maskWidth,'height':maskHeight});
-    $('#popupMask').css('display',  'block');  
-        
-    
+    $('#popupMask').css('display',  'block'); 
         
     $("#" + dialogId).css('top',  topPosition);
     $("#" + dialogId).css('left', leftPosition);
     $("#" + dialogId).toggleClass('popupDialog',true);
-
+    
     $("#" + dialogId).fadeIn(200);
 };
 
 var hidePopupDialog = function (){
-	$('#popupMask').fadeOut(700);    
-	$('#popupMask').fadeTo("slow",0.2);
+	$('#popupMask').css('display',  'none');   
 	var pD = $(".popupDialog");
     if(pD != null) {
     	pD.fadeOut(200);
