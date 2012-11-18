@@ -25,49 +25,52 @@
 	} else if (firstDayOfTheWeek == Calendar.SATURDAY) {
 		offset = 6;
 	}
-	
-	int dayOfMonth=1;
+
+	int dayOfMonth = 1;
+	int lastDayOfMonth = calendar
+			.getActualMaximum(Calendar.DAY_OF_MONTH);
+	int endOffsetVariable = 0;
+	int weeks = offset + lastDayOfMonth <= 35 ? 5 : 6;
 %>
 
 <table width="100%" border="0" cellspacing="0" cellpadding="0"
 	rules="all">
 	<tr>
-		<c:forEach var="i" begin="0" end="${offset}" step="1" varStatus ="status">
+		<c:forEach var="i" begin="1" end="<%=offset%>" step="1"
+			varStatus="status">
 			<td class="day nonactive"></td>
 		</c:forEach>
-		<c:forEach var="i" begin="${dayOfMonth}" end="${6-offset}" step="1" varStatus ="status">
-			<td class="day active">${i}</td>
+		<c:forEach var="i" begin="<%=dayOfMonth%>" end="<%=7 - offset%>"
+			step="1" varStatus="status">
+			<td class="day active"><%=dayOfMonth++%></td>
 		</c:forEach>
 	</tr>
+
+	<c:forEach var="i" begin="1" end="<%=weeks - 2%>" step="1"
+		varStatus="status">
+		<tr>
+			<c:forEach var="i" begin="<%=dayOfMonth%>" end="<%=dayOfMonth + 6%>"
+				step="1" varStatus="status">
+				<td class="day active"><%=dayOfMonth++%></td>
+			</c:forEach>
+		</tr>
+	</c:forEach>
 	<tr>
-		<c:forEach var="i" begin="1" end="${dayOfMonth+7}" step="1" varStatus ="status">
-			<td class="day active">${i}</td>
+		<c:forEach var="i" begin="<%=dayOfMonth%>" end="<%=lastDayOfMonth%>"
+			step="1" varStatus="status">
+			<td class="day active"><%=dayOfMonth++%></td>
+			<%
+				endOffsetVariable++;
+			%>
 		</c:forEach>
-	</tr>
-	<tr>
-		<c:forEach var="i" begin="1" end="${dayOfMonth+7}" step="1" varStatus ="status">
-			<td class="day active">${i}</td>
+		<c:forEach var="i" begin="<%=endOffsetVariable%>" end="6" step="1"
+			varStatus="status">
+			<td class="day nonactive"></td>
 		</c:forEach>
-	</tr>
-	<tr>
-		<c:forEach var="i" begin="1" end="${dayOfMonth+7}" step="1" varStatus ="status">
-			<td class="day active">${i}</td>
-		</c:forEach>
-	</tr>
-	<tr>
-		<td class="day active">25</td>
-		<td class="day active">26</td>
-		<td class="day active">27</td>
-		<td class="day active">28</td>
-		<td class="day active">29</td>
-		<td class="day active">30</td>
-		<td class="day nonactive">1
-			<ul>
-				<li>First Winter day</li>
-			</ul>
-		</td>
 	</tr>
 </table>
+<div id="currMonth" style="display:none;"> <%= calendar.get(Calendar.MONTH) %></div>
+<div id="currYear" style="display:none;"> <%= calendar.get(Calendar.YEAR) %></div>
 
 <!-- 
 <table width="100%" border="0" cellspacing="0" cellpadding="0"
