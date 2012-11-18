@@ -379,6 +379,7 @@ ul.nav a:hover,ul.nav a:active,ul.nav a:focus {
 	width:200px;
 	top:100px;
 	left:100px;
+	display:none;
 }
 .popupMask {
 	opacity:0;
