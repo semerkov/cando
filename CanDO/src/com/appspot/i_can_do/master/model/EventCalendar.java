@@ -16,7 +16,7 @@ import com.google.appengine.api.datastore.Key;
 
 @Entity
 @NamedQueries({
-	@NamedQuery(name = "EventCalendar.getCalendarsByUser", query = "SELECT c FROM EventCalendar c WHERE c.owner:=user") })
+	@NamedQuery(name = "EventCalendar.getCalendarsByKey", query = "SELECT c FROM EventCalendar c WHERE c.key = :key") })
 public class EventCalendar {
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

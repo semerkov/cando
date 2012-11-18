@@ -2,8 +2,10 @@ var calendar_id="";
 
 
 $(document).ready(function() {
-	
+	retrieveEventCalendarMenu();
 	retrieveCalender("this");
+	
+	calendarMenuClicks();
 	
 	$(".calendarSidebar li").prepend('<span class="arrow-u navarrows">&nbsp;</span>');
 	$(".todoSidebar li").prepend('<span class="arrow-u navarrows">&nbsp;</span>');
@@ -50,48 +52,8 @@ $(document).ready(function() {
 		}
 	});
 	
-	$(".item").click(function() {
-		var square = $(this).children('div').first();
-		if ($(this).hasClass('active')) {
-			$(this).toggleClass('active', false);
-			square.toggleClass('active', false);
-		} else {
-			$(this).toggleClass('active', true);
-			square.toggleClass('active', true);
-		}
-	});
-	
-	$("#myTodoItem").click(function() {
-		var calendar = $('.calendar');
-		if ($(this).hasClass('active')) {
-			$(".todoWrapper").css('display',"block");
-			if($('.todoSidebar').css('display') == 'block'){
-				calendar.css('width', '68%');
-			}else{
-				calendar.css('width', '82%');
-			}
-			
-		} else {
-			$(".todoWrapper").css('display',"none");
-			calendar.css('width', '83%');
-		}
-	});
-	
 	$('.todoWrapper .todoSidebar .close').click(function() {
 		$("#myTodoItem").click();
-	});
-	
-	$('.calendarAdd').click( function(e){
-			var t = $(this);
-			showPopupDialog('calendarAddForm',t.offset().top + t.height(),t.offset().left);
-			e.stopPropagation();
-	});
-	
-	$('.calendarEdit').click( function(e){
-			var t = $(this);
-			calendar_id=t.next('.calendar_id').first();
-			showPopupDialog('calendarEditForm',t.offset().top + t.height(),t.offset().left);
-			e.stopPropagation();
 	});
 	
 	$("#nextMonth").click(function(e) {
@@ -185,4 +147,64 @@ month[10]="November";
 month[11]="December";
 function getMonthNameByNumber(number){
 	return month[number];
+}
+function retrieveEventCalendarMenu(){
+	$.ajax({
+		url : 'calendar',
+		type : 'POST',
+		data : {
+			'action' : 'retrieveEventCalendarMenu'
+		},
+		success : function(data) {
+			$('.myCalendar').html(data);
+			calendarMenuClicks();
+		},
+		error : function(data) {
+			alert("Error retrieve EventCalendarMenu")
+		}
+	});
+	$("body").css("cursor", "auto");
+};
+
+function calendarMenuClicks(){
+	$(".item").click(function() {
+		var square = $(this).children('div').first();
+		if ($(this).hasClass('active')) {
+			$(this).toggleClass('active', false);
+			square.toggleClass('active', false);
+		} else {
+			$(this).toggleClass('active', true);
+			square.toggleClass('active', true);
+		}
+	});
+	
+	$("#myTodoItem").click(function() {
+		var calendar = $('.calendar');
+		if ($(this).hasClass('active')) {
+			$(".todoWrapper").css('display',"block");
+			if($('.todoSidebar').css('display') == 'block'){
+				calendar.css('width', '68%');
+			}else{
+				calendar.css('width', '82%');
+			}
+			
+		} else {
+			$(".todoWrapper").css('display',"none");
+			calendar.css('width', '83%');
+		}
+	});
+
+	$('.calendarAdd').click( function(e){
+			var t = $(this);
+			showPopupDialog('calendarAddForm',t.offset().top + t.height(),t.offset().left);
+			e.stopPropagation();
+	});
+	
+	$('.calendarEdit').click( function(e){
+			var t = $(this);
+			calendar_id=t.next('.calendar_id').first();
+			showPopupDialog('calendarEditForm',t.offset().top + t.height(),t.offset().left);
+			e.stopPropagation();
+	});
+	
 }

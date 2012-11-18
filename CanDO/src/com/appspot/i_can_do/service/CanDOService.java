@@ -30,12 +30,24 @@ public class CanDOService {
 
 	@SuppressWarnings("unchecked")
 	public List<EventCalendar> getCalendars(User user) {
-		Query query = em.createNamedQuery("EventCalendar.getCalendarsByUser");
-		List<EventCalendar> calendars = new ArrayList<EventCalendar>(5);
-		query.setParameter("user", user);
-		try {
-			calendars = (List<EventCalendar>) query.getResultList();
-		} catch (Exception ex) {
+		if (user == null)
+			throw new NullPointerException("User cannot be null!");
+		if (user.getKey() == null)
+			throw new IllegalArgumentException("Not persiste user!");
+		
+		Query query = em
+				.createNamedQuery("CalendarKeeper.getCalendarsKeysByUserKey");
+
+		query.setParameter("userKey", user.getKey());
+		
+		List<Key> calendarsKeys = (List<Key>) query.getResultList();
+		List<EventCalendar> calendars = new ArrayList<EventCalendar>();
+		for(Key key : calendarsKeys){
+			Query calendarQuery = em
+					.createNamedQuery("EventCalendar.getCalendarsByKey");
+			calendarQuery.setParameter("key", key);
+			EventCalendar c = (EventCalendar)calendarQuery.getSingleResult();
+			calendars.add(c);
 		}
 		return calendars;
 	}

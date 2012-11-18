@@ -25,7 +25,8 @@ public class CalendarServlet extends HttpServlet {
 	private static final Logger log = Logger.getLogger(RegisterServlet.class
 			.getName());
 	private static final List<String> SECURITY_ACTIONS = Arrays
-			.asList(new String[] { "retrieveCalenderTable", "addCalendar" });
+			.asList(new String[] { "retrieveCalenderTable", "addCalendar",
+					"retrieveEventCalendarMenu" });
 	private CanDOService canDOService;
 
 	private User testUser;// TODO remove test user when complete registration
@@ -79,7 +80,9 @@ public class CalendarServlet extends HttpServlet {
 			return;
 		}
 
-		if (action.equals("retrieveCalenderTable")) {
+		if (action.equals("retrieveEventCalendarMenu")) {
+			fillEventCalendarMenu(request, response);
+		} else if (action.equals("retrieveCalenderTable")) {
 			retrieveCalenderTable(request, response);
 		} else if (action.equals("addCalendar")) {
 			addCalendar(request, response);
@@ -97,8 +100,10 @@ public class CalendarServlet extends HttpServlet {
 
 	private void retrieveCalenderTable(HttpServletRequest request,
 			HttpServletResponse response) throws IOException, ServletException {
-		Integer month = Integer.parseInt(request.getParameter("currentMonth").trim());
-		Integer year = Integer.parseInt(request.getParameter("currentYear").trim());
+		Integer month = Integer.parseInt(request.getParameter("currentMonth")
+				.trim());
+		Integer year = Integer.parseInt(request.getParameter("currentYear")
+				.trim());
 		String monthAction = request.getParameter("monthAction");
 		Calendar calendar = Calendar.getInstance();
 		calendar.setFirstDayOfWeek(0);
@@ -119,10 +124,11 @@ public class CalendarServlet extends HttpServlet {
 				// common case
 				calendar.set(Calendar.YEAR, year);
 				int offset = 0;// if "this" case
-				if(monthAction.equals("next")){
+				if (monthAction.equals("next")) {
 					offset++;
-				}else if(monthAction.equals("previous")){
-					offset--;				}
+				} else if (monthAction.equals("previous")) {
+					offset--;
+				}
 				calendar.set(Calendar.MONTH, month + offset);
 			}
 			request.setAttribute("calendar", calendar);
@@ -133,20 +139,53 @@ public class CalendarServlet extends HttpServlet {
 	}
 
 	public void addCalendar(HttpServletRequest request,
-			HttpServletResponse response) {
+			HttpServletResponse response) throws ServletException, IOException {
+		String name = request.getParameter("calendarName");
+		String color = "#EAEAEA";
+		//String color = request.getParameter("calendarName");
+		if (!("".equals(name) && "".equals(color))) {
+			EventCalendar calendar = new EventCalendar();
+			calendar.setName(name);
+			calendar.setColor(color);
+			canDOService.addCalendar(calendar, testUser.getKey());
+			fillEventCalendarMenu(request,response);
+		}
+		return;
+	}
+
+	public void fillEventCalendarMenu(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		List<EventCalendar> calendars = canDOService.getCalendars(testUser);
+		request.setAttribute("calendars", calendars);
+		request.getRequestDispatcher(
+				"/WEB-INF/pages/createEventCalendarMenu.jsp").forward(request,
+				response);
+		return;
+	}
+
+	public void initTestCalendars() {
 		EventCalendar calendar = new EventCalendar();
-		calendar.setName("New calendar");
+		calendar.setName("Trip calendar");
 		calendar.setColor("#EAEAEA");
 		Date c1 = new Date();
 		Event event = new Event("Train from Lviv", "Meet Natik from Lviv", c1,
 				c1, c1);
-		Event event2 = new Event("A letter", "Buy a letter", c1, c1, c1);
+		Event event2 = new Event("Trip to Kiev", "New Year in Kiev!!", c1, c1,
+				c1);
 		calendar.getEvents().add(event);
 		calendar.getEvents().add(event2);
 		canDOService.addCalendar(calendar, testUser.getKey());
-		calendar.getEvents().get(0).setName("Changed");
-		calendar.setName("new name!");
-		calendar = canDOService.saveCalendar(calendar);
-		canDOService.removeCalendar(calendar);
+
+		EventCalendar calendar1 = new EventCalendar();
+		calendar1.setName("Gifts");
+		calendar1.setColor("#EAEAEA");
+		Date c2 = new Date();
+		Event event3 = new Event("Moms birthday", "Buy a gift", c2, c2, c2);
+		Event event4 = new Event("Natik birthday", "Buy a gift", c2, c2, c2);
+		calendar1.getEvents().add(event3);
+		calendar1.getEvents().add(event4);
+
+		canDOService.addCalendar(calendar1, testUser.getKey());
+		return;
 	}
 }
