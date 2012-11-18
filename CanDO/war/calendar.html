@@ -19,9 +19,9 @@
 <script type="text/javascript" src="js/calendar.js"></script>
 <script type="text/javascript" src="js/warningeventsbar.js"></script>
 <script type="text/javascript">
-$(document).ready(function() {
-	retrieveCalenderTable("November","this");
-});
+	$(document).ready(function() {
+		retrieveCalenderTable("November", "this");
+	});
 </script>
 
 
@@ -48,7 +48,10 @@ $(document).ready(function() {
 			<div class="calendarWrapper">
 				<div class="calendarSidebar">
 					<ul class="nav">
-						<li class="active"><a href="#">My calendars</a></li>
+						<li class="active">
+							<!-- значёк добавления календаря -->
+							<div class="calendarAdd" onClick="viewAddCalendarForm();">▼</div> <a href="#">My calendars</a>
+						</li>
 						<div class="#myCalendar">
 							<div class="item active" id="myCalendarItem">
 								<div class="square active"></div>
@@ -90,9 +93,9 @@ $(document).ready(function() {
 			<div class="calendar">
 				<div class="calendarHeader">
 					<input type="button" name="todayButton" id="todayButton"
-						style="float: left;" value="Today"> <input type="submit"
-						name="prevMonth" id="prevMonth" value="&lt;"> <input
-						type="button" name="nextMonth" id="nextMonth" value="&gt;">
+						style="float: left;" value="Today">
+                    <input type="submit"name="prevMonth" id="prevMonth" value="&lt;"> 
+                    <input type="button" name="nextMonth" id="nextMonth" value="&gt;">
 					<span id="currentMonth">November 2012</span>
 				</div>
 				<table id="daysNameTable" width="100%" border="0" cellspacing="0"
@@ -143,7 +146,7 @@ $(document).ready(function() {
 		</div>
 	</div>
 
-  
+
 	<!-- events bar -->
 	<div id="warning_events_bar">
 		<div id="warning_events_header">
@@ -153,6 +156,18 @@ $(document).ready(function() {
 		</div>
 		<div id="warning_events"></div>
 	</div>
+	
+
 <div id="popupMask" class="popupMask" onclick="hidePopupDialog();" ></div>
+
+
+	<!-- add new calendar -->
+	<div id="calendarAddForm">
+		<form action="">
+        	<input type="text" name="calendarName" id="calendarName" value="Имя календаря" onFocus="" > 
+            <input type="submit" name="todaySubmit" id="todayButton">
+        </form>
+	</div>
+
 </body>
 </html>

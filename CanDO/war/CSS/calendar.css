@@ -2,7 +2,8 @@
 
 html {
 	height: 100%;
-	width: 100%; max-width : 2560px;
+	width: 100%;
+	max-width: 2560px;
 	min-width: 1280px;
 	max-width: 2560px;
 }
@@ -158,11 +159,13 @@ a:hover,a:active,a:focus {
 	height: 5%;
 	table-layout: fixed;
 }
+
 .calendar #calendarTableWrapper {
 	height: 90%;
 	width: 100%;
 	table-layout: fixed;
 }
+
 .calendar #calendarTableWrapper table {
 	height: 100%;
 	width: 100%;
@@ -346,11 +349,43 @@ ul.nav a:hover,ul.nav a:active,ul.nav a:focus {
 .arrow-l {
 	background: url(../IMG/arrow_grey_left.png) no-repeat 0 center;
 }
+
+.calendarAdd:hover {
+	border: #333 solid 1px;
+	color: #333;
+	cursor: pointer;
+}
+
+.calendarAdd {
+	position:relative;
+	background-color: #CCC;
+	border: #666 solid 1px;
+	color: #666;
+	float: right;
+	top:4px;
+	right:4px;
+	text-align: center;
+	vertical-align: central;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+}
+
+#calendarAddForm {
+	z-index:300;
+	position:absolute;
+	border: #333 dotted 1px;
+	background-color:#FFF;
+	height:100px;
+	width:200px;
+	top:100px;
+	left:100px;
+}
 .popupMask {
-    background-color: #000000;
-    display: none;
-    left: 0;
-    position: absolute;
-    top: 0;
-    z-index: 100;
+	opacity:0;
+	background-color: #FFFFFF;
+	display: none;
+	left: 0;
+	position: absolute;
+	top: 0;
+	z-index: 100;
 }
