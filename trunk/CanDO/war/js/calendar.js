@@ -133,7 +133,7 @@ var showPopupDialog = function (dialogId, height, width) {
 
 var hidePopupDialog = function (){
 	$('#popupMask').fadeOut(700);    
-	$('#popupMask').fadeTo("slow",0.8);
+	$('#popupMask').fadeTo("slow",0.2);
 	var pD = $(".popupDialog");
     if(pD != null) {
     	pD.fadeOut(700);
