@@ -57,6 +57,8 @@ public class CalendarServlet extends HttpServlet {
 		} else {
 			log.warning("Test user exist");
 		}
+		
+		initTestCalendars();
 	}
 
 	protected boolean isLoginState(HttpServletRequest request) {
