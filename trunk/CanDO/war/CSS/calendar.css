@@ -108,7 +108,7 @@ a:hover,a:active,a:focus {
 }
 
 #todayButton {
-	float: right;
+	float: left;
 	margin: 0px 3px;
 	width: 10%;
 	height: 60%;
@@ -173,6 +173,7 @@ a:hover,a:active,a:focus {
 }
 
 .calendar #calendarTableWrapper table tr {
+	
 }
 
 .calendar .day {
@@ -180,6 +181,7 @@ a:hover,a:active,a:focus {
 	vertical-align: top;
 	padding: 5px;
 }
+
 .calendar ul,.calendar ol {
 	padding: 0 5px 5px 15px;
 	font: 75%/1.2 Arial;
@@ -196,11 +198,14 @@ a:hover,a:active,a:focus {
 .calendar .day.active {
 	background-color: #DFE1FF;
 }
-
 .calendar .day.today {
 	background-color: #EAEAEA;
 	border-width: 2px;
 }
+.calendar .day.selected{
+	background-color:#FFDFDF;
+}
+
 
 .todoWrapper {
 	height: 100%;
@@ -355,13 +360,13 @@ ul.nav a:hover,ul.nav a:active,ul.nav a:focus {
 }
 
 .calendarAdd {
-	position:relative;
+	position: relative;
 	background-color: #CCC;
 	border: #666 solid 1px;
 	color: #666;
 	float: right;
-	top:6px;
-	right:4px;
+	top: 6px;
+	right: 4px;
 	text-align: center;
 	padding-bottom: 0px;
 	vertical-align: central;
@@ -370,17 +375,16 @@ ul.nav a:hover,ul.nav a:active,ul.nav a:focus {
 }
 
 #calendarAddForm {
-	z-index:300;
-	position:absolute;
+	z-index: 300;
+	position: absolute;
 	border: #333 solid 1px;
-	background-color:#FFF;
-	height:100px;
-	width:200px;
-	top:100px;
-	left:100px;
-	display:none;
+	background-color: #FFF;
+	height: 100px;
+	width: 200px;
+	top: 100px;
+	left: 100px;
+	display: none;
 }
-
 
 .calendarEdit:hover {
 	border: #333 solid 1px;
@@ -389,12 +393,12 @@ ul.nav a:hover,ul.nav a:active,ul.nav a:focus {
 }
 
 .calendarEdit {
-	position:relative;
+	position: relative;
 	border: #666 solid 1px;
 	color: #666;
 	float: right;
-	top:4px;
-	right:4px;
+	top: 4px;
+	right: 4px;
 	text-align: center;
 	vertical-align: central;
 	font-family: Arial, Helvetica, sans-serif;
@@ -402,18 +406,18 @@ ul.nav a:hover,ul.nav a:active,ul.nav a:focus {
 }
 
 #calendarEditForm {
-	z-index:301;
-	position:absolute;
+	z-index: 301;
+	position: absolute;
 	border: #333 solid 1px;
-	background-color:#FFF;
-	width:230px;
-	top:100px;
-	left:100px;
-	display:none;
+	background-color: #FFF;
+	width: 230px;
+	top: 100px;
+	left: 100px;
+	display: none;
 }
 
 .popupMask {
-	opacity:0;
+	opacity: 0;
 	background-color: #FFFFFF;
 	display: none;
 	left: 0;
@@ -431,26 +435,36 @@ ul.nav a:hover,ul.nav a:active,ul.nav a:focus {
 	padding-bottom: 10px;
 	padding-left: 5px;
 }
-.editForm{
+
+.editForm {
 	padding-top: 5px;
 	padding-right: 10px;
 	padding-bottom: 5px;
-	padding-left: 25px;	
-}
-.editForm:hover{
-	cursor:pointer;
-	background-color:#D5DFE1;
+	padding-left: 25px;
 }
 
-.calendar_id{
-	display:none;
+.editForm:hover {
+	cursor: pointer;
+	background-color: #D5DFE1;
 }
 
-#editSettingsCalendarForm{
-	text-align:center;
-	padding:10px;
-	
-	}
-.event_id{
-	display:none;
+.calendar_id {
+	display: none;
+}
+
+#editSettingsCalendarForm {
+	text-align: center;
+	padding: 10px;
+}
+
+.event_id {
+	display: none;
+}
+
+#msg {
+	z-index: 1001;
+	position: absolute;
+	width: 400px;
+	background: white;
+	border: 1px solid black;
 }

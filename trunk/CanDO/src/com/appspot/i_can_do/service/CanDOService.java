@@ -45,13 +45,8 @@ public class CanDOService {
 		List<Key> calendarsKeys = (List<Key>) query.getResultList();
 		List<EventCalendar> calendars = new ArrayList<EventCalendar>();
 		for (Key key : calendarsKeys) {
-			Query calendarQuery = em
-					.createNamedQuery("EventCalendar.getCalendarByKey");
-			calendarQuery.setParameter("key", key);
-			try{
-			EventCalendar c = (EventCalendar) calendarQuery.getSingleResult();
+			EventCalendar c = em.find(EventCalendar.class, key);
 			calendars.add(c);
-			}catch(NoResultException ex){}
 		}
 		return calendars;
 	}
