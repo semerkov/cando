@@ -1,5 +1,5 @@
 var calendar_id = "";
-
+var curCalendarName="";
 function calendarTableClicks(){
 	﻿$('.day.active').click(function(e) {
 		$(this).addClass('selected');
@@ -44,19 +44,21 @@ $(document).ready(
 
 
 			$('#saveCalendarButton').click(function(e){
-				var name = $('#eventAddName').val();
-				alert(name);
+				
+				
+				var name = $('#editEventAddNameInput').val();
+				alert(curCalendarName);
 				if (name == "") {
-					$('#eventAddName').css('border-color', 'red');
+					$('#editEventAddNameInput').css('border-color', 'red');
 				} else {
-					$('#eventAddName').css('border-color', 'green');
+					$('#editEventAddNameInput').css('border-color', 'green');
 					
 					$.ajax({
 						url : 'calendar',
 						type : 'POST',
 						data : {
 							'action' : 'updateCalendar',
-							'calendarKey' : calendarKey,
+							'calendarKey' : calendar_id.text(),
 							'calendarName' : name
 						},
 						success : function(data) {
@@ -141,6 +143,7 @@ $(document).ready(
 					$.ajax({
 						url : 'calendar',
 						type : 'POST',
+						async : 'false',
 						data : {
 							'action' : 'addCalendar',
 							'calendarName' : name
@@ -164,6 +167,7 @@ $(document).ready(
 			});
 			
 		});
+
 function showEditCalendarForm(){
 		hidePopupDialog();
 		var H = $(window).height();
@@ -171,6 +175,7 @@ function showEditCalendarForm(){
 		var t = $('#editCalendarForm');
 		showPopupDialog('editCalendarForm',(H - t.height())/2, (W - t.width())/2);
 	};
+	
 function showOnlyThisCalendar() {
 	alert("Not completed yet");
 };
@@ -354,9 +359,16 @@ function calendarMenuClicks() {
 				e.stopPropagation();
 			});
 
+	
+	$('.item').mouseenter(function(){
+		$(this).find('.calendarEdit').css('display', 'block');
+	}).mouseleave(function(){
+		$(this).find('.calendarEdit').css('display', 'none');
+	});
 	$('.calendarEdit').click(
 			function(e) {
 				var t = $(this);
+				curCalendarName = t.parent().text();
 				calendar_id = t.next('.calendar_id').first();
 				showPopupDialog('calendarEditForm',
 						t.offset().top + t.height(), t.offset().left);
