@@ -23,7 +23,9 @@ function calendarTableClicks(){
 		e.stopPropagation();
 	});
 	
-
+	$("#dateStart").datetimepicker();
+	$("#dateFinish").datetimepicker();
+	
 };
 
 $(document).ready(
