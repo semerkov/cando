@@ -46,9 +46,7 @@
 						<li class="active">
 							<div class="calendarAdd">▼</div> <a href="#">My calendars</a>
 						</li>
-						<div class="myCalendar">
-							
-						</div>
+						<div class="myCalendar"></div>
 						<li class="active"><a href="#">Others calendars</a></li>
 						<div class="#othersCalendar">
 							<div class="item active">
@@ -76,9 +74,10 @@
 			<div class="calendar">
 				<div class="calendarHeader">
 					<input type="button" name="todayButton" id="todayButton"
-						style="float: left;" value="Today"/>
-                    <input type="button" name="prevMonth" id="prevMonth" value="&lt;"/> 
+						 value="Today" /> 
+					<input type="button" name="prevMonth" id="prevMonth" value="&lt;"/> 
                     <input type="button" name="nextMonth" id="nextMonth" value="&gt;"/>
+
 					<span id="currentMonth">November 2012</span>
 				</div>
 				<table id="daysNameTable" width="100%" border="0" cellspacing="0"
@@ -139,33 +138,32 @@
 		<div id="warning_events"></div>
 	</div>
 
-<div id="popupMask" class="popupMask" onclick="hidePopupDialog();" ></div>
+	<div id="popupMask" class="popupMask" onclick="hidePopupDialog();"></div>
 
 
 	<!-- add new calendar -->
 	<div id="calendarAddForm">
-    	<div style="text-align:center; margin-top: 10px;">Add new calendar</div>
-        <div class="addForm">
-            <form>
-                <input type="text" name="calendarName" id="calendarName" style="width: 95%;" placeholder="Calendar name"/>
-                <input type="button" name="addCalendarButton" id="addCalendarSubmit" value="Create"/>
-            </form>
-        </div>
-    </div>
-    
-    <!-- edit calendar -->
-	<div id="calendarEditForm">
-    	<div class="editForm" onClick="showOnlyThisCalendar();">
-        	Show only this calendar
-       	</div>
-        <div class="editForm" >
-			Edit settings
-       	</div>
-        <div class="editForm" onClick="removeCalendarConfirm();">
-			Remove calendar
-       	</div>
+		<div style="text-align: center; margin-top: 10px;">Add new
+			calendar</div>
+		<div class="addForm">
+			<form>
+				<input type="text" name="calendarName" id="calendarName"
+					style="width: 95%;" placeholder="Calendar name" /> <input
+					type="button" name="addCalendarButton" id="addCalendarSubmit"
+					value="Create" />
+			</form>
+		</div>
 	</div>
-	
+
+	<!-- edit calendar -->
+	<div id="calendarEditForm">
+		<div class="editForm" onClick="showOnlyThisCalendar();">Show
+			only this calendar</div>
+		<div class="editForm">Edit settings</div>
+		<div class="editForm" onClick="removeCalendarConfirm();">Remove
+			calendar</div>
+	</div>
+
 	<!-- edit settings of calendar -->
 	<div id="editSettingsCalendarForm">
 		<form>
@@ -176,7 +174,67 @@
 	</div>
 	
     
-    <!-- confirm form -->
     <div id="confirm"></div>
+	
+		<div id="msg">
+		<div id="bubblePromo:f" style="display: none;"></div>
+		<div class="bubblemain">
+			<div id="bubbleClose:f" class="bubbleclose" style=""></div>
+			<div class="bubblecontent" id="bubbleContent:f">
+				<div>
+					<div></div>
+					<div class="cb-root">
+						<div class="cb-switcher" id=":y.switcher">
+							<span id=":y.choice0" class="cb-switcher-selected">Event</span> |
+							<span id=":y.choice1" class="lk cb-switcher-link">Task</span>
+						</div>
+						<form autocomplete="off" id=":y.form" action="javascript:(void)">
+							<table class="cb-table" cellpadding="0" cellspacing="0">
+								<tbody>
+									<tr>
+										<th class="cb-key">When:</th>
+										<td class="cb-value">Thu, 8 November</td>
+									</tr>
+									<tr>
+										<th class="cb-key">What:</th>
+										<td class="cb-value"><div class="textbox-fill-wrapper">
+												<div class="textbox-fill-mid">
+													<input id=":y.what" type="text"
+														class="textbox-fill-input cb-event-title-input">
+												</div>
+											</div>
+											<div class="cb-example">e.g. 7 p.m. Dinner at Panchos</div></td>
+									</tr>
+									<tr>
+										<td colspan="2" class="cb-actions"><input type="hidden"
+											id=":y.calendar"><span id=":y.create-button"><div
+													class="goog-inline-block goog-imageless-button" title=""
+													role="button" style="-webkit-user-select: none;"
+													tabindex="0">
+													<div
+														class="goog-inline-block goog-imageless-button-outer-box">
+														<div
+															class="goog-inline-block goog-imageless-button-inner-box">
+															<div class="goog-imageless-button-pos">
+																<div class="goog-imageless-button-top-shadow">&nbsp;</div>
+																<div class="goog-imageless-button-content">Create
+																	event</div>
+															</div>
+														</div>
+													</div>
+												</div></span> &nbsp; <a id="editEvent">Edit
+												event <strong>>></strong>
+										</a></td>
+									</tr>
+								</tbody>
+							</table>
+						</form>
+					</div>
+				</div>
+			</div>
+			<div id="prong:f" class="bottom-prong" style="left: 182px;">
+				<div class="prong-dk"></div>
+				<div class="prong-lt"></div>
+			</div>
 </body>
 </html>

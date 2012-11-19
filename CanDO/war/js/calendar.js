@@ -1,12 +1,39 @@
 var calendar_id = "";
 
+function calendarTableClicks(){
+	﻿$('.day.active').click(function(e) {
+		$(this).addClass('selected');
+		var s = this.getBoundingClientRect();
+		showPopupDialog('msg',s.top + (Math.abs(s.top - s.bottom) / 2) - 185,  s.left + (Math.abs(s.left - s.right) / 2) - 200);
+		/*
+		if(($(this).hasClass('day active') || $(this).hasClass('day today')) && !$(this).hasClass('select')) 
+			{
+				jQuery('#msg').remove();
+				$('.select').toggleClass('select', false);
+				$(this).toggleClass('select', true);
+				$(this).append('');
+			}*/
+		e.stopPropagation();
+	});
+
+	$('.bubbleclose').click(function(e) {
+		alert("close click");
+		$('#msg').remove();
+		// $('.select').toggleClass('select', false);
+		e.stopPropagation();
+	});
+	
+
+};
+
 $(document).ready(
 		function() {
 			retrieveEventCalendarMenu();
 			retrieveCalender("this");
 
 			calendarMenuClicks();
-
+			calendarTableClicks();
+			
 			$(".calendarSidebar li").prepend(
 					'<span class="arrow-u navarrows">&nbsp;</span>');
 			$(".todoSidebar li").prepend(
@@ -97,11 +124,17 @@ $(document).ready(
 					});
 				}
 				e.stopPropagation();
+			});	
+			
+			
+			$('#editEvent').click(function(e) {
+				alert("edit event");
 			});
+			
 		});
 
 function showOnlyThisCalendar() {
-	alert(calendar_id.text());
+	alert("Not completed yet");
 }
 
 function removeCalendarConfirm() {
@@ -171,6 +204,8 @@ function retrieveCalenderTable(year, month, monthAction) {
 							'#currMonth').text()))
 							+ $('#currYear').text();
 					$('#currentMonth').html(calendarHeaderText);
+					
+					calendarTableClicks();
 				},
 				error : function(data) {
 					$('#calendarTableWrapper')
@@ -206,6 +241,8 @@ var hidePopupDialog = function() {
 		pD.fadeOut(200);
 		pD.toggleClass('popupDialog', false);
 	}
+	
+	$('.day.selected').removeClass('selected');//remove selected after msg
 };
 
 var month = new Array();
@@ -253,7 +290,7 @@ function calendarMenuClicks() {
 			square.toggleClass('active', true);
 		}
 	});
-
+	
 	$("#myTodoItem").click(function() {
 		var calendar = $('.calendar');
 		if ($(this).hasClass('active')) {
