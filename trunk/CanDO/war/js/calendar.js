@@ -42,6 +42,36 @@ $(document).ready(
 			$(".todoSidebar li").prepend(
 					'<span class="arrow-u navarrows">&nbsp;</span>');
 
+
+			$('#saveCalendarButton').click(function(e){
+				var name = $('#eventAddName').val();
+				alert(name);
+				if (name == "") {
+					$('#eventAddName').css('border-color', 'red');
+				} else {
+					$('#eventAddName').css('border-color', 'green');
+					
+					$.ajax({
+						url : 'calendar',
+						type : 'POST',
+						data : {
+							'action' : 'updateCalendar',
+							'calendarKey' : calendarKey,
+							'calendarName' : name
+						},
+						success : function(data) {
+							retrieveEventCalendarMenu();
+							hidePopupDialog();
+
+						},
+						error : function(data) {
+							alert("Error updateCalendar")
+						}
+					});
+				}					
+				e.stopPropagation();
+			});
+			
 			$('.todoArrows').click(function() {
 				var calendar = $('.calendar');
 				var arrow = $('.todoArrows span');
@@ -111,7 +141,6 @@ $(document).ready(
 					$.ajax({
 						url : 'calendar',
 						type : 'POST',
-						async : 'false',
 						data : {
 							'action' : 'addCalendar',
 							'calendarName' : name
@@ -136,9 +165,11 @@ $(document).ready(
 			
 		});
 function showEditCalendarForm(){
-		var t = $(document);
-		showPopupDialog('editCalendarForm',
-				t.offset().top/2, t.offset().left/2);
+		hidePopupDialog();
+		var H = $(window).height();
+		var W = $(window).width();
+		var t = $('#editCalendarForm');
+		showPopupDialog('editCalendarForm',(H - t.height())/2, (W - t.width())/2);
 	};
 function showOnlyThisCalendar() {
 	alert("Not completed yet");
@@ -222,7 +253,7 @@ function retrieveCalenderTable(year, month, monthAction) {
 					console.log(data);
 				}
 			});
-	$("body").css("cursor", "auto");
+	$("body").css("cursor", "auto");	
 };
 
 var showPopupDialog = function(dialogId, topPosition, leftPosition) {
