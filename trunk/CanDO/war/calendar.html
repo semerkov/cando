@@ -15,6 +15,7 @@
 	type="text/css" />
 <script src="js/jquery-1.8.2.js" type="text/javascript" charset="utf-8"></script>
 <script src="js/jquery-ui-1.9.1.custom.min.js"></script>
+<script type="text/javascript" src="js/jquery-ui-timepicker-addon.js"></script>
 
 <script type="text/javascript" src="js/calendar.js"></script>
 <script type="text/javascript" src="js/warningeventsbar.js"></script>
@@ -166,10 +167,27 @@
 
 	<!-- edit settings of calendar -->
 	<div id="editSettingsCalendarForm">
-		<form>
-			<input type="text" name="calendarName" id="calendarName" placeholder="Calendar name" style="" />
-			
-	        <input type="button" name="addCalendarButton" id="addCalendarSubmit" value="Update"/>
+		<form style="">
+        <div style="text-align:center">Event edit form</div>
+            <div class="editForm">
+                  <label>Name of event:</label>
+                  <input type="text" name="calendarName" id="calendarName" placeholder="Calendar name"/><br>
+                  <label>Description:</label>
+                  <input type="text" name="calendarDesc" id="calendarDesc" placeholder="Calendar description" /><br>
+                  <label>Start time:</label>
+                  <input type="text" name="dateStart" id="dateStart"/><br>
+                  <label>Finish time:</label>
+                  <input type="text" name="dateFinish" id="dateFinish"/>
+                    <div style="text-align:center">
+                        Notification time
+                    </div>
+                    <div>
+                    <label>
+                    </label>
+                    </div>
+                    <div style="text-align:center"> <input type="button" name="addCalendarButton" id="addCalendarSubmit" 
+                     		value="Update"/></div>
+            </div>
 	    </form>
 	</div>
 	
