@@ -25,6 +25,11 @@ function getActiveCalendars()
 		
 }
 
+function getCurrentCalendarName()
+{
+	var c = $('.myCalendar .item .calendar_id');
+
+}
 
 function calendarTableClicks(){
 	﻿$('.day.active').click(function(e) {
