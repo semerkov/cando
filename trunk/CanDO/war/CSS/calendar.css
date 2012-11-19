@@ -451,3 +451,6 @@ ul.nav a:hover,ul.nav a:active,ul.nav a:focus {
 	padding:10px;
 	
 	}
+.event_id{
+	display:none;
+}

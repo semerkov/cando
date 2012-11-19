@@ -19,6 +19,7 @@ import com.appspot.i_can_do.master.security.User;
 import com.appspot.i_can_do.service.CanDOSecurityService;
 import com.appspot.i_can_do.service.CanDOService;
 import com.appspot.i_can_do.service.exceptions.LoginNameExistException;
+import com.google.appengine.api.datastore.KeyFactory;
 
 @SuppressWarnings("serial")
 public class CalendarServlet extends HttpServlet {
@@ -26,7 +27,8 @@ public class CalendarServlet extends HttpServlet {
 			.getName());
 	private static final List<String> SECURITY_ACTIONS = Arrays
 			.asList(new String[] { "retrieveCalenderTable", "addCalendar",
-					"retrieveEventCalendarMenu", "removeCalendar" });
+					"retrieveEventCalendarMenu", "removeCalendar",
+					"updateCalendar", "addEvent", "updateEvent", "removeEvent" });
 	private CanDOService canDOService;
 
 	private User testUser;// TODO remove test user when complete registration
@@ -88,6 +90,14 @@ public class CalendarServlet extends HttpServlet {
 			addCalendar(request, response);
 		} else if (action.equals("removeCalendar")) {
 			removeCalendar(request, response);
+		} else if (action.equals("updateCalendar")) {
+			updateCalendar(request, response);
+		} else if (action.equals("addEvent")) {
+			addEvent(request, response);
+		} else if (action.equals("updateEvent")) {
+			updateEvent(request, response);
+		} else if (action.equals("removeEvent")) {
+			removeEvent(request, response);
 		}
 	}
 
@@ -147,7 +157,7 @@ public class CalendarServlet extends HttpServlet {
 		String name = request.getParameter("calendarName");
 		String color = "#EAEAEA";
 		// String color = request.getParameter("calendarName");
-		if (!("".equals(name) && "".equals(color))) {
+		if (name != null && color != null) {
 			EventCalendar calendar = new EventCalendar();
 			calendar.setName(name);
 			calendar.setColor(color);
@@ -172,6 +182,60 @@ public class CalendarServlet extends HttpServlet {
 			canDOService.removeCalendarByKey(calendarKey);
 		}
 
+	}
+
+	public void updateCalendar(HttpServletRequest request,
+			HttpServletResponse response) {
+		String calendarKey = request.getParameter("calendarKey");
+		String calendarName = request.getParameter("calendarName");
+		if (calendarKey != null && calendarName != null) {
+			canDOService.removeCalendarByKey(calendarKey);
+		}
+	}
+
+	public void addEvent(HttpServletRequest request,
+			HttpServletResponse response) {
+		String calendarKey = request.getParameter("calendarKey");
+		String eventName = request.getParameter("eventName");
+		if (calendarKey != null && eventName != null) {
+			EventCalendar calendar = canDOService.getCalendarByKey(calendarKey);
+			Event event = new Event();
+			event.setName(eventName);
+			canDOService.addEvent(event);
+			calendar.getEvents().add(event);
+			canDOService.saveCalendar(calendar);
+			request.setAttribute("event",event);
+			updateEvent(request, response);// set other fields
+		}
+
+	}
+
+	public void updateEvent(HttpServletRequest request,
+			HttpServletResponse response) {
+		String eventKey = request.getParameter("eventKey");
+		Event event = (Event)request.getAttribute("event");
+		String eventName = request.getParameter("eventName");
+		String eventDesc = request.getParameter("eventDesc");
+		if (eventKey != null || event!=null) {
+			if(eventKey != null){
+			event = canDOService.getEventByKey(eventKey);
+			}
+			if (eventName != null) {
+				event.setName(eventName);
+			}
+			if (eventDesc != null) {
+				event.setDescription(eventDesc);
+			}
+			canDOService.saveEvent(event);
+		}
+	}
+
+	public void removeEvent(HttpServletRequest request,
+			HttpServletResponse response) {
+		String eventKey = request.getParameter("eventKey");
+		if (eventKey != null) {
+			canDOService.removeEventByKey(eventKey);
+		}
 	}
 
 	public void initTestCalendars() {

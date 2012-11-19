@@ -4,7 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <%@ page
-	import="java.text.SimpleDateFormat,java.util.Calendar,java.util.List,java.util.ArrayList, com.appspot.i_can_do.master.model.EventCalendar, com.appspot.i_can_do.master.model.Event"%>
+	import="java.text.SimpleDateFormat,java.util.Calendar,java.util.List,java.util.ArrayList, com.appspot.i_can_do.master.model.EventCalendar, com.appspot.i_can_do.master.model.Event, com.google.appengine.api.datastore.KeyFactory"%>
 <%
 	final Calendar calendar = (Calendar) request
 			.getAttribute("calendar");
@@ -58,7 +58,7 @@
 				for(Event e : events){
 					if(formatter.format(e.getStart()).equals(formatter.format(calendar.getTime()))){
 						%>
-						<li><%=e.getName()%></li>
+						<li><%=e.getName()%><div class="event_id"><%=KeyFactory.keyToString(e.getKey())%></div></li>
 						<%
 					}
 				}
@@ -78,7 +78,7 @@
 				for(Event e : events){
 					if(formatter.format(e.getStart()).equals(formatter.format(calendar.getTime()))){
 						%>
-						<li><%=e.getName()%></li>
+						<li><%=e.getName()%><div class="event_id"><%=KeyFactory.keyToString(e.getKey())%></div></li>
 						<%
 					}
 				}
@@ -96,7 +96,7 @@
 				for(Event e : events){
 					if(formatter.format(e.getStart()).equals(formatter.format(calendar.getTime()))){
 						%>
-						<li><%=e.getName()%></li>
+						<li><%=e.getName()%><div class="event_id"><%=KeyFactory.keyToString(e.getKey())%></div></li>
 						<%
 					}
 				}
