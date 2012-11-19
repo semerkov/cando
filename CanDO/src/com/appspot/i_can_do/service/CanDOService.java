@@ -6,6 +6,7 @@ import java.util.logging.Logger;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
 
 import com.appspot.i_can_do.master.model.CalendarKeeper;
@@ -45,12 +46,20 @@ public class CanDOService {
 		List<EventCalendar> calendars = new ArrayList<EventCalendar>();
 		for (Key key : calendarsKeys) {
 			Query calendarQuery = em
-					.createNamedQuery("EventCalendar.getCalendarsByKey");
+					.createNamedQuery("EventCalendar.getCalendarByKey");
 			calendarQuery.setParameter("key", key);
+			try{
 			EventCalendar c = (EventCalendar) calendarQuery.getSingleResult();
 			calendars.add(c);
+			}catch(NoResultException ex){}
 		}
 		return calendars;
+	}
+
+	public EventCalendar getCalendarByKey(String calendarKey) {
+		Key key = KeyFactory.stringToKey(calendarKey);
+		return em.find(EventCalendar.class, key);
+
 	}
 
 	public EventCalendar addCalendar(EventCalendar calendar, Key ownerKey) {
@@ -130,7 +139,7 @@ public class CanDOService {
 	public void removeCalendarByKey(String calendarKey) {
 		Key key = KeyFactory.stringToKey(calendarKey);
 		removeCalendarKeeper(key);
-		EntityTransaction txn = em.getTransaction();		
+		EntityTransaction txn = em.getTransaction();
 		txn.begin();
 		try {
 			EventCalendar cal = em.find(EventCalendar.class, key);
@@ -145,14 +154,14 @@ public class CanDOService {
 		}
 	}
 
-	private void removeCalendarKeeper(Key calendarKey){
+	private void removeCalendarKeeper(Key calendarKey) {
 		EntityTransaction txn = em.getTransaction();
 		txn.begin();
 		try {
 			Query query = em
 					.createNamedQuery("CalendarKeeper.getCalendarKeeperByCalendarKey");
 			query.setParameter("eventCalendarKey", calendarKey);
-			CalendarKeeper c =(CalendarKeeper) query.getSingleResult();
+			CalendarKeeper c = (CalendarKeeper) query.getSingleResult();
 			em.remove(c);
 			em.flush();
 			txn.commit();
@@ -163,45 +172,63 @@ public class CanDOService {
 			}
 		}
 	}
-	private void addEvent(Event event) {
+
+	public Event getEventByKey(String eventKey){
+		Key key = KeyFactory.stringToKey(eventKey);
+		return  em.find(Event.class, key);
+	}
+	
+	public Event saveEvent(Event event) {
+		Event newEvent = null;
 		EntityTransaction txn = em.getTransaction();
 		txn.begin();
 		try {
-			em.persist(event);
+			newEvent = em.merge(event);
+			em.flush();
 			txn.commit();
+			log.warning("Calendar saved: " + event);
+		} finally {
+			if (txn.isActive()) {
+				txn.rollback();
+			}
+		}
+		return newEvent;
+
+	}
+	
+	public void removeEventByKey(String eventKey) {
+		Key key = KeyFactory.stringToKey(eventKey);
+		EntityTransaction txn = em.getTransaction();
+		txn.begin();
+		try {
+			Event event = em.find(Event.class, key);
+			em.remove(event);
+			em.flush();
+			txn.commit();
+			log.warning("Event removed with key: " + key);
 		} finally {
 			if (txn.isActive()) {
 				txn.rollback();
 			}
 		}
 	}
-
-	private void saveEvent(Event event) {
-		EntityTransaction txn = em.getTransaction();
-		txn.begin();
-		try {
-			em.merge(event);
-			em.flush();
-			txn.commit();
-		} finally {
-			if (txn.isActive()) {
-				txn.rollback();
+	
+	public Event addEvent(Event event) {
+		if (event != null) {
+			EntityTransaction txn = em.getTransaction();
+			txn.begin();
+			try {
+				if (event.getKey() == null) {
+					em.persist(event);
+					txn.commit();
+					log.warning("Event created: " + event);
+				}
+			} finally {
+				if (txn.isActive()) {
+					txn.rollback();
+				}
 			}
 		}
-	}
-
-	private void removeEvent(Event event) {
-		EntityTransaction txn = em.getTransaction();
-		txn.begin();
-		try {
-			Event ev = em.find(Event.class, event.getKey());
-			em.remove(ev);
-			em.flush();
-			txn.commit();
-		} finally {
-			if (txn.isActive()) {
-				txn.rollback();
-			}
-		}
+		return event;
 	}
 }

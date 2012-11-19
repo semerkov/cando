@@ -105,6 +105,7 @@ function showOnlyThisCalendar() {
 }
 
 function removeCalendarConfirm() {
+	hidePopupDialog();
 	$("#confirm").dialog({
 		position : [ "center", "center" ],
 		title: "Remove this calendar",
