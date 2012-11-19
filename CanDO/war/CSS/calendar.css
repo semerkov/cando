@@ -485,7 +485,9 @@ ul.nav a:hover,ul.nav a:active,ul.nav a:focus {
 	width:300px;
 	display:none;
 }
-
+#saveCalendarButton{
+	width: 90px;
+}
 .event_id {
 	display: none;
 }
