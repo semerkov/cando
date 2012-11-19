@@ -35,22 +35,7 @@ function calendarTableClicks(){
 	﻿$('.day.active').click(function(e) {
 		$(this).addClass('selected');
 		var s = this.getBoundingClientRect();
-		showPopupDialog('msg',s.top + (Math.abs(s.top - s.bottom) / 2) - 185,  s.left + (Math.abs(s.left - s.right) / 2) - 200);
-		/*
-		if(($(this).hasClass('day active') || $(this).hasClass('day today')) && !$(this).hasClass('select')) 
-			{
-				jQuery('#msg').remove();
-				$('.select').toggleClass('select', false);
-				$(this).toggleClass('select', true);
-				$(this).append('');
-			}*/
-		e.stopPropagation();
-	});
-
-	$('.bubbleclose').click(function(e) {
-		alert("close click");
-		$('#msg').remove();
-		// $('.select').toggleClass('select', false);
+		showPopupDialog('addEventsForm',s.top + (Math.abs(s.top - s.bottom) / 2) - 260,  s.left + (Math.abs(s.left - s.right) / 2) - 170);
 		e.stopPropagation();
 	});
 	
@@ -58,6 +43,32 @@ function calendarTableClicks(){
 	$("#eventEdirDateFinish").datetimepicker();
 	$("#evntAddDateStart").datetimepicker();
 	$("#eventAddDateFinish").datetimepicker();
+	
+	$('#calendarTableWrapper li').click(function(e){
+		var H = $(window).height();
+		var W = $(window).width();
+		var t = $('#viewEventForm');
+		showPopupDialog('viewEventForm',(H - t.height())/2, (W - t.width())/2);
+		e.stopPropagation();
+	});
+	
+	$('#viewShowOkButton').click(function(e){
+		hidePopupDialog();
+		e.stopPropagation();
+	});
+	$('#viewShowEditEventButton').click(function(e){
+		hidePopupDialog();
+		var H = $(window).height();
+		var W = $(window).width();
+		var t = $('#editEventsForm');
+		showPopupDialog('editEventsForm',(H - t.height())/2, (W - t.width())/2);
+		e.stopPropagation();
+	});
+	$('#editEventsUpdateButton').click(function(e){
+		hidePopupDialog();
+		e.stopPropagation();
+	});
+	
 };
 
 $(document).ready(
@@ -78,7 +89,6 @@ $(document).ready(
 				
 				
 				var name = $('#editEventAddNameInput').val();
-				alert(curCalendarName);
 				if (name == "") {
 					$('#editEventAddNameInput').css('border-color', 'red');
 				} else {

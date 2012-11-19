@@ -193,7 +193,7 @@
                     <label>Hours</label><input type="text" name="" id="" size="2" value="0"/>
                     <label>Minutes</label><input type="text" name="" id="" size="2" value="0"/>
                  </div>
-                 <div style="text-align:center"> <input type="button" name="addCalendarButton" id="addCalendarSubmit" 
+                 <div style="text-align:center"> <input type="button" name="editEventsUpdateButton" id="editEventsUpdateButton" 
                  value="Update"/>
                  </div>
             </div>
@@ -228,7 +228,7 @@
                     <label>Minutes</label><input type="text" name="" id="" size="2" value="0"/>
                  </div>
                  <div style="text-align:center"> <input type="button" name="addCalendarButton" id="addCalendarSubmit" 
-                 value="Update"/>
+                 value="Create event!"/>
                  </div>
             </div>
 	    </form>
@@ -265,68 +265,42 @@
 	    </form>
 	</div>
 	
+	<div id="viewEventForm">
+			<form>
+        	<div style="text-align:center; padding-bottom:10px;">Edit event</div>
+            <div class="eventEditForm">
+            	<div>
+                	<div style="width:50%; float:right;">
+                    <label>events name</label>
+                    <label>description</label><br>
+                    <label>start time</label><br>
+                    <label>finish time</label><br>
+                    </div>
+                    <div >
+                    <label>Name of event:</label><br>
+                    <label>Description:</label><br>
+                    <label>Start time:</label><br>
+                    <label>Finish time:</label>        
+                    </div>
+                </div>
+                <br>
+                <div style="text-align:center; width:100%">
+                Notification time
+                </div>
+                <div style="text-align:center;">
+                    <label>Days: </label>00
+                    <label>Hours: </label>00
+                    <label>Minutes: </label>00
+                 </div>
+                 <div style="text-align:center"><input type="button" style="width:60px;" name="viewShowOkButton" id="viewShowOkButton" 
+                 value="Ok"/> <input type="button" name="viewShowEditEventButton" id="viewShowEditEventButton" 
+                 value="Edit event"/>
+                 </div>
+            </div>
+	    </form>
+	</div>
+	
     
     <div id="confirm"></div>
-	
-		<div id="msg">
-		<div id="bubblePromo:f" style="display: none;"></div>
-		<div class="bubblemain">
-			<div id="bubbleClose:f" class="bubbleclose" style=""></div>
-			<div class="bubblecontent" id="bubbleContent:f">
-				<div>
-					<div></div>
-					<div class="cb-root">
-						<div class="cb-switcher" id=":y.switcher">
-							<span id=":y.choice0" class="cb-switcher-selected">Event</span> |
-							<span id=":y.choice1" class="lk cb-switcher-link">Task</span>
-						</div>
-						<form autocomplete="off" id=":y.form" action="javascript:(void)">
-							<table class="cb-table" cellpadding="0" cellspacing="0">
-								<tbody>
-									<tr>
-										<th class="cb-key">When:</th>
-										<td class="cb-value">Thu, 8 November</td>
-									</tr>
-									<tr>
-										<th class="cb-key">What:</th>
-										<td class="cb-value"><div class="textbox-fill-wrapper">
-												<div class="textbox-fill-mid">
-													<input id=":y.what" type="text"
-														class="textbox-fill-input cb-event-title-input">
-												</div>
-											</div>
-											<div class="cb-example">e.g. 7 p.m. Dinner at Panchos</div></td>
-									</tr>
-									<tr>
-										<td colspan="2" class="cb-actions"><input type="hidden"
-											id=":y.calendar"><span id=":y.create-button"><div
-													class="goog-inline-block goog-imageless-button" title=""
-													role="button" style="-webkit-user-select: none;"
-													tabindex="0">
-													<div
-														class="goog-inline-block goog-imageless-button-outer-box">
-														<div
-															class="goog-inline-block goog-imageless-button-inner-box">
-															<div class="goog-imageless-button-pos">
-																<div class="goog-imageless-button-top-shadow">&nbsp;</div>
-																<div class="goog-imageless-button-content">Create
-																	event</div>
-															</div>
-														</div>
-													</div>
-												</div></span> &nbsp; <a id="editEvent">Edit
-												event <strong>>></strong>
-										</a></td>
-									</tr>
-								</tbody>
-							</table>
-						</form>
-					</div>
-				</div>
-			</div>
-			<div id="prong:f" class="bottom-prong" style="left: 182px;">
-				<div class="prong-dk"></div>
-				<div class="prong-lt"></div>
-			</div>
 </body>
 </html>
