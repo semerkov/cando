@@ -189,7 +189,9 @@ public class CalendarServlet extends HttpServlet {
 		String calendarKey = request.getParameter("calendarKey");
 		String calendarName = request.getParameter("calendarName");
 		if (calendarKey != null && calendarName != null) {
-			canDOService.removeCalendarByKey(calendarKey);
+			EventCalendar calendar = canDOService.getCalendarByKey(calendarKey);
+			calendar.setName(calendarName);
+			canDOService.saveCalendar(calendar);
 		}
 	}
 
