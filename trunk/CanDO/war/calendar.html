@@ -160,33 +160,107 @@
 	<div id="calendarEditForm">
 		<div class="editForm" onClick="showOnlyThisCalendar();">Show
 			only this calendar</div>
-		<div class="editForm">Edit settings</div>
+		<div class="editForm" onClick="showEditCalendarForm();">Edit settings</div>
 		<div class="editForm" onClick="removeCalendarConfirm();">Remove
 			calendar</div>
 	</div>
-
+    
 	<!-- edit settings of calendar -->
-	<div id="editSettingsCalendarForm">
-		<form style="">
-        <div style="text-align:center">Event edit form</div>
-            <div class="editForm">
-                  <label>Name of event:</label>
-                  <input type="text" name="calendarName" id="calendarName" placeholder="Calendar name"/><br>
-                  <label>Description:</label>
-                  <input type="text" name="calendarDesc" id="calendarDesc" placeholder="Calendar description" /><br>
-                  <label>Start time:</label>
-                  <input type="text" name="dateStart" id="dateStart"/><br>
-                  <label>Finish time:</label>
-                  <input type="text" name="dateFinish" id="dateFinish"/>
-                    <div style="text-align:center">
-                        Notification time
+	<div id="editEventsForm">
+			<form>
+        	<div style="text-align:center; padding-bottom:10px;">Edit event</div>
+            <div class="eventEditForm">
+            	<div>
+                	<div style="width:50%; float:right;">
+                    <input type="text" name="eventEditName" id="eventEditName" placeholder="Event name"/><br>
+                    <input type="text" name="eventEditDesc" id="eventEditDesc" placeholder="Event description" /><br>
+                    <input type="text" name="eventEditDateStart" id="eventEditDateStart"/><br>
+                    <input type="text" name="eventEdirDateFinish" id="eventEdirDateFinish"/>
                     </div>
-                    <div>
-                    <label>
-                    </label>
+                    <div >
+                    <label>Name of event:</label><br>
+                    <label>Description:</label><br>
+                    <label>Start time:</label><br>
+                    <label>Finish time:</label>        
                     </div>
-                    <div style="text-align:center"> <input type="button" name="addCalendarButton" id="addCalendarSubmit" 
-                     		value="Update"/></div>
+                </div>
+                <br>
+                <div style="text-align:center; width:100%">
+                Notification time
+                </div>
+                <div style="text-align:center;">
+                    <label>Days</label><input type="text" name="" id="" size="2" value="0"/>
+                    <label>Hours</label><input type="text" name="" id="" size="2" value="0"/>
+                    <label>Minutes</label><input type="text" name="" id="" size="2" value="0"/>
+                 </div>
+                 <div style="text-align:center"> <input type="button" name="addCalendarButton" id="addCalendarSubmit" 
+                 value="Update"/>
+                 </div>
+            </div>
+	    </form>
+	</div>
+    
+    <div id="addEventsForm">
+			<form>
+        	<div style="text-align:center; padding-bottom:10px;">Add event</div>
+            <div class="addEditForm">
+            	<div>
+                	<div style="width:50%; float:right;">
+                    <input type="text" name="eventAddName" id="eventAddName" placeholder="Event name"/><br>
+                    <input type="text" name="eventAddDesc" id="eventAddDesc" placeholder="Event description" /><br>
+                    <input type="text" name="evntAddDateStart" id="evntAddDateStart"/><br>
+                    <input type="text" name="eventAddDateFinish" id="eventAddDateFinish"/>
+                    </div>
+                    <div >
+                    <label>Name of event:</label><br>
+                    <label>Description:</label><br>
+                    <label>Start time:</label><br>
+                    <label>Finish time:</label>        
+                    </div>
+                </div>
+                <br>
+                <div style="text-align:center; width:100%">
+                Notification time
+                </div>
+                <div style="text-align:center;">
+                    <label>Days</label><input type="text" name="" id="" size="2" value="0"/>
+                    <label>Hours</label><input type="text" name="" id="" size="2" value="0"/>
+                    <label>Minutes</label><input type="text" name="" id="" size="2" value="0"/>
+                 </div>
+                 <div style="text-align:center"> <input type="button" name="addCalendarButton" id="addCalendarSubmit" 
+                 value="Update"/>
+                 </div>
+            </div>
+	    </form>
+	</div>
+    
+        <div id="editCalendarForm">
+			<form>
+        	<div style="text-align:center; padding-bottom:10px;">Edit calendar</div>
+            <div class="addEditForm">
+            	<div>
+                	<div style="width:50%; float:right;">
+                    <input type="text" name="eventAddName" id="eventAddName" placeholder="Calendar name"/>
+                    </div>
+                	<div >
+                    <label>Name:</label><br>        
+                    </div>
+                </div>
+                <br>
+                <div style="text-align:center; width:100%">
+                Shared settings
+                </div>
+                <div>
+                	<div style="width:50%; float:right;">
+                    <input type="text" name="" id="" placeholder="Friend name"/>
+                    </div>
+                	<div >
+                    <label>Friend: </label>       
+                    </div>
+                </div>
+                <div style="text-align:center"><br><input type="button" name="saveCalendarButton" id="saveCalendarButton" 
+                 value="Save"/>
+                 </div>
             </div>
 	    </form>
 	</div>

@@ -23,9 +23,10 @@ function calendarTableClicks(){
 		e.stopPropagation();
 	});
 	
-	$("#dateStart").datetimepicker();
-	$("#dateFinish").datetimepicker();
-	
+	$("#eventEditDateStart").datetimepicker();
+	$("#eventEdirDateFinish").datetimepicker();
+	$("#evntAddDateStart").datetimepicker();
+	$("#eventAddDateFinish").datetimepicker();
 };
 
 $(document).ready(
@@ -134,10 +135,15 @@ $(document).ready(
 			});
 			
 		});
-
+function showEditCalendarForm(){
+		var t = $(document);
+		showPopupDialog('editCalendarForm',
+				t.offset().top/2, t.offset().left/2);
+	};
 function showOnlyThisCalendar() {
 	alert("Not completed yet");
-}
+};
+
 
 function removeCalendarConfirm() {
 	hidePopupDialog();
@@ -325,4 +331,4 @@ function calendarMenuClicks() {
 						t.offset().top + t.height(), t.offset().left);
 				e.stopPropagation();
 			});
-}
+};
