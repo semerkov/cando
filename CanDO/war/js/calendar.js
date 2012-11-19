@@ -1,5 +1,31 @@
 var calendar_id = "";
 var curCalendarName="";
+
+var arr_active_calendar_id;
+var arr_active_calendar_name;
+
+function getActiveCalendars()
+{
+	var c = $('.myCalendar');
+	if(c!=null)
+	{
+		var t = $(c).find('.item.active .calendar_id');
+		arr_active_calendar_id = new Array(t.length);
+			t.each(function(index, element) {
+                arr_active_calendar_id[index]=element.innerText;
+            });
+		
+		var n = $(c).find('.item.active .calendar_name');
+		arr_active_calendar_name = new Array(n.length);
+		alert(n.length);
+			n.each(function(index, element) {
+                arr_active_calendar_name[index]=element.innerText;
+            });
+	}
+		
+}
+
+
 function calendarTableClicks(){
 	﻿$('.day.active').click(function(e) {
 		$(this).addClass('selected');
@@ -166,8 +192,18 @@ $(document).ready(
 				alert("edit event");
 			});
 			
+			
+			
+			
 		});
+<<<<<<< .mine
+		
+		
+		
+		
+=======
 
+>>>>>>> .r77
 function showEditCalendarForm(){
 		hidePopupDialog();
 		var H = $(window).height();

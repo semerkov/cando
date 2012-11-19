@@ -17,7 +17,7 @@
 		<div class="square active"></div>
 		<div class="calendarEdit">▼</div>
 		<div class="calendar_id"><%=KeyFactory.keyToString(calendar.get(i).getKey())%></div>
-		<%=calendar.get(i++).getName()%>
+		<div class="calendar_name"><%=calendar.get(i++).getName()%></div>
 	</div>
 </c:forEach>
 
