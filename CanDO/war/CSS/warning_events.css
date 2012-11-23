@@ -6,18 +6,18 @@
 	padding: 0px;
 	z-index: 308;
 	margin: 0px;
-	border: 1px solid #2D2D2D;
+	border: 1px hidden #3CF;
+	border-style: solid;
 	overflow: auto;
 	left:5px;
 	bottom:5px;
 	max-height:350px;
 	min-width:172px;
-	width:20%;
-	font-size:14px;
+	width:14%;
 }
 
 #warning_events_header {
-	background-color:#39F;
+	background-color: #36F;
 	color: #FFF;
 	font-size: 16px;
 	text-align: center;
@@ -26,20 +26,15 @@
 .single_event {
 	margin: 0px;
 	padding: 0px;
-	border-top-width: 1px;
-	border-top-color: #000;
-	border-top-style: groove;
 }
 
 .event_name {
 	background-color: #CCC;
-	border-bottom-color: #000;
 	font-family: "Comic Sans MS", cursive;
 	font-weight: 500;
 	text-align: center;
-	border-bottom-width: 1px;
-	border-bottom-style: dotted;
 	cursor:pointer;
+	font-size:12px;
 }
 
 .event_description {
