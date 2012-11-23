@@ -11,11 +11,15 @@
 		<class>com.appspot.i_can_do.master.model.Event</class>
 		<class>com.appspot.i_can_do.master.model.EventCalendar</class>
 		<class>com.appspot.i_can_do.master.model.CalendarKeeper</class>	
+		<class>com.appspot.i_can_do.master.model.Task</class>
+		<class>com.appspot.i_can_do.master.model.TaskList</class>	
+		<class>com.appspot.i_can_do.master.model.TaskKeeper</class>
 		<exclude-unlisted-classes />
 		<properties>
 			<property name="datanucleus.NontransactionalRead" value="true" />
 			<property name="datanucleus.NontransactionalWrite" value="true" />
 			<property name="datanucleus.ConnectionURL" value="appengine" />
+			<property name="datanucleus.appengine.datastoreEnableXGTransactions" value="true" />
 		</properties>
 	</persistence-unit>
 	

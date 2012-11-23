@@ -119,6 +119,7 @@ public class CanDOService {
 
 	public void removeCalendar(EventCalendar calendar) {
 		EntityTransaction txn = em.getTransaction();
+		removeCalendarKeeper(calendar.getKey());
 		txn.begin();
 		try {
 			EventCalendar cal = em.find(EventCalendar.class, calendar.getKey());
@@ -370,8 +371,9 @@ public class CanDOService {
 		return newTaskList;
 	}
 	
-	public void removTaskList(TaskList taskList){
+	public void removeTaskList(TaskList taskList){
 		EntityTransaction txn = em.getTransaction();
+		removeTaskKeeper(taskList.getKey());
 		txn.begin();
 		try {
 			TaskList tList = em.find(TaskList.class, taskList.getKey());

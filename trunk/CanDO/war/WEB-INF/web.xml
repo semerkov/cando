@@ -38,4 +38,12 @@
 		<servlet-name>CalendarServlet</servlet-name>
 		<url-pattern>/calendar</url-pattern>
 	</servlet-mapping>
+	<servlet>
+		<servlet-name>InitTestBaseServlet</servlet-name>
+		<servlet-class>com.appspot.i_can_do.server.servlets.InitTestBaseServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>InitTestBaseServlet</servlet-name>
+		<url-pattern>/initTestBase</url-pattern>
+	</servlet-mapping>
 </web-app>

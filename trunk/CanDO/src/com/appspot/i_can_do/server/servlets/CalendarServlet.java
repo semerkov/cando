@@ -15,6 +15,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.appspot.i_can_do.master.model.Event;
 import com.appspot.i_can_do.master.model.EventCalendar;
+import com.appspot.i_can_do.master.model.Task;
+import com.appspot.i_can_do.master.model.TaskList;
+import com.appspot.i_can_do.master.security.State;
 import com.appspot.i_can_do.master.security.User;
 import com.appspot.i_can_do.service.CanDOSecurityService;
 import com.appspot.i_can_do.service.CanDOService;
@@ -23,7 +26,7 @@ import com.google.appengine.api.datastore.KeyFactory;
 
 @SuppressWarnings("serial")
 public class CalendarServlet extends HttpServlet {
-	private static final Logger log = Logger.getLogger(RegisterServlet.class
+	private static final Logger log = Logger.getLogger(CalendarServlet.class
 			.getName());
 	private static final List<String> SECURITY_ACTIONS = Arrays
 			.asList(new String[] { "retrieveCalenderTable", "addCalendar",
@@ -57,8 +60,6 @@ public class CalendarServlet extends HttpServlet {
 		} else {
 			log.warning("Test user exist");
 		}
-		
-		initTestCalendars();
 	}
 
 	protected boolean isLoginState(HttpServletRequest request) {
@@ -240,30 +241,5 @@ public class CalendarServlet extends HttpServlet {
 		if (eventKey != null) {
 			canDOService.removeEventByKey(eventKey);
 		}
-	}
-
-	public void initTestCalendars() {
-		EventCalendar calendar = new EventCalendar();
-		calendar.setName("Trip calendar");
-		calendar.setColor("#EAEAEA");
-		Date c1 = new Date();
-		Event event = new Event("Train from Lviv", "Meet Natik from Lviv", c1,
-				c1, c1);
-		Event event2 = new Event("Trip to Kiev", "New Year in Kiev!!", c1, c1,
-				c1);
-		calendar.getEvents().add(event);
-		calendar.getEvents().add(event2);
-		canDOService.addCalendar(calendar, testUser.getKey());
-
-		EventCalendar calendar1 = new EventCalendar();
-		calendar1.setName("Gifts");
-		calendar1.setColor("#EAEAEA");
-		Date c2 = new Date();
-		Event event3 = new Event("Moms birthday", "Buy a gift", c2, c2, c2);
-		Event event4 = new Event("Natik birthday", "Buy a gift", c2, c2, c2);
-		calendar1.getEvents().add(event3);
-		calendar1.getEvents().add(event4);
-		canDOService.addCalendar(calendar1, testUser.getKey());
-		return;
 	}
 }
