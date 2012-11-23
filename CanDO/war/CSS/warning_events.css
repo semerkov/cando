@@ -1,12 +1,10 @@
 #warning_events_bar {
 	display: none;
-	/*width: 200px;
-	height: 350px;*/
 	background-color: #FFFFFF;
 	color: #1A1A1A;
 	position: fixed;
 	padding: 0px;
-	z-index: 2000;
+	z-index: 308;
 	margin: 0px;
 	border: 1px solid #2D2D2D;
 	overflow: auto;
@@ -14,13 +12,14 @@
 	bottom:5px;
 	max-height:350px;
 	min-width:172px;
-	width:14%;
+	width:20%;
+	font-size:14px;
 }
 
 #warning_events_header {
-	background-color: #141414;
+	background-color:#39F;
 	color: #FFF;
-	font-size: 18px;
+	font-size: 16px;
 	text-align: center;
 }
 
@@ -36,7 +35,6 @@
 	background-color: #CCC;
 	border-bottom-color: #000;
 	font-family: "Comic Sans MS", cursive;
-	font-size: 18px;
 	font-weight: 500;
 	text-align: center;
 	border-bottom-width: 1px;
@@ -46,15 +44,10 @@
 
 .event_description {
 	font-family: Verdana, Geneva, sans-serif;
-	font-size: 13px;
-	padding-right: 10px;
-	padding-top: 3px;
-	padding-bottom: 10px;
-	padding-left: 5px;
+	font-size:8px;
 }
 
 .start_time {
 	font-family: "Comic Sans MS", cursive;
-	font-size: 15px;
 	text-align: right;
 }

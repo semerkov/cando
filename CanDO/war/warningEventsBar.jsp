@@ -14,7 +14,7 @@
 		for (Event event : events) {
 			String string = df.format(event.getStart().getTime());
 %>
-<div class="single_event">
+<div>
 	<div class="event_name">
     <%=event.getName()%>
     	<div class="start_time"><%=string%></div>
