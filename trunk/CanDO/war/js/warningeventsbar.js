@@ -27,6 +27,16 @@ function loading(){
 }
 
 function init(){
+	 $("#warning_events_bar").accordion({ 
+		 header: '.event_name',
+		 autoHeight: true
+	 });
+	 
+	 $('.accordion .event_name').click(function() {
+		$(this).next().toggle('slow');
+		return false;
+	 }).next().hide();
+	/*
 	$('.event_description').css('display', 'none');
 	$('.event_name').click(function(e) {
 		var div = $(this).next('.event_description').first();
@@ -43,6 +53,8 @@ function init(){
 		}
 		e.stopPropagation();
 	});
+	*/
+
 }
 
 function close_events_bar(){
