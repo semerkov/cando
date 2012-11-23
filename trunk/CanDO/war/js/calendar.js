@@ -37,16 +37,25 @@ function calendarTableClicks(){
 		showPopupDialog('addEventsForm',s.top + (Math.abs(s.top - s.bottom) / 2) - 260,  s.left + (Math.abs(s.left - s.right) / 2) - 170);
 		e.stopPropagation();
 	});
-	
-	$("#eventEditDateStart").datetimepicker({
-				 onClose: function(dateText, inst) {
-					 $("#eventAddDateFinish").datetimepicker('option','mindatetime',dateText);
-				 }
+	<!--не доконца работает-->
+	var dateS = new Date();
+	var dateF = new Date();
+	/*date.setDate(Date.parse());*/
+	$('#eventEditDateStart').datetimepicker({
+		dateFormat: 'dd.mm.yy',
+		minDateTime: dateS,
+		onClose: function(datetimeText, datepickerInstance){
+				var d = new Date();
+				/*d.setDate(Date.parse(datetimeText));*/
+				alert(d.toLocaleDateString());
+                $('#eventEdirDateFinish',document).datetimepicker({minDateTime: d});			
+		}
 	});
-	
-	$("#eventEdirDateFinish").datetimepicker();
-	$("#evntAddDateStart").datetimepicker();
-	$("#eventAddDateFinish").datetimepicker();
+	$('#eventEdirDateFinish').datetimepicker({
+		dateFormat: 'dd.mm.yy'
+		});
+	$('#evntAddDateStart').datetimepicker({});
+	$('#eventAddDateFinish').datetimepicker({});
 	
 	$('#calendarTableWrapper li').click(function(e){
 		var H = $(window).height();
