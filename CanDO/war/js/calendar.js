@@ -32,7 +32,7 @@ function getCurrentCalendarName()
 }
 
 function calendarTableClicks(){
-	﻿$('.day.active').click(function(e) {
+		$('.day.active').click(function(e) {
 		$(this).addClass('selected');
 		var s = this.getBoundingClientRect();
 		showPopupDialog('addEventsForm',s.top + (Math.abs(s.top - s.bottom) / 2) - 260,  s.left + (Math.abs(s.left - s.right) / 2) - 170);

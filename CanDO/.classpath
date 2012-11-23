@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="con" path="com.google.appengine.eclipse.core.GAE_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/gson-2.2.2.jar"/>
-	<classpathentry kind="con" path="com.google.appengine.eclipse.core.GAE_CONTAINER/v2"/>
+	<classpathentry exported="true" kind="lib" path="D:/Program Files/Java/new/war/WEB-INF/lib/mail.jar"/>
+	<classpathentry exported="true" kind="lib" path="D:/Program Files/Java/new/war/WEB-INF/lib/mailapi.jar"/>
+	<classpathentry exported="true" kind="lib" path="D:/Program Files/Java/new/war/WEB-INF/lib/smtp.jar"/>
+	<classpathentry kind="con" path="com.google.appengine.eclipse.core.GAE_CONTAINER/appengine-java-sdk-1.7.3"/>
 	<classpathentry kind="output" path="war/WEB-INF/classes"/>
 </classpath>
