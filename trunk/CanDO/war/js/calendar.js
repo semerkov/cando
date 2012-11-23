@@ -28,18 +28,22 @@ function getActiveCalendars()
 function getCurrentCalendarName()
 {
 	var c = $('.myCalendar .item .calendar_id');
-
 }
 
 function calendarTableClicks(){
-		$('.day.active').click(function(e) {
+	$('.day.active').click(function(e) {
 		$(this).addClass('selected');
 		var s = this.getBoundingClientRect();
 		showPopupDialog('addEventsForm',s.top + (Math.abs(s.top - s.bottom) / 2) - 260,  s.left + (Math.abs(s.left - s.right) / 2) - 170);
 		e.stopPropagation();
 	});
 	
-	$("#eventEditDateStart").datetimepicker();
+	$("#eventEditDateStart").datetimepicker({
+				 onClose: function(dateText, inst) {
+					 $("#eventAddDateFinish").datetimepicker('option','mindatetime',dateText);
+				 }
+	});
+	
 	$("#eventEdirDateFinish").datetimepicker();
 	$("#evntAddDateStart").datetimepicker();
 	$("#eventAddDateFinish").datetimepicker();
@@ -211,14 +215,7 @@ $(document).ready(
 			
 			
 		});
-<<<<<<< .mine
-		
-		
-		
-		
-=======
 
->>>>>>> .r77
 function showEditCalendarForm(){
 		hidePopupDialog();
 		var H = $(window).height();
