@@ -462,7 +462,7 @@ ul.nav a:hover,ul.nav a:active,ul.nav a:focus {
 	border:1px solid #000;
 	background-color:#FFF;
 	width:300px;
-	display:none;
+	/*display:none;*/
 }
 #addEventsForm {
 	padding:20px;
