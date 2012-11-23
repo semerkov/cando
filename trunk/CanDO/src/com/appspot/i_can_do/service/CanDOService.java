@@ -12,6 +12,9 @@ import javax.persistence.Query;
 import com.appspot.i_can_do.master.model.CalendarKeeper;
 import com.appspot.i_can_do.master.model.Event;
 import com.appspot.i_can_do.master.model.EventCalendar;
+import com.appspot.i_can_do.master.model.Task;
+import com.appspot.i_can_do.master.model.TaskKeeper;
+import com.appspot.i_can_do.master.model.TaskList;
 import com.appspot.i_can_do.master.security.Permission;
 import com.appspot.i_can_do.master.security.User;
 import com.google.appengine.api.datastore.Key;
@@ -112,7 +115,6 @@ public class CanDOService {
 			}
 		}
 		return newCalendar;
-
 	}
 
 	public void removeCalendar(EventCalendar calendar) {
@@ -157,10 +159,11 @@ public class CanDOService {
 					.createNamedQuery("CalendarKeeper.getCalendarKeeperByCalendarKey");
 			query.setParameter("eventCalendarKey", calendarKey);
 			CalendarKeeper c = (CalendarKeeper) query.getSingleResult();
+			Key calendarKeeperKey = c.getKey();
 			em.remove(c);
 			em.flush();
 			txn.commit();
-			log.warning("CalendarKeeper removed with key: " + calendarKey);
+			log.warning("CalendarKeeper removed with key: " + calendarKeeperKey);
 		} finally {
 			if (txn.isActive()) {
 				txn.rollback();
@@ -188,7 +191,6 @@ public class CanDOService {
 			}
 		}
 		return newEvent;
-
 	}
 	
 	public void removeEventByKey(String eventKey) {
@@ -226,4 +228,199 @@ public class CanDOService {
 		}
 		return event;
 	}
+	
+	public Task addTask(Task task){
+		if (task != null) {
+			EntityTransaction txn = em.getTransaction();
+			txn.begin();
+			try {
+				if (task.getKey() == null) {
+					em.persist(task);
+					txn.commit();
+					log.warning("Task created: " + task);
+				}
+			} finally {
+				if (txn.isActive()) {
+					txn.rollback();
+				}
+			}
+		}
+		return task;
+	
+	}
+	
+	public Task saveTask(Task task){
+		Task newTask = null;
+		EntityTransaction txn = em.getTransaction();
+		txn.begin();
+		try {
+			newTask = em.merge(task);
+			em.flush();
+			txn.commit();
+			log.warning("Task saved: " + task);
+		} finally {
+			if (txn.isActive()) {
+				txn.rollback();
+			}
+		}
+		return newTask;
+	}
+	
+	public void removeTaskByKey(String taskKey){
+		Key key = KeyFactory.stringToKey(taskKey);
+		EntityTransaction txn = em.getTransaction();
+		txn.begin();
+		try {
+			Task task = em.find(Task.class, key);
+			em.remove(task);
+			em.flush();
+			txn.commit();
+			log.warning("Task removed with key: " + key);
+		} finally {
+			if (txn.isActive()) {
+				txn.rollback();
+			}
+		}
+	}
+	
+	public Task getTaskByKey(String taskKey){
+		Key key = KeyFactory.stringToKey(taskKey);
+		return  em.find(Task.class, key);
+	}
+	
+	public List<TaskList> getTaskLists(User user){
+		if (user == null)
+			throw new NullPointerException("User cannot be null!");
+		if (user.getKey() == null)
+			throw new IllegalArgumentException("Not persiste user!");
+
+		Query query = em
+				.createNamedQuery("TaskKeeper.getTasksListsKeysByUserKey");
+
+		query.setParameter("userKey", user.getKey());
+
+		List<Key> tasksKeys = (List<Key>) query.getResultList();
+		List<TaskList> tasksList = new ArrayList<TaskList>();
+		for (Key key : tasksKeys) {
+			TaskList c = em.find(TaskList.class, key);
+			tasksList.add(c);
+		}
+		return tasksList;
+	}
+	
+	public TaskList getTaskListByKey(String taskKey){
+		Key key = KeyFactory.stringToKey(taskKey);
+		return em.find(TaskList.class, key);
+	}
+	
+	public TaskList addTaskList(TaskList taskList, Key ownerKey){
+		if (taskList != null && ownerKey != null) {
+			EntityTransaction txn = em.getTransaction();
+			txn.begin();
+			try {
+				if (taskList.getKey() == null) {
+					em.persist(taskList);
+					txn.commit();
+					log.warning("TaskList created: " + taskList);
+				}
+			} finally {
+				if (txn.isActive()) {
+					txn.rollback();
+				}
+			}
+
+			txn = em.getTransaction();
+			txn.begin();
+			try {
+				TaskKeeper keeper = new TaskKeeper(taskList.getKey(),
+						ownerKey, Permission.Owner);
+				em.persist(keeper);
+				txn.commit();
+				log.warning("TaskKeeper created" + keeper);
+			} finally {
+				if (txn.isActive()) {
+					txn.rollback();
+				}
+			}
+		} else {
+			if (taskList == null) {
+				log.warning("TaskList for add is null");
+			} else {
+				log.warning("Owner key for add is null");
+			}
+			throw new IllegalArgumentException("TaskList for add is null");
+		}
+		return taskList;
+	}
+	
+	public TaskList saveTaskList(TaskList taskList){
+		TaskList newTaskList = null;
+		EntityTransaction txn = em.getTransaction();
+		txn.begin();
+		try {
+			newTaskList = em.merge(taskList);
+			em.flush();
+			txn.commit();
+			log.warning("TaskList saved: " + taskList);
+		} finally {
+			if (txn.isActive()) {
+				txn.rollback();
+			}
+		}
+		return newTaskList;
+	}
+	
+	public void removTaskList(TaskList taskList){
+		EntityTransaction txn = em.getTransaction();
+		txn.begin();
+		try {
+			TaskList tList = em.find(TaskList.class, taskList.getKey());
+			em.remove(tList);
+			em.flush();
+			txn.commit();
+			log.warning("TaskList removed: " + taskList);
+		} finally {
+			if (txn.isActive()) {
+				txn.rollback();
+			}
+		}
+	}
+	
+	public void removeTaskListByKey(String taskListKey){
+		Key key = KeyFactory.stringToKey(taskListKey);
+		removeTaskKeeper(key);
+		EntityTransaction txn = em.getTransaction();
+		txn.begin();
+		try {
+			TaskList cal = em.find(TaskList.class, key);
+			em.remove(cal);
+			em.flush();
+			txn.commit();
+			log.warning("TaskList removed with key: " + key);
+		} finally {
+			if (txn.isActive()) {
+				txn.rollback();
+			}
+		}
+	}
+	
+	private void removeTaskKeeper(Key taskListKey){
+		EntityTransaction txn = em.getTransaction();
+		txn.begin();
+		try {
+			Query query = em
+					.createNamedQuery("TaskKeeper.getTaskKeeperByTaskListKey");
+			query.setParameter("taskListKey", taskListKey);
+			TaskKeeper c = (TaskKeeper) query.getSingleResult();
+			Key taskKeeperKey = c.getKey();
+			em.remove(c);
+			em.flush();
+			txn.commit();
+			log.warning("TaskKeeper removed with key: " + taskKeeperKey);
+		} finally {
+			if (txn.isActive()) {
+				txn.rollback();
+			}
+		}
+	}	
 }
