@@ -6,16 +6,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import com.google.appengine.api.datastore.Key;
 
 @Entity
-@NamedQueries({
-	@NamedQuery(name = "Event.getEvents", query = "SELECT event FROM Event event") })
 public class Event{
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

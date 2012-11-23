@@ -1,5 +1,6 @@
 package com.appspot.i_can_do.master.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -24,6 +25,10 @@ public class TaskList {
 	@OneToMany(cascade=CascadeType.ALL)
 	private List<Task> tasks;
 	private String color;
+	
+	public TaskList(){
+		tasks = new ArrayList<Task>();
+	}
 	
 	@Override
 	public String toString() {

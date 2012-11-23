@@ -11,6 +11,7 @@
 	int i = 0;
 %>
 
+<% if(calendar.size() != 0) { %>
 <c:forEach var="i" begin="0" end="<%=calendar.size()-1%>" step="1"
 	varStatus="status">
 	<div class="item active">
@@ -20,6 +21,8 @@
 		<div class="calendar_name"><%=calendar.get(i++).getName()%></div>
 	</div>
 </c:forEach>
+
+<% } %>
 
 <div class="item active" id="myTodoItem">
 	<div class="square active"></div>
