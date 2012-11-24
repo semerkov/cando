@@ -24,45 +24,52 @@ import com.appspot.i_can_do.service.utils.ServletUtils;
 
 @SuppressWarnings("serial")
 public class LoginServlet extends HttpServlet {
-	//one week
+	// one week
 	public static final int EXISTING_REMEMBER_COOKIE_TIME = 604800;
+	public static final String REMEMBER_COOKIE_USER = "userCookie";
+	public static final String REMEMBER_COOKIE_HASH = "userCookieHash";
 	private static final EntityManager em = EMF.get().createEntityManager();
 	private CanDOSecurityService security;
 	private static final Logger log = Logger.getLogger(LoginServlet.class
 			.getName());
 	private static final List<String> SECURITY_ACTIONS = Arrays
 			.asList(new String[] { "login" });
-	
+
 	@Override
 	public void init(ServletConfig config) {
 		security = CanDOSecurityService.instance();
 		log.info("Servlet created");
 	}
-	
+
 	@Override
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws IOException {
 		String action = request.getParameter("action");
-		
+
 		if (SECURITY_ACTIONS.contains(action)) {
 			String email = request.getParameter("email");
 			String password = request.getParameter("password");
 			String rememberMe = request.getParameter("rememberMe");
-			if (email != null&&password!=null&&rememberMe!=null) {
-				try{
-					User user = security.login(email,password);
-					
+			if (email != null && password != null && rememberMe != null) {
+				try {
+					User user = security.login(email, password);
+
 					HttpSession session = request.getSession();
 					log.info("create session: " + session.getId());
 					session.setAttribute("user", user);
-					
+
 					Date curDate = new Date();
 					byte[] rememberCookiesHash = null;
-					
-					if(rememberMe=="true")
-					{
-						rememberCookiesHash = Crypto.hashPassword(curDate.toString());
-						Cookie c = new Cookie("userCookie",rememberCookiesHash.toString());
+
+					if (rememberMe == "true") {
+						rememberCookiesHash = Crypto.hashPassword(curDate
+								.toString());
+						Cookie c = new Cookie(REMEMBER_COOKIE_USER,
+								user.getEmail());
+						c.setMaxAge(EXISTING_REMEMBER_COOKIE_TIME);
+						response.addCookie(c);
+						c = new Cookie(REMEMBER_COOKIE_HASH,
+								rememberCookiesHash.toString());
 						c.setMaxAge(EXISTING_REMEMBER_COOKIE_TIME);
 						response.addCookie(c);
 					}
@@ -71,21 +78,15 @@ public class LoginServlet extends HttpServlet {
 					user.setRememberIpAdress(request.getRemoteAddr());
 					em.merge(user);
 					log.info("login is successful: " + user.getEmail());
-				}
-				catch(LoginNameNotFoundException ex)
-				{
+				} catch (LoginNameNotFoundException ex) {
 					ServletUtils.writeJson(response, "LoginNameNotFound");
-				}
-				catch(LoginFailedException ex)
-				{
+				} catch (LoginFailedException ex) {
 					ServletUtils.writeJson(response, "LoginFailed");
 				}
-			}
-			else
-			{
+			} else {
 				response.sendError(HttpServletResponse.SC_METHOD_NOT_ALLOWED,
 						"Do not set parameters to login");
-			}			
+			}
 		} else {
 			response.sendError(HttpServletResponse.SC_METHOD_NOT_ALLOWED,
 					"Not existing action!");
