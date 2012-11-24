@@ -46,4 +46,12 @@
 		<servlet-name>InitTestBaseServlet</servlet-name>
 		<url-pattern>/initTestBase</url-pattern>
 	</servlet-mapping>
+	<servlet>
+		<servlet-name>LoginServlet</servlet-name>
+		<servlet-class>com.appspot.i_can_do.server.servlets.LoginServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>LoginServlet</servlet-name>
+		<url-pattern>/login</url-pattern>
+	</servlet-mapping>
 </web-app>
