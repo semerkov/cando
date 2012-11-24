@@ -17,6 +17,7 @@ body {
 	padding: 0px;
 	font: 100%/1.4 Arial;
 	overflow: hidden;
+	background: url(images/ui-bg_diagonals-thick_90_eeeeee_40x40.png) repeat 0 center;
 }
 
 /* ~~ Селекторы элементов/тегов ~~ */
@@ -142,7 +143,6 @@ a:hover,a:active,a:focus {
 }
 
 .calendarHeader {
-	background: #FFF;
 	height: 5%;
 	width: 100%;
 	float: left;
@@ -198,7 +198,8 @@ a:hover,a:active,a:focus {
 }
 
 .calendar .day.nonactive {
-	background-color: #FFF;
+	border:0px;
+	visibility:hidden;
 }
 
 .calendar .day.active {
