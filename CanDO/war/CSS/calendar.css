@@ -62,7 +62,7 @@ a:hover,a:active,a:focus {
 	overflow: none;
 	width: 100%;
 	margin: 0px auto;
-	padding-top: 20px;
+	padding-top: 10px;
 }
 
 /* ~~ верхнему колонтитулу не задана ширина. Он растянется на всю ширину макета. Он содержит заполнитель для изображения, который должен быть заменен логотипом по ссылке ~~ */
@@ -95,36 +95,32 @@ a:hover,a:active,a:focus {
 
 #nextMonth {
 	float: left;
-	margin: 0px 3px;
+	margin: 2% 3px;
 	width: 5%;
-	height: 60%;
 }
 
 #prevMonth {
 	float: left;
-	margin: 0px 3px;
+	margin: 2% 3px;
 	width: 5%;
-	height: 60%;
 }
 
 #todayButton {
 	float: left;
-	margin: 0px 3px;
+	margin: 2% 5px;
 	width: 10%;
-	height: 60%;
 }
 
 #currentMonth {
 	position: relative;
 	right: 10%;
-	height: 60%;
-	font: Arial;
-	font-size: 18px;
+	font-size: 40px;
+	text-shadow: 5px 3px 8px black;
 }
 
 .calendarWrapper {
 	height: 100%;
-	width: 15%;
+	width: 20%;
 	float: left;
 }
 
@@ -134,10 +130,13 @@ a:hover,a:active,a:focus {
 	background: #FFF;
 	border: solid 1px #CCC;
 }
-
+.calendarSidebar nav button{
+	width: 100%;
+	margin:0px;
+}
 .calendar {
 	height: 100%;
-	width: 68%;
+	width: 58%;
 	padding: 0 1%;
 	float: left;
 }
@@ -151,6 +150,9 @@ a:hover,a:active,a:focus {
 	margin: 0px 0px;
 	text-align: center;
 }
+.calendarHeader button span.ui-button-text{
+	padding: 0px;
+}
 
 .calendar #daysNameTable {
 	position: relative;
@@ -158,6 +160,10 @@ a:hover,a:active,a:focus {
 	left: 0px;
 	height: 5%;
 	table-layout: fixed;
+}
+.calendar #daysNameTable th {
+	font-weight: lighter;
+	text-shadow: 1px 1px 1px grey;
 }
 
 .calendar #calendarTableWrapper {
@@ -196,10 +202,10 @@ a:hover,a:active,a:focus {
 }
 
 .calendar .day.active {
-	background-color: #DFE1FF;
+	background-color: #D7EBF9
 }
 .calendar .day.today {
-	background-color: #EAEAEA;
+	background-color: #AED0EA;
 	border-width: 2px;
 }
 .calendar .day.selected{
@@ -209,7 +215,7 @@ a:hover,a:active,a:focus {
 
 .todoWrapper {
 	height: 100%;
-	width: 15%;
+	width: 20%;
 	position: relative;
 	float: left;
 	background-color: #FFF;
@@ -234,6 +240,10 @@ a:hover,a:active,a:focus {
 	width: 100%;
 	border: solid 1px #CCC;
 	float: right;
+}
+.todoWrapper .todoSidebar nav button{
+	width: 100%;
+	margin:0px;
 }
 
 .todoWrapper .todoSidebar .close {
@@ -273,20 +283,20 @@ ul.nav li .navarrows {
 	left: 6px;
 }
 
-ul.nav li .active {
+nav li .active {
 	
 }
 
-ul.nav div {
-	margin-left: 10px;
+nav div {
+	margin-left: 2px;
 }
 
-ul.nav div .item {
+nav div .item {
 	display: block;
 	cursor: pointer;
 }
 
-ul.nav div .item .square {
+nav div .item .square {
 	position: relative;
 	top: 5px;
 	float: left;
@@ -297,7 +307,7 @@ ul.nav div .item .square {
 	background-color: #FFF;
 }
 
-ul.nav div .item .active {
+nav div .item .active {
 	background-color: #FA573C;
 }
 
@@ -353,23 +363,12 @@ ul.nav a:hover,ul.nav a:active,ul.nav a:focus {
 	background: url(../IMG/arrow_grey_left.png) no-repeat 0 center;
 }
 
-.calendarAdd:hover {
-	border: #333 solid 1px;
-	color: #333;
-	cursor: pointer;
-}
-
 .calendarAdd {
-	position: relative;
-	background-color: #CCC;
-	border: #666 solid 1px;
-	color: #666;
+	position: absolute;
 	float: right;
-	top: 6px;
+	top: 4px;
 	right: 4px;
-	text-align: center;
 	padding-bottom: 0px;
-	vertical-align: central;
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 12px;
 }
@@ -394,8 +393,13 @@ ul.nav a:hover,ul.nav a:active,ul.nav a:focus {
 	color: #FFF;
 	font-size: 16px;
 }
-#calendarAddForm #addCalendarSubmit{
+#addCalendarSubmit{
 	float: left;
+}
+#addCalendarSubmit span{
+	font-size: 14px;
+	font-weight: lighter;
+	padding: 1px;
 }
 
 .calendarEdit:hover {
@@ -533,4 +537,10 @@ ul.nav a:hover,ul.nav a:active,ul.nav a:focus {
 }
 #calendarTableWrapper li{
 	cursor : pointer;
+}
+#calendarSideBarDatepicker{
+	
+}
+#calendarSideBarDatepicker .ui-datepicker{
+	width:97%;
 }
