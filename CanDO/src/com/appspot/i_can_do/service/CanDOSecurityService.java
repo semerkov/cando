@@ -71,10 +71,6 @@ public class CanDOSecurityService implements ICanDOSecurityService {
 			throws LoginNameNotFoundException, LoginFailedException {
 		log.info("Login Attempt: " + username);
 		User user = doLogin(username, password);
-
-		user.setLastLogin(new Date());
-		em.merge(user);
-
 		return user;
 	}
 

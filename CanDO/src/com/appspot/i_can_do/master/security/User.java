@@ -15,7 +15,7 @@ import com.google.appengine.api.datastore.Key;
 @Entity
 @NamedQueries({
 		@NamedQuery(name = "User.getUsers", query = "SELECT u FROM User u"),
-		@NamedQuery(name = "User.getUser", query = "SELECT u FROM User u WHERE u.email = :userEmail") })
+		@NamedQuery(name = "User.getUser", query = "SELECT u FROM User u WHERE u.email = :userEmail")})
 public class User{
 	
 	@Id
@@ -24,7 +24,9 @@ public class User{
 	private String email;
 	private String name;
 	private String sername;
-	private Date lastLogin;
+	private Date lastEntryDate;
+	private byte[] rememberCookiesHash;
+	private String rememberIpAdress;
 	private int timeZone;
 	private boolean disabled;
 	@Column(nullable = false)
@@ -62,14 +64,6 @@ public class User{
 		this.passwordHash = passwordHash;
 	}
 
-	public Date getLastLogin() {
-		return lastLogin;
-	}
-
-	public void setLastLogin(Date lastLogin) {
-		this.lastLogin = lastLogin;
-	}
-
 	public int getTimeZone() {
 		return timeZone;
 	}
@@ -88,5 +82,29 @@ public class User{
 	
 	public Key getKey(){
 		return key;
+	}
+
+	public Date getLastEntryDate() {
+		return lastEntryDate;
+	}
+
+	public void setLastEntryDate(Date lastEntryDate) {
+		this.lastEntryDate = lastEntryDate;
+	}
+
+	public byte[] getRememberCookiesHash() {
+		return rememberCookiesHash;
+	}
+
+	public void setRememberCookiesHash(byte[] rememberCookiesHash) {
+		this.rememberCookiesHash = rememberCookiesHash;
+	}
+
+	public String getRememberIpAdress() {
+		return rememberIpAdress;
+	}
+
+	public void setRememberIpAdress(String rememberIpAdress) {
+		this.rememberIpAdress = rememberIpAdress;
 	}
 }
