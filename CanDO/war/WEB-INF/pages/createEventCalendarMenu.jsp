@@ -4,7 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <%@ page
-	import="java.util.List, com.appspot.i_can_do.master.model.EventCalendar, com.google.appengine.api.datastore.KeyFactory"%>
+	import="java.util.List, com.appspot.i_can_do.master.model.EventCalendar,com.appspot.i_can_do.master.security.User, com.google.appengine.api.datastore.KeyFactory"%>
 <%
 	final List<EventCalendar> calendar = (List<EventCalendar>) request
 			.getAttribute("calendars");
@@ -24,8 +24,8 @@
 
 <% } %>
 
-<div class="item active" id="myTodoItem">
-	<div class="square active"></div>
+<div class="item" id="myTodoItem">
+	<div class="square"></div>
 	<div class="calendarEdit">▼</div>
 	<div class="calendar_id">some task key</div>
 	<div class="calendar_name">Tasks</div>

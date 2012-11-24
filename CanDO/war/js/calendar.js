@@ -31,7 +31,7 @@ function getCurrentCalendarName()
 
 function calendarTableClicks(){
 	$('.day.active').click(function(e) {
-		$(this).addClass('selected');
+		$(this).addClass('ui-state-active');
 		var s = this.getBoundingClientRect();
 		showPopupDialog('addEventsForm',s.top + (Math.abs(s.top - s.bottom) / 2) - 260,  s.left + (Math.abs(s.left - s.right) / 2) - 170);
 		e.stopPropagation();
@@ -88,22 +88,13 @@ $(document).ready(
 			retrieveEventCalendarMenu();
 			retrieveCalender("this");
 
-			calendarMenuClicks();
-			calendarTableClicks();
+			todoMenuClicks();
 			
-			$(".calendarSidebar li").prepend(
-					'<span class="arrow-u navarrows">&nbsp;</span>');
-			$(".todoSidebar li").prepend(
-					'<span class="arrow-u navarrows">&nbsp;</span>');
-
-
 			$( "button" ).button();
 			$( "#calendarSideBarDatepicker" ).datepicker();
 			$("input").addClass('ui-corner-all');
 			
-			$('#saveCalendarButton').click(function(e){
-				
-				
+			$('#saveCalendarButton').click(function(e){	
 				var name = $('#editEventAddNameInput').val();
 				if (name == "") {
 					$('#editEventAddNameInput').css('border-color', 'red');
@@ -168,10 +159,6 @@ $(document).ready(
 				}
 			});
 
-			$('.todoWrapper .todoSidebar .close').click(function() {
-				$("#myTodoItem").click();
-			});
-
 			$("#nextMonth").click(function(e) {
 				retrieveCalender("next");
 				e.stopPropagation();
@@ -217,10 +204,6 @@ $(document).ready(
 			$('#editEvent').click(function(e) {
 				alert("edit event");
 			});
-			
-			
-			
-			
 		});
 
 function showEditCalendarForm(){
@@ -358,7 +341,7 @@ var hidePopupDialog = function() {
 		pD.toggleClass('popupDialog', false);
 	}
 	
-	$('.day.selected').removeClass('selected');//remove selected after msg
+	$('.day.ui-state-active').removeClass('ui-state-active');//remove selected after msg
 };
 
 var month = new Array();
@@ -413,14 +396,14 @@ function calendarMenuClicks() {
 		if ($(this).hasClass('active')) {
 			$(".todoWrapper").css('display', "block");
 			if ($('.todoSidebar').css('display') == 'block') {
-				calendar.css('width', '68%');
+				calendar.css('width', '58%');
 			} else {
-				calendar.css('width', '82%');
+				calendar.css('width', '77%');
 			}
 
 		} else {
 			$(".todoWrapper").css('display', "none");
-			calendar.css('width', '83%');
+			calendar.css('width', '77%');
 		}
 	});
 
@@ -433,12 +416,65 @@ function calendarMenuClicks() {
 			});
 
 	
-	$('.item').mouseenter(function(){
+	$('.calendarSidebar .item').mouseenter(function(){
 		$(this).find('.calendarEdit').css('display', 'block');
 	}).mouseleave(function(){
 		$(this).find('.calendarEdit').css('display', 'none');
 	});
-	$('.calendarEdit').click(
+	$('.calendarSidebar .calendarEdit').click(
+			function(e) {
+				var t = $(this);
+				curCalendarName = t.parent().text();
+				calendar_id = t.next('.calendar_id').first();
+				showPopupDialog('calendarEditForm',
+						t.offset().top + t.height(), t.offset().left);
+				e.stopPropagation();
+			});
+};
+
+function todoMenuClicks() {
+	$(".todoSidebar .item").click(function() {
+		var square = $(this).children('div').first();
+		if ($(this).hasClass('active')) {
+			$(this).toggleClass('active', false);
+			square.toggleClass('active', false);
+		} else {
+			$(this).toggleClass('active', true);
+			square.toggleClass('active', true);
+		}
+	});
+	/*
+	$("#myTodoItem").click(function() {
+		var calendar = $('.calendar');
+		if ($(this).hasClass('active')) {
+			$(".todoWrapper").css('display', "block");
+			if ($('.todoSidebar').css('display') == 'block') {
+				calendar.css('width', '58%');
+			} else {
+				calendar.css('width', '77%');
+			}
+
+		} else {
+			$(".todoWrapper").css('display', "none");
+			calendar.css('width', '77%');
+		}
+	});
+
+	$('.calendarAdd').click(
+			function(e) {
+				var t = $(this);
+				showPopupDialog('calendarAddForm', t.offset().top + t.height(),
+						t.offset().left);
+				e.stopPropagation();
+			});
+
+	*/
+	$('.todoSidebar .item').mouseenter(function(){
+		$(this).find('.todoEdit').css('display', 'block');
+	}).mouseleave(function(){
+		$(this).find('.todoEdit').css('display', 'none');
+	});
+	$('.todoSidebar .todoEdit').click(
 			function(e) {
 				var t = $(this);
 				curCalendarName = t.parent().text();

@@ -3,7 +3,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>CanDO - Calendar</title>
-<link href="CSS/jquery-ui-1.9.1.custom.min.css" rel="stylesheet" type="text/css" />
+<link href="CSS/jquery-ui-1.9.1.custom.min.css" rel="stylesheet"
+	type="text/css" />
 <link rel="stylesheet" type="text/css" href="CSS/calendar.css" />
 <link rel="stylesheet" type="text/css" href="CSS/warning_events.css" />
 
@@ -41,28 +42,43 @@
 					<div id="calendarSideBarDatepicker"></div>
 					<nav>
 						<button class="active">
-							<div class="calendarAdd ui-icon ui-icon-triangle-1-ne"></div>My calendars</button>
+							<div class="calendarAdd ui-icon ui-icon-triangle-1-ne"></div>
+							My calendars
+						</button>
 						<div class="myCalendar"></div>
 						<button class="active">Others calendars</button>
 						<div class="#othersCalendar">
 							<div class="item active">
 								<div class="square active"></div>
+								<div class="calendarEdit">▼</div>
 								New Year Parties!
+								<div class="owner_name">Artem Pashenko</div>
 							</div>
 							<div class="item">
 								<div class="square"></div>
+								<div class="calendarEdit">▼</div>
 								Happy Birthday`s
+								<div class="owner_name">Natalia Chistotina</div>
 							</div>
 							<div class="item">
 								<div class="square"></div>
+								<div class="calendarEdit">▼</div>
 								Study calendar
+								<div class="owner_name">Vlidimir Semerkov</div>
 							</div>
 							<div class="item active">
 								<div class="square active"></div>
+								<div class="calendarEdit">▼</div>
 								Work calendar
+								<div class="owner_name">Boss</div>
 							</div>
 						</div>
 					</nav>
+					<!-- events bar -->
+					<div id="warning_events_bar">
+						<div id="warning_events_header">Immediate events</div>
+						<div id="warning_events"></div>
+					</div>
 					<div class="clearfloat"></div>
 				</div>
 			</div>
@@ -71,7 +87,7 @@
 				<div class="calendarHeader">
 					<button name="todayButton" id="todayButton">Today</button>
 					<button name="prevMonth" id="prevMonth">&lt;</button>
-					<button name="nextMonth" id="nextMonth" >&gt;</button>
+					<button name="nextMonth" id="nextMonth">&gt;</button>
 					<span id="currentMonth">November 2012</span>
 				</div>
 				<table id="daysNameTable" width="100%" border="0" cellspacing="0"
@@ -98,10 +114,12 @@
 						<button class="active">My to-do`s</button>
 						<div class="#myTodos">
 							<div class="item">
+								<div class="todoEdit">▼</div>
 								<div class="square"></div>
 								Sergey to-do
-							</div>
+							</div>							
 							<div class="item active">
+								<div class="todoEdit">▼</div>
 								<div class="square active"></div>
 								Read books
 							</div>
@@ -109,8 +127,10 @@
 						<button class="active">Others to-do`s</button>
 						<div class="#othersTodos">
 							<div class="item">
+								<div class="todoEdit">▼</div>
 								<div class="square"></div>
 								See films
+								<div class="owner_name">Vladislav Mazur</div>
 							</div>
 						</div>
 					</nav>
@@ -121,180 +141,171 @@
 		</div>
 	</div>
 
-	<!-- events bar -->
-	<div id="warning_events_bar">
-		<div id="warning_events_header">
-			Immediate events 
-		</div>
-		<div id="warning_events"></div>
-	</div>
-
 	<div id="popupMask" class="popupMask" onclick="hidePopupDialog();"></div>
-
 
 	<!-- add new calendar -->
 	<div id="calendarAddForm" class="ui-corner-all">
-		<div class="title">Add new
-			calendar<img src="IMG/close_icon.png"
+		<div class="title">
+			Add new calendar<img src="IMG/close_icon.png"
 				style="float: right; background-color: #FFF; cursor: pointer;"
-				onClick="hidePopupDialog();" /></div>
+				onClick="hidePopupDialog();" />
+		</div>
 		<div class="addForm">
 			<form>
 				<input type="text" name="calendarName" id="calendarName"
-					style="width: 95%;" placeholder="Calendar name" /> 
-					<button name="addCalendarButton" id="addCalendarSubmit">Create</button>
+					style="width: 95%;" placeholder="Calendar name" />
+				<button name="addCalendarButton" id="addCalendarSubmit">Create</button>
 			</form>
 		</div>
 	</div>
-
 	<!-- edit calendar -->
 	<div id="calendarEditForm" class="ui-corner-all">
-	<button onClick="showOnlyThisCalendar();">Show
-			only this calendar</button>
-			<img src="IMG/close_icon.png"
-				style="float: right; background-color: #FFF; cursor: pointer;top: -12px; right: 1px;position: absolute;"
-				onClick="hidePopupDialog();" />
-	<button onClick="showEditCalendarForm();">Edit settings</button>
-	<button  onClick="removeCalendarConfirm();">Remove
+		<button onClick="showOnlyThisCalendar();">Show only this
 			calendar</button>
+		<img src="IMG/close_icon.png"
+			style="float: right; background-color: #FFF; cursor: pointer; top: -12px; right: 1px; position: absolute;"
+			onClick="hidePopupDialog();" />
+		<button onClick="showEditCalendarForm();">Edit settings</button>
+		<button onClick="removeCalendarConfirm();">Remove calendar</button>
 	</div>
-    
+
 	<!-- edit settings of calendar -->
 	<div id="editEventsForm">
-			<form>
-        	<div style="text-align:center; padding-bottom:10px;">Edit event</div>
-            <div class="eventEditForm">
-            	<div>
-                	<div style="width:50%; float:right;">
-                    <input type="text" name="eventEditName" id="eventEditName" placeholder="Event name"/><br>
-                    <input type="text" name="eventEditDesc" id="eventEditDesc" placeholder="Event description" /><br>
-                    <input type="text" name="eventEditDateStart" id="eventEditDateStart"/><br>
-                    <input type="text" name="eventEdirDateFinish" id="eventEdirDateFinish"/>
-                    </div>
-                    <div >
-                    <label>Name of event:</label><br>
-                    <label>Description:</label><br>
-                    <label>Start time:</label><br>
-                    <label>Finish time:</label>        
-                    </div>
-                </div>
-                <br>
-                <div style="text-align:center; width:100%">
-                Notification time
-                </div>
-                <div style="text-align:center;">
-                    <label>Days</label><input type="text" name="" id="" size="2" value="0"/>
-                    <label>Hours</label><input type="text" name="" id="" size="2" value="0"/>
-                    <label>Minutes</label><input type="text" name="" id="" size="2" value="0"/>
-                 </div>
-                 <div style="text-align:center"> <input type="button" name="editEventsUpdateButton" id="editEventsUpdateButton" 
-                 value="Update"/>
-                 </div>
-            </div>
-	    </form>
+		<form>
+			<div style="text-align: center; padding-bottom: 10px;">Edit
+				event</div>
+			<div class="eventEditForm">
+				<div>
+					<div style="width: 50%; float: right;">
+						<input type="text" name="eventEditName" id="eventEditName"
+							placeholder="Event name" /><br> <input type="text"
+							name="eventEditDesc" id="eventEditDesc"
+							placeholder="Event description" /><br> <input type="text"
+							name="eventEditDateStart" id="eventEditDateStart" /><br> <input
+							type="text" name="eventEdirDateFinish" id="eventEdirDateFinish" />
+					</div>
+					<div>
+						<label>Name of event:</label><br> <label>Description:</label><br>
+						<label>Start time:</label><br> <label>Finish time:</label>
+					</div>
+				</div>
+				<br>
+				<div style="text-align: center; width: 100%">Notification time
+				</div>
+				<div style="text-align: center;">
+					<label>Days</label><input type="text" name="" id="" size="2"
+						value="0" /> <label>Hours</label><input type="text" name="" id=""
+						size="2" value="0" /> <label>Minutes</label><input type="text"
+						name="" id="" size="2" value="0" />
+				</div>
+				<div style="text-align: center">
+					<input type="button" name="editEventsUpdateButton"
+						id="editEventsUpdateButton" value="Update" />
+				</div>
+			</div>
+		</form>
 	</div>
-    
-    <div id="addEventsForm">
-			<form>
-        	<div style="text-align:center; padding-bottom:10px;">Add event</div>
-            <div class="addEditForm">
-            	<div>
-                	<div style="width:50%; float:right;">
-                    <input type="text" name="eventAddName" id="eventAddName" placeholder="Event name"/><br>
-                    <input type="text" name="eventAddDesc" id="eventAddDesc" placeholder="Event description" /><br>
-                    <input type="text" name="evntAddDateStart" id="evntAddDateStart"/><br>
-                    <input type="text" name="eventAddDateFinish" id="eventAddDateFinish"/>
-                    </div>
-                    <div >
-                    <label>Name of event:</label><br>
-                    <label>Description:</label><br>
-                    <label>Start time:</label><br>
-                    <label>Finish time:</label>        
-                    </div>
-                </div>
-                <br>
-                <div style="text-align:center; width:100%">
-                Notification time
-                </div>
-                <div style="text-align:center;">
-                    <label>Days</label><input type="text" name="" id="" size="2" value="0"/>
-                    <label>Hours</label><input type="text" name="" id="" size="2" value="0"/>
-                    <label>Minutes</label><input type="text" name="" id="" size="2" value="0"/>
-                 </div>
-                 <div style="text-align:center"> <input type="button" name="addCalendarButton" id="addCalendarSubmit" 
-                 value="Create event!"/>
-                 </div>
-            </div>
-	    </form>
+
+	<div id="addEventsForm">
+		<form>
+			<div style="text-align: center; padding-bottom: 10px;">Add
+				event</div>
+			<div class="addEditForm">
+				<div>
+					<div style="width: 50%; float: right;">
+						<input type="text" name="eventAddName" id="eventAddName"
+							placeholder="Event name" /><br> <input type="text"
+							name="eventAddDesc" id="eventAddDesc"
+							placeholder="Event description" /><br> <input type="text"
+							name="evntAddDateStart" id="evntAddDateStart" /><br> <input
+							type="text" name="eventAddDateFinish" id="eventAddDateFinish" />
+					</div>
+					<div>
+						<label>Name of event:</label><br> <label>Description:</label><br>
+						<label>Start time:</label><br> <label>Finish time:</label>
+					</div>
+				</div>
+				<br>
+				<div style="text-align: center; width: 100%">Notification time
+				</div>
+				<div style="text-align: center;">
+					<label>Days</label><input type="text" name="" id="" size="2"
+						value="0" /> <label>Hours</label><input type="text" name="" id=""
+						size="2" value="0" /> <label>Minutes</label><input type="text"
+						name="" id="" size="2" value="0" />
+				</div>
+				<div style="text-align: center">
+					<input type="button" name="addCalendarButton"
+						id="addCalendarSubmit" value="Create event!" />
+				</div>
+			</div>
+		</form>
 	</div>
-    
-        <div id="editCalendarForm" class="ui-corner-all">
-        	<div class="title">Edit calendar</div>
-			<form>
-            <div class="addEditForm">
-            	<div>
-                	<div style="width:50%; float:right;">
-                    <input type="text" name="editEventAddNameInput" id="editEventAddNameInput" placeholder="Calendar name"/>
-                    </div>
-                	<div >
-                    <label>Name:</label><br>        
-                    </div>
-                </div>
-                <br>
-                <div style="text-align:center; width:100%">
-                Shared settings
-                </div>
-                <div>
-                	<div style="width:50%; float:right;">
-                    <input type="text" name="" id="" placeholder="Friend name"/>
-                    </div>
-                	<div >
-                    <label>Friend: </label>       
-                    </div>
-                </div>
-                <div style="text-align:center"><br><input type="button" name="saveCalendarButton" id="saveCalendarButton" 
-                 value="Save"/>
-                 </div>
-            </div>
-	    </form>
+
+	<div id="editCalendarForm" class="ui-corner-all">
+		<div class="title">Edit calendar</div>
+		<form>
+			<div class="addEditForm">
+				<div>
+					<div style="width: 50%; float: right;">
+						<input type="text" name="editEventAddNameInput"
+							id="editEventAddNameInput" placeholder="Calendar name" />
+					</div>
+					<div>
+						<label>Name:</label><br>
+					</div>
+				</div>
+				<br>
+				<div style="text-align: center; width: 100%">Shared settings</div>
+				<div>
+					<div style="width: 50%; float: right;">
+						<input type="text" name="" id="" placeholder="Friend name" />
+					</div>
+					<div>
+						<label>Friend: </label>
+					</div>
+				</div>
+				<div style="text-align: center">
+					<br> <input type="button" name="saveCalendarButton"
+						id="saveCalendarButton" value="Save" />
+				</div>
+			</div>
+		</form>
 	</div>
-	
+
 	<div id="viewEventForm">
-			<form>
-        	<div style="text-align:center; padding-bottom:10px;">Edit event</div>
-            <div class="eventEditForm">
-            	<div>
-                	<div style="width:50%; float:right;">
-                    <label>events name</label>
-                    <label>description</label><br>
-                    <label>start time</label><br>
-                    <label>finish time</label><br>
-                    </div>
-                    <div >
-                    <label>Name of event:</label><br>
-                    <label>Description:</label><br>
-                    <label>Start time:</label><br>
-                    <label>Finish time:</label>        
-                    </div>
-                </div>
-                <br>
-                <div style="text-align:center; width:100%">
-                Notification time
-                </div>
-                <div style="text-align:center;">
-                    <label>Days: </label>00
-                    <label>Hours: </label>00
-                    <label>Minutes: </label>00
-                 </div>
-                 <div style="text-align:center"><input type="button" style="width:60px;" name="viewShowOkButton" id="viewShowOkButton" 
-                 value="Ok"/> <input type="button" name="viewShowEditEventButton" id="viewShowEditEventButton" 
-                 value="Edit event"/>
-                 </div>
-            </div>
-	    </form>
+		<form>
+			<div style="text-align: center; padding-bottom: 10px;">Edit
+				event</div>
+			<div class="eventEditForm">
+				<div>
+					<div style="width: 50%; float: right;">
+						<label>events name</label> <label>description</label><br> <label>start
+							time</label><br> <label>finish time</label><br>
+					</div>
+					<div>
+						<label>Name of event:</label><br> <label>Description:</label><br>
+						<label>Start time:</label><br> <label>Finish time:</label>
+					</div>
+				</div>
+				<br>
+				<div style="text-align: center; width: 100%">Notification time
+				</div>
+				<div style="text-align: center;">
+					<label>Days: </label>00 <label>Hours: </label>00 <label>Minutes:
+					</label>00
+				</div>
+				<div style="text-align: center">
+					<input type="button" style="width: 60px;" name="viewShowOkButton"
+						id="viewShowOkButton" value="Ok" /> <input type="button"
+						name="viewShowEditEventButton" id="viewShowEditEventButton"
+						value="Edit event" />
+				</div>
+			</div>
+		</form>
 	</div>
-	
-    
-    <div id="confirm"></div>
+
+
+	<div id="confirm"></div>
 </body>
 </html>
