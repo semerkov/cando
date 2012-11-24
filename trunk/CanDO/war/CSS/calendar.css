@@ -385,9 +385,20 @@ ul.nav a:hover,ul.nav a:active,ul.nav a:focus {
 	left: 100px;
 	display: none;
 }
+#calendarAddForm .title{
+	text-align: left;
+	margin-top: 7px;
+	margin-bottom: 7px;
+	padding-left: 15px;
+	background-color: #36F;
+	color: #FFF;
+	font-size: 16px;
+}
+#calendarAddForm #addCalendarSubmit{
+	float: left;
+}
 
 .calendarEdit:hover {
-	border: #333 solid 1px;
 	color: #333;
 	cursor: pointer;
 }
@@ -409,12 +420,20 @@ ul.nav a:hover,ul.nav a:active,ul.nav a:focus {
 #calendarEditForm {
 	z-index: 301;
 	position: absolute;
-	border: #333 solid 1px;
 	background-color: #FFF;
 	width: 230px;
 	top: 100px;
 	left: 100px;
 	display: none;
+}
+#calendarEditForm button{
+	width: 228px;
+	font-size: 17px;
+	margin:1px;
+	-moz-border-radius: 2px; /* Firefox */
+	  -webkit-border-radius: 2px; /* Safari, Chrome */
+	  -khtml-border-radius: 2px; /* KHTML */
+	  border-radius: 2px;
 }
 
 .popupMask {
@@ -485,6 +504,15 @@ ul.nav a:hover,ul.nav a:active,ul.nav a:focus {
 	background-color:#FFF;
 	width:300px;
 	display:none;
+}
+#editCalendarForm .title{
+	text-align: left;
+	margin-top: 7px;
+	margin-bottom: 7px;
+	padding-left: 15px;
+	background-color: #36F;
+	color: #FFF;
+	font-size: 16px;
 }
 #viewEventForm {
 	padding:20px;

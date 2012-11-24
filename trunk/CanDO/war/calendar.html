@@ -138,9 +138,11 @@
 
 
 	<!-- add new calendar -->
-	<div id="calendarAddForm">
-		<div style="text-align: center; margin-top: 10px;">Add new
-			calendar</div>
+	<div id="calendarAddForm" class="ui-corner-all">
+		<div class="title">Add new
+			calendar<img src="IMG/close_icon.png"
+				style="float: right; background-color: #FFF; cursor: pointer;"
+				onClick="hidePopupDialog();" /></div>
 		<div class="addForm">
 			<form>
 				<input type="text" name="calendarName" id="calendarName"
@@ -152,12 +154,15 @@
 	</div>
 
 	<!-- edit calendar -->
-	<div id="calendarEditForm">
-		<div class="editForm" onClick="showOnlyThisCalendar();">Show
-			only this calendar</div>
-		<div class="editForm" onClick="showEditCalendarForm();">Edit settings</div>
-		<div class="editForm" onClick="removeCalendarConfirm();">Remove
-			calendar</div>
+	<div id="calendarEditForm" class="ui-corner-all">
+	<button onClick="showOnlyThisCalendar();">Show
+			only this calendar</button>
+			<img src="IMG/close_icon.png"
+				style="float: right; background-color: #FFF; cursor: pointer;top: -12px; right: 1px;position: absolute;"
+				onClick="hidePopupDialog();" />
+	<button onClick="showEditCalendarForm();">Edit settings</button>
+	<button  onClick="removeCalendarConfirm();">Remove
+			calendar</button>
 	</div>
     
 	<!-- edit settings of calendar -->
@@ -229,9 +234,9 @@
 	    </form>
 	</div>
     
-        <div id="editCalendarForm">
+        <div id="editCalendarForm" class="ui-corner-all">
+        	<div class="title">Edit calendar</div>
 			<form>
-        	<div style="text-align:center; padding-bottom:10px;">Edit calendar</div>
             <div class="addEditForm">
             	<div>
                 	<div style="width:50%; float:right;">

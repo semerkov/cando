@@ -27,5 +27,6 @@
 <div class="item active" id="myTodoItem">
 	<div class="square active"></div>
 	<div class="calendarEdit">▼</div>
-	Tasks
+	<div class="calendar_id">some task key</div>
+	<div class="calendar_name">Tasks</div>
 </div>
