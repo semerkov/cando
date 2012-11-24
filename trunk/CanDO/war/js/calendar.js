@@ -98,6 +98,8 @@ $(document).ready(
 
 
 			$( "button" ).button();
+			$( "#calendarSideBarDatepicker" ).datepicker();
+			$("input").addClass('ui-corner-all');
 			
 			$('#saveCalendarButton').click(function(e){
 				
@@ -138,33 +140,28 @@ $(document).ready(
 					$('.todoWrapper').css('width', '0%');
 					arrow.toggleClass('arrow-l', true);
 					arrow.toggleClass('arrow-r', false);
-					calendar.css('width', '82%');
+					calendar.css('width', '77%');
 					$(this).css('left', '-10px');
 				} else {
 					slider.css('display', 'block')
-					$('.todoWrapper').css('width', '15%');
+					$('.todoWrapper').css('width', '20%');
 					arrow.toggleClass('arrow-r', true);
 					arrow.toggleClass('arrow-l', false);
-					calendar.css('width', '68%');
+					calendar.css('width', '58%');
 					$(this).css('left', '-22px');
 
 				}
 			});
 
-			$("li").click(function() {
-				var arrow = $(this).children('span');
+			$("nav button").click(function() {
 				var div = $(this).next('div').first();
 				if ($(this).hasClass('active')) {
 					$(this).toggleClass('active', false);
-					arrow.toggleClass('arrow-u', false);
-					arrow.toggleClass('arrow-d', true);
 					div.hide("slide", {
 						direction : "up"
 					}, 300);
 				} else {
 					$(this).toggleClass('active', true);
-					arrow.toggleClass('arrow-u', true);
-					arrow.toggleClass('arrow-d', false);
 					div.show("slide", {
 						direction : "up"
 					}, 300);
@@ -310,6 +307,15 @@ function retrieveCalenderTable(year, month, monthAction) {
 				},
 				success : function(data) {
 					$('#calendarTableWrapper').html(data);
+					$('#calendarTableWrapper table').css('height','90%');
+					if($('#calendarTableWrapper table tr').length==5){
+						// 5 weeks
+						$('#calendarTableWrapper table tr').css('height','20%');
+					}else{
+						// 6 weeks
+						$('#calendarTableWrapper table tr').css('height','16.6%');
+					}
+					
 					var calendarHeaderText = getMonthNameByNumber(parseInt($(
 							'#currMonth').text()))
 							+ $('#currYear').text();

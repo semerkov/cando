@@ -37,13 +37,13 @@
 		<div class="content">
 
 			<div class="calendarWrapper">
-				<div class="calendarSidebar">
-					<ul class="nav">
-						<li class="active">
-							<div class="calendarAdd">▼</div> <a href="#">My calendars</a>
-						</li>
+				<div class="calendarSidebar ui-corner-all">
+					<div id="calendarSideBarDatepicker"></div>
+					<nav>
+						<button class="active">
+							<div class="calendarAdd ui-icon ui-icon-triangle-1-ne"></div>My calendars</button>
 						<div class="myCalendar"></div>
-						<li class="active"><a href="#">Others calendars</a></li>
+						<button class="active">Others calendars</button>
 						<div class="#othersCalendar">
 							<div class="item active">
 								<div class="square active"></div>
@@ -62,18 +62,16 @@
 								Work calendar
 							</div>
 						</div>
-					</ul>
+					</nav>
 					<div class="clearfloat"></div>
 				</div>
 			</div>
 
 			<div class="calendar">
 				<div class="calendarHeader">
-					<input type="button" name="todayButton" id="todayButton"
-						 value="Today" /> 
-					<input type="button" name="prevMonth" id="prevMonth" value="&lt;"/> 
-                    <input type="button" name="nextMonth" id="nextMonth" value="&gt;"/>
-
+					<button name="todayButton" id="todayButton">Today</button>
+					<button name="prevMonth" id="prevMonth">&lt;</button>
+					<button name="nextMonth" id="nextMonth" >&gt;</button>
 					<span id="currentMonth">November 2012</span>
 				</div>
 				<table id="daysNameTable" width="100%" border="0" cellspacing="0"
@@ -95,10 +93,9 @@
 				<div class="todoArrows">
 					<span class="arrow-r arrows"></span>
 				</div>
-				<div class="todoSidebar">
-					<div class="close"></div>
-					<ul class="nav">
-						<li class="active"><a href="#">My to-do`s</a></li>
+				<div class="todoSidebar ui-corner-all">
+					<nav>
+						<button class="active">My to-do`s</button>
 						<div class="#myTodos">
 							<div class="item">
 								<div class="square"></div>
@@ -109,14 +106,14 @@
 								Read books
 							</div>
 						</div>
-						<li class="active"><a href="#">Others to-do`s</a></li>
+						<button class="active">Others to-do`s</button>
 						<div class="#othersTodos">
 							<div class="item">
 								<div class="square"></div>
 								See films
 							</div>
 						</div>
-					</ul>
+					</nav>
 					<div class="todoActions"></div>
 				</div>
 			</div>
@@ -144,9 +141,8 @@
 		<div class="addForm">
 			<form>
 				<input type="text" name="calendarName" id="calendarName"
-					style="width: 95%;" placeholder="Calendar name" /> <input
-					type="button" name="addCalendarButton" id="addCalendarSubmit"
-					value="Create" />
+					style="width: 95%;" placeholder="Calendar name" /> 
+					<button name="addCalendarButton" id="addCalendarSubmit">Create</button>
 			</form>
 		</div>
 	</div>
