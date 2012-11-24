@@ -84,7 +84,7 @@ public class LoginServlet extends HttpServlet {
 			else
 			{
 				response.sendError(HttpServletResponse.SC_METHOD_NOT_ALLOWED,
-						"Do not get parameters to login");
+						"Do not set parameters to login");
 			}			
 		} else {
 			response.sendError(HttpServletResponse.SC_METHOD_NOT_ALLOWED,
