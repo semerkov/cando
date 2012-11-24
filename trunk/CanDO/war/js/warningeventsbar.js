@@ -1,7 +1,7 @@
 $(document).ready(function(e) {
 	loading();
 	$('#warning_events_header').click(function(){
-		$("#warning_events").toggle('slow');
+		$("#warning_events").toggle({'effect':'blind','duration':'slow'});
 	});
 });
 
