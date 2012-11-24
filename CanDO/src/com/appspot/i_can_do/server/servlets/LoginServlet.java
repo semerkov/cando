@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.servlet.ServletConfig;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
@@ -92,5 +93,21 @@ public class LoginServlet extends HttpServlet {
 					"Not existing action!");
 			return;
 		}
+	}
+	
+	public User validateRememberCookies(String email,String hash,String ipAdress)
+	{
+		User user;
+		try{
+			user = security.findUser(email);
+		}
+		catch(NoResultException ex){return null;}
+		
+		if(user.getRememberCookiesHash().toString()==hash
+				&&user.getRememberIpAdress()==ipAdress
+				&&((new Date()).getTime()-user.getLastEntryDate().getTime())<EXISTING_REMEMBER_COOKIE_TIME*100){
+			return user;
+		}
+		return null;	
 	}
 }
