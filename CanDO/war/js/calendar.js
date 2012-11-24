@@ -17,7 +17,6 @@ function getActiveCalendars()
 		
 		var n = $(c).find('.item.active .calendar_name');
 		arr_active_calendar_name = new Array(n.length);
-		alert(n.length);
 			n.each(function(index, element) {
                 arr_active_calendar_name[index]=element.innerText;
             });
@@ -27,7 +26,7 @@ function getActiveCalendars()
 
 function getCurrentCalendarName()
 {
-	var c = $('.myCalendar .item .calendar_id');
+	return $(".myCalendar div:contains("+$(calendar_id).text()+")").next(".calendar_name").text();
 }
 
 function calendarTableClicks(){
@@ -98,6 +97,8 @@ $(document).ready(
 					'<span class="arrow-u navarrows">&nbsp;</span>');
 
 
+			$( "button" ).button();
+			
 			$('#saveCalendarButton').click(function(e){
 				
 				
@@ -231,10 +232,18 @@ function showEditCalendarForm(){
 		var W = $(window).width();
 		var t = $('#editCalendarForm');
 		showPopupDialog('editCalendarForm',(H - t.height())/2, (W - t.width())/2);
+		$("#editEventAddNameInput").css('border-color','white');
+		$("#editEventAddNameInput").val(getCurrentCalendarName());
 	};
 	
 function showOnlyThisCalendar() {
-	alert("Not completed yet");
+	$('.myCalendar').find('.item.active .calendar_id').each(function(index, element) {
+		$(element).click();
+    });
+	$(".myCalendar div:contains("+$(calendar_id).text()+")").parent().click();
+	hidePopupDialog();
+	//retrive table for selected items
+	
 };
 
 
@@ -372,6 +381,7 @@ function retrieveEventCalendarMenu() {
 		success : function(data) {
 			$('.myCalendar').html(data);
 			calendarMenuClicks();
+			getActiveCalendars();
 		},
 		error : function(data) {
 			alert("Error retrieve EventCalendarMenu")
