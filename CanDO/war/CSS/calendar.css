@@ -587,3 +587,13 @@ ul.nav a:hover,ul.nav a:active,ul.nav a:focus {
 	margin-left:0px;
 	width:25px;
 }
+
+#todosEditForm {
+	z-index: 301;
+	position: absolute;
+	background-color: #FFF;
+	width: 230px;
+	top: 100px;
+	left: 100px;
+	display: none;
+}
