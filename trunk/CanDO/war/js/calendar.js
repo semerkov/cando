@@ -212,7 +212,7 @@ $(document).ready(
 			
 			$('.beforeDays').spinner({min:'0',max:'90'});
 			$('.beforeHours').spinner({min:'0',max:'24'});
-			$('.beforeMinutes').spinner({min:'0',max:'60'});
+			$('.beforeMinutes').spinner({min:'0',max:'60',step:'5'});
 		});
 
 function showEditCalendarForm(){
