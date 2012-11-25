@@ -4,6 +4,9 @@ var curCalendarName="";
 var arr_active_calendar_id;
 var arr_active_calendar_name;
 
+var curTodoName="";
+var todo_id="";
+
 function getActiveCalendars()
 {
 	var c = $('.myCalendar');
@@ -149,7 +152,7 @@ $(document).ready(
 				}
 			});
 
-			$("nav button").click(function() {
+			$("nav button").click(function(e) {
 				var div = $(this).next('div').first();
 				if ($(this).hasClass('active')) {
 					$(this).toggleClass('active', false);
@@ -162,6 +165,7 @@ $(document).ready(
 						direction : "up"
 					}, 300);
 				}
+				e.stopPropagation();
 			});
 
 			$("#nextMonth").click(function(e) {
@@ -389,7 +393,7 @@ function retrieveEventCalendarMenu() {
 };
 
 function calendarMenuClicks() {
-	$(".item").click(function() {
+	$(".myCalendar .item").click(function(e) {
 		var square = $(this).children('div').first();
 		if ($(this).hasClass('active')) {
 			$(this).toggleClass('active', false);
@@ -398,6 +402,7 @@ function calendarMenuClicks() {
 			$(this).toggleClass('active', true);
 			square.toggleClass('active', true);
 		}
+		e.stopPropagation();
 	});
 	
 	$("#myTodoItem").click(function() {
@@ -442,8 +447,8 @@ function calendarMenuClicks() {
 };
 
 function todoMenuClicks() {
-	$(".todoSidebar .item").click(function() {
-		var square = $(this).children('div').first();
+	$(".todoSidebar .item").click(function(e) {
+		var square = $('.square',this).first();
 		if ($(this).hasClass('active')) {
 			$(this).toggleClass('active', false);
 			square.toggleClass('active', false);
@@ -451,6 +456,8 @@ function todoMenuClicks() {
 			$(this).toggleClass('active', true);
 			square.toggleClass('active', true);
 		}
+		alert('item click');
+		e.stopPropagation();
 	});
 	/*
 	$("#myTodoItem").click(function() {
@@ -480,16 +487,29 @@ function todoMenuClicks() {
 	*/
 	$('.todoSidebar .item').mouseenter(function(){
 		$(this).find('.todoEdit').css('display', 'block');
+		$(this).find('.todoRemove').css('display', 'block');
 	}).mouseleave(function(){
 		$(this).find('.todoEdit').css('display', 'none');
+		$(this).find('.todoRemove').css('display', 'none');
 	});
+	
 	$('.todoSidebar .todoEdit').click(
 			function(e) {
 				var t = $(this);
+				curTodoName = t.parent().text();
+				todo_id = t.find('.todo_id').first();
+				showPopupDialog('calendarEditForm',
+						t.offset().top + t.height(), t.offset().left);
+				alert('ffgdfg');
+				e.stopPropagation();
+			});
+	$('.todoSidebar .todoRemove').click(
+			function(e) {
+				var t = $(this);
 				curCalendarName = t.parent().text();
-				calendar_id = t.next('.calendar_id').first();
+				todo_id = t.find('.todo_id').first();
 				showPopupDialog('calendarEditForm',
 						t.offset().top + t.height(), t.offset().left);
 				e.stopPropagation();
-			});
+			});	
 };
