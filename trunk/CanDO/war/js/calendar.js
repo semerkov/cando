@@ -496,8 +496,8 @@ function todoMenuClicks() {
 				var t = $(this);
 				curTodoName = t.parent().text();
 				todo_id = t.find('.todo_id').first();
-				showPopupDialog('calendarEditForm',
-						t.offset().top + t.height(), t.offset().left - $('#calendarEditForm').width());
+				showPopupDialog('todosEditForm',
+						t.offset().top + t.height(), t.offset().left - $('#todosEditForm').width());
 				e.stopPropagation();
 			});
 };
