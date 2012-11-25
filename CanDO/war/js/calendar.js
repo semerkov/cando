@@ -51,10 +51,15 @@ function calendarTableClicks(){
 		}
 	});
 	$('#eventEdirDateFinish').datetimepicker({
-		dateFormat: 'dd.mm.yy'
+		dateFormat: 'dd.mm.yy',
+		minDateTime: dateS
 		});
-	$('#evntAddDateStart').datetimepicker({});
-	$('#eventAddDateFinish').datetimepicker({});
+	$('#evntAddDateStart').datetimepicker({
+		dateFormat: 'dd.mm.yy',
+		minDateTime: dateS});
+	$('#eventAddDateFinish').datetimepicker({
+		dateFormat: 'dd.mm.yy',
+		minDateTime: dateS});
 	
 	$('#calendarTableWrapper li').click(function(e){
 		var H = $(window).height();
