@@ -426,23 +426,21 @@ ul.nav a:hover,ul.nav a:active,ul.nav a:focus {
 	display : none;
 	border-radius:3px;
 }
-.todoEdit:hover {
-	color: #333;
-	cursor: pointer;
-}
 .todoEdit{
-	position: relative;
-	border: #666 solid 1px;
-	color: #666;
-	float: left;
-	top: 4px;
-	right: 4px;
-	text-align: center;
-	vertical-align: central;
-	font-family: Arial, Helvetica, sans-serif;
-	font-size: 8px;
-	display : none;
-	border-radius:3px;
+	width:20px !important;
+	height:20px !important;
+	margin-right: 7px !important;
+	padding:0px !important;
+	float: right;
+	display:none;
+}
+.todoRemove{
+	width:20px !important;
+	height:20px !important;
+	margin-right: 7px !important;
+	padding:0px !important;
+	float: right;
+	display:none;
 }
 #calendarEditForm {
 	z-index: 301;
