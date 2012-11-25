@@ -209,6 +209,10 @@ $(document).ready(
 			$('#editEvent').click(function(e) {
 				alert("edit event");
 			});
+			
+			$('.beforeDays').spinner({min:'0',max:'90'});
+			$('.beforeHours').spinner({min:'0',max:'24'});
+			$('.beforeMinutes').spinner({min:'0',max:'60'});
 		});
 
 function showEditCalendarForm(){
