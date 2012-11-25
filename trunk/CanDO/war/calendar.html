@@ -16,7 +16,9 @@
 <script type="text/javascript" src="js/calendar.js"></script>
 <script type="text/javascript" src="js/warningeventsbar.js"></script>
 
+
 </head>
+
 <body>
 	<div class="container">
 
@@ -48,31 +50,31 @@
 						<div class="#othersCalendar">
 							<div class="item active">
 								<div class="square active"></div>
-								<div class="calendarEdit">▼</div>
+								<button class="calendarEdit ui-icon ui-icon-pencil "></button>
 								New Year Parties!
 								<div class="owner_name">Artem Pashenko</div>
 							</div>
 							<div class="item">
 								<div class="square"></div>
-								<div class="calendarEdit">▼</div>
+								<button class="calendarEdit ui-icon ui-icon-pencil "></button>
 								Happy Birthday`s
 								<div class="owner_name">Natalia Chistotina</div>
 							</div>
 							<div class="item">
 								<div class="square"></div>
-								<div class="calendarEdit">▼</div>
+								<button class="calendarEdit ui-icon ui-icon-pencil "></button>
 								Study calendar
 								<div class="owner_name">Vlidimir Semerkov</div>
 							</div>
 							<div class="item active">
 								<div class="square active"></div>
-								<div class="calendarEdit">▼</div>
+								<button class="calendarEdit ui-icon ui-icon-pencil "></button>
 								Work calendar
 								<div class="owner_name">Boss</div>
 							</div>
 						</div>
 					</nav>
-					<!-- events bar -->
+					<!-- warning events bar -->
 					<div id="warning_events_bar">
 						<div id="warning_events_header">Immediate events</div>
 						<div id="warning_events"></div>
@@ -110,27 +112,28 @@
 				<div class="todoSidebar ui-corner-all">
 					<nav>
 						<button class="active">My to-do`s</button>
+						<div class="todoAdd ui-icon ui-icon-triangle-1-nw"></div>
 						<div class="myTodos">
 							<div class="item">
 								<div class="square"></div>
-                                <div class="todoEdit">▼</div>
+                                <button class="todoRemove ui-icon-trash ui-icon"></button>
+                                <button class="todoEdit ui-icon-pencil ui-icon"></button>
 								Sergey to-do
                                 <div class="todo_id" style="display:none;">23</div>
 							</div>							
 							<div class="item active">
 								<div class="square active"></div>
-                                <div class="todoEdit">▼</div>
+                                <button class="todoRemove ui-icon-trash ui-icon"></button>
+                                <button class="todoEdit ui-icon-pencil ui-icon"></button>
 								Read books
                                 <div class="todo_id" style="display:none;">23</div>
 							</div>
-                            <div style="text-align:center; margin-bottom:3px;">
-                            </div>
 						</div>
 						<button class="active">Others to-do`s</button>
 						<div class="#othersTodos">
 							<div class="item">
 								<div class="square"></div>
-                                <div class="todoEdit">▼</div>
+                                <button class="todoRemove ui-icon-trash ui-icon"></button>
 								See films
                                 <div class="owner_name">Vladislav Mazur</div>
 							</div>
@@ -146,21 +149,20 @@
 	<div id="popupMask" class="popupMask" onclick="hidePopupDialog();"></div>
 
 	<!-- add new calendar -->
-	<div id="calendarAddForm" class="ui-corner-all">
-		<div class="title">
-			Add new calendar<img src="IMG/close_icon.png"
-				style="float: right; background-color: #FFF; cursor: pointer;"
-				onClick="hidePopupDialog();" />
+	<div id="calendarAddForm" class="ui-dialog ui-widget ui-widget-content ui-corner-all ui-draggable ui-resizable">
+		<div class="ui-dialog-titlebar ui-widget-header ui-helper-clearfix ui-corner-all">
+			Add new calendar
+			<div class="form_title ui-dialog-titlebar-close">
+				<span class="ui-icon ui-icon-closethick ui-corner-all" onClick="hidePopupDialog();">close</span>
+			</div>
 		</div>
 		<div class="addForm">
-			<form>
 				<input type="text" name="calendarName" id="calendarName"
-					style="width: 95%;" placeholder="Calendar name" />
+					style="width: 98%;" placeholder="Calendar name" />
 				<button name="addCalendarButton" id="addCalendarSubmit">Create</button>
-			</form>
 		</div>
 	</div>
-	<!-- edit calendar -->
+	<!-- calendar change pop-up-->
 	<div id="calendarEditForm" class="ui-corner-all">
 		<button onClick="showOnlyThisCalendar();">Show only this
 			calendar</button>
@@ -172,6 +174,41 @@
 	</div>
 
 	<!-- edit settings of calendar -->
+	<div id="editCalendarForm" class="ui-dialog ui-widget ui-widget-content ui-corner-all ui-draggable ui-resizable">
+		<div class="ui-dialog-titlebar ui-widget-header ui-helper-clearfix ui-corner-all">
+			Edit calendar
+			<div class="form_title ui-dialog-titlebar-close">
+				<span class="ui-icon ui-icon-closethick ui-corner-all" onClick="hidePopupDialog();">close</span>
+			</div>
+		</div>
+		<div class="addEditForm">
+			<div>
+				<div style="width: 50%; float: right;">
+					<input type="text" name="editEventAddNameInput"
+						id="editEventAddNameInput" placeholder="Calendar name" />
+				</div>
+				<div>
+					<label>Name:</label><br>
+				</div>
+			</div>
+			<br>
+			<div style="text-align: center; width: 100%">Shared settings</div>
+			<div>
+				<div style="width: 50%; float: right;">
+					<input type="text" name="" id="" placeholder="Friend name" />
+				</div>
+				<div>
+					<label>Friend: </label>
+				</div>
+			</div>
+			<div style="text-align: center">
+				<br> <button type="button" name="saveCalendarButton"
+					id="saveCalendarButton">Save</button>
+			</div>
+		</div>
+	</div>
+	
+		
 	<div id="editEventsForm">
 		<form>
 			<div style="text-align: center; padding-bottom: 10px;">Edit
@@ -207,7 +244,7 @@
 			</div>
 		</form>
 	</div>
-
+	
 	<div id="addEventsForm">
 		<form>
 			<div style="text-align: center; padding-bottom: 10px;">Add
@@ -243,38 +280,7 @@
 			</div>
 		</form>
 	</div>
-
-	<div id="editCalendarForm" class="ui-corner-all">
-		<div class="title">Edit calendar</div>
-		<form>
-			<div class="addEditForm">
-				<div>
-					<div style="width: 50%; float: right;">
-						<input type="text" name="editEventAddNameInput"
-							id="editEventAddNameInput" placeholder="Calendar name" />
-					</div>
-					<div>
-						<label>Name:</label><br>
-					</div>
-				</div>
-				<br>
-				<div style="text-align: center; width: 100%">Shared settings</div>
-				<div>
-					<div style="width: 50%; float: right;">
-						<input type="text" name="" id="" placeholder="Friend name" />
-					</div>
-					<div>
-						<label>Friend: </label>
-					</div>
-				</div>
-				<div style="text-align: center">
-					<br> <input type="button" name="saveCalendarButton"
-						id="saveCalendarButton" value="Save" />
-				</div>
-			</div>
-		</form>
-	</div>
-
+	
 	<div id="viewEventForm">
 		<form>
 			<div style="text-align: center; padding-bottom: 10px;">Edit
@@ -306,16 +312,8 @@
 			</div>
 		</form>
 	</div>
-	
-    	<!-- edit todos -->
-	<div id="todosEditForm" class="ui-corner-all">
-		<button onClick="#">Edit settings</button>
-		<img src="IMG/close_icon.png"
-			style="float: right; background-color: #FFF; cursor: pointer; top: -12px; right: 1px; position: absolute;"
-			onClick="hidePopupDialog();" />
-		<button onClick="#">Remove task</button>
-	</div>
-	
+
+
 	<div id="confirm"></div>
 </body>
 </html>

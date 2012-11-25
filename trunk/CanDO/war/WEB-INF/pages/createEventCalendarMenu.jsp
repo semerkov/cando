@@ -16,7 +16,7 @@
 	varStatus="status">
 	<div class="item active">
 		<div class="square active"></div>
-		<div class="calendarEdit">▼</div>
+		<button class="calendarEdit ui-icon ui-icon-pencil ui-button ui-widget ui-state-default ui-corner-all"></button>
 		<div class="calendar_id"><%=KeyFactory.keyToString(calendar.get(i).getKey())%></div>
 		<div class="calendar_name"><%=calendar.get(i++).getName()%></div>
 	</div>
@@ -26,7 +26,7 @@
 
 <div class="item" id="myTodoItem">
 	<div class="square"></div>
-	<div class="calendarEdit">▼</div>
+	<button class="calendarEdit ui-icon ui-icon-pencil ui-button ui-widget ui-state-default ui-corner-all"></button>
 	<div class="calendar_id">some task key</div>
 	<div class="calendar_name">Tasks</div>
 </div>

@@ -97,7 +97,7 @@ $(document).ready(
 			retrieveCalender("this");
 
 			todoMenuClicks();
-			
+			$( ".ui-draggable" ).draggable();
 			$( "button" ).button();
 			$( "#calendarSideBarDatepicker" ).datepicker();
 			$("input").addClass('ui-corner-all');
@@ -268,6 +268,7 @@ function removeCalendarConfirm() {
 			},
 			"No" : function() {
 				$(this).dialog("close");
+				hidePopupDialog();
 			}
 		}
 	});
@@ -285,6 +286,9 @@ function retrieveCalender(monthAction) {
 				monthAction);
 	}
 }
+function selectedCalendarsChanged(){
+	retrieveCalenderTable((new Date()).getFullYear(), (new Date()).getMonth(), "this");
+}
 
 function retrieveCalenderTable(year, month, monthAction) {
 	$('#calendarTableWrapper')
@@ -299,7 +303,8 @@ function retrieveCalenderTable(year, month, monthAction) {
 					'action' : 'retrieveCalenderTable',
 					'currentMonth' : month,
 					'monthAction' : monthAction,
-					'currentYear' : year
+					'currentYear' : year,
+					'selectedCalendars' : $(arr_active_calendar_id).length
 				},
 				success : function(data) {
 					$('#calendarTableWrapper').html(data);
