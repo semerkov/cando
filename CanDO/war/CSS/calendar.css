@@ -574,3 +574,15 @@ ul.nav a:hover,ul.nav a:active,ul.nav a:focus {
 	margin-top: 5px;
 	margin-right: 3px;
 }
+.beforeDays{
+	margin-left:0px;
+	width:25px;
+}
+.beforeHours{
+	margin-left:0px;
+	width:25px;
+}
+.beforeMinutes{
+	margin-left:0px;
+	width:25px;
+}
