@@ -43,14 +43,14 @@ public class RootServlet extends HttpServlet {
 			Cookie cookies[] = request.getCookies();
 			if (cookies != null) {
 				for (Cookie c : cookies) {
-					if (c.getName() == LoginServlet.REMEMBER_COOKIE_USER) {
+					if (c.getName().equals(LoginServlet.REMEMBER_COOKIE_USER)) {
 						email = c.getValue();
-					} else if (c.getName() == LoginServlet.REMEMBER_COOKIE_HASH) {
+					} else if (c.getName().equals(LoginServlet.REMEMBER_COOKIE_HASH)) {
 						hash = c.getValue();
 					}
 				}
 				log.info("cookies check");
-				if (email != "" && hash != "") {
+				if ((!email.equals("")) && (!hash.equals(""))) {
 					User user = login.validateRememberCookies(email, hash, ipAdress);
 					if (user != null) {
 						session.setAttribute("user", user.getEmail());

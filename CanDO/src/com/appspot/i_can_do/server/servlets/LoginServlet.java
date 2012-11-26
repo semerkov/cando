@@ -104,8 +104,8 @@ public class LoginServlet extends HttpServlet {
 		}
 		catch(NoResultException ex){return null;}
 		
-		if(user.getRememberCookiesHash().toString()==hash
-				&&user.getRememberIpAdress()==ipAdress
+		if(user.getRememberCookiesHash().toString().equals(hash)
+				&&user.getRememberIpAdress().equals(ipAdress)
 				&&((new Date()).getTime()-user.getLastEntryDate().getTime())<EXISTING_REMEMBER_COOKIE_TIME*100){
 			return user;
 		}
