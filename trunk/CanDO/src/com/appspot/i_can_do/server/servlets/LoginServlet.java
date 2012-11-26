@@ -6,8 +6,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
 import javax.persistence.NoResultException;
 import javax.servlet.ServletConfig;
 import javax.servlet.http.Cookie;
@@ -18,7 +16,6 @@ import javax.servlet.http.HttpSession;
 
 import com.appspot.i_can_do.master.security.User;
 import com.appspot.i_can_do.service.CanDOSecurityService;
-import com.appspot.i_can_do.service.EMF;
 import com.appspot.i_can_do.service.exceptions.LoginFailedException;
 import com.appspot.i_can_do.service.exceptions.LoginNameNotFoundException;
 import com.appspot.i_can_do.service.utils.Crypto;
@@ -30,7 +27,7 @@ public class LoginServlet extends HttpServlet {
 	public static final int EXISTING_REMEMBER_COOKIE_TIME = 604800;
 	public static final String REMEMBER_COOKIE_USER = "userCookie";
 	public static final String REMEMBER_COOKIE_HASH = "userCookieHash";
-	private CanDOSecurityService security;
+	private static CanDOSecurityService security;
 	private static final Logger log = Logger.getLogger(LoginServlet.class
 			.getName());
 	private static final List<String> SECURITY_ACTIONS = Arrays
@@ -57,10 +54,10 @@ public class LoginServlet extends HttpServlet {
 
 					HttpSession session = request.getSession();
 					log.info("create session: " + session.getId());
-					session.setAttribute("user",user.getEmail());
+					session.setAttribute("user", user.getEmail());
 
 					Date curDate = new Date();
-					byte[] rememberCookiesHash = "".getBytes();
+					byte[] rememberCookiesHash = null;
 
 					if (rememberMe.equals("1")) {
 						rememberCookiesHash = Crypto.hashPassword(curDate
@@ -95,20 +92,21 @@ public class LoginServlet extends HttpServlet {
 			return;
 		}
 	}
-	
-	public User validateRememberCookies(String email,String hash,String ipAdress)
-	{
-		User user;
-		try{
+
+	public User validateRememberCookies(String email, String hash,
+			String ipAdress) {
+		User user = null;
+		try {
 			user = security.findUser(email);
+		} catch (NoResultException ex) {}
+		if (user != null) {
+			if (user.getRememberCookiesHash().toString().equals(hash)
+					&& user.getRememberIpAdress().equals(ipAdress)
+					&& ((new Date()).getTime() - user.getLastEntryDate()
+							.getTime()) < EXISTING_REMEMBER_COOKIE_TIME * 100) {
+				return user;
+			}
 		}
-		catch(NoResultException ex){return null;}
-		
-		if(user.getRememberCookiesHash().toString().equals(hash)
-				&&user.getRememberIpAdress().equals(ipAdress)
-				&&((new Date()).getTime()-user.getLastEntryDate().getTime())<EXISTING_REMEMBER_COOKIE_TIME*100){
-			return user;
-		}
-		return null;	
+		return null;
 	}
 }

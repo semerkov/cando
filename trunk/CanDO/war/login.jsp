@@ -32,7 +32,7 @@
 	    <br/>
 	    <input type="password" name="password" id="password" class="ui-corner-all"></input>
 	    <br/>
-	    <input type="checkbox" name="rememberMe" id="rememberMe" class="ui-corner-all" value="0"/>
+	    <input type="checkbox" name="rememberMe" id="rememberMe" class="ui-corner-all" value="1"/>
 	    <label> Keep me log in</label>
 	    <br/>
 	    <button id="login_button">Login</button>
