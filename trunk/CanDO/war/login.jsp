@@ -17,28 +17,27 @@
 
 </head>
 <body>
-<div class="container">
-  <div class="header"><jsp:include page="header.jsp" flush="true" /></div>
-  <div class="content">
-  	<div style="margin-left:80px;" >
-      <form id="login_form">
-      <label> Login:</label>
-      <br/>
-      <input type="text" name="email" id="email"/>
-      <br/>
-      <label> Password:</label>
-      <br/>
-      <input type="password" name="password" id="password" class=""/>
-      <br/>
-      <label> Remember ME:</label>
-      <input type="checkbox" name="rememberMe" id="rememberMe" value="0"/>
-      <br/>
-      <input type="button" id="login_button" tabIndex="4"; value="Enter"/>
-      <br/>
-      <span>You do not have an account? <a href="register.jsp" style="font-style:oblique">Sign up here!</a></span>
-    </form>
-    </div>
-  </div>
-</div>
+	<div id="login_form" class="ui-dialog ui-widget ui-widget-content ui-corner-all ui-draggable ui-resizable">
+		<div class="ui-dialog-titlebar ui-widget-header ui-helper-clearfix ui-corner-all">
+			Login
+			<div class="form_title ui-dialog-titlebar-close">
+			<span class="ui-icon ui-icon-closethick ui-corner-all" onClick="hidePopupDialog();">close</span>
+			</div>
+		</div>   
+		<label> Email:</label>
+	    <br/>
+	    <input type="text" name="email" id="email"/>
+	    <br/>
+	    <label> Password:</label>
+	    <br/>
+	    <input type="password" name="password" id="password" class="ui-corner-all"></input>
+	    <br/>
+	    <input type="checkbox" name="rememberMe" id="rememberMe" class="ui-corner-all" value="0"/>
+	    <label> Keep me log in</label>
+	    <br/>
+	    <button id="login_button">Login</button>
+	    <br/>
+	    <span>You do not have an account? <a href="register.jsp" style="font-style:oblique">Sign up here!</a></span>
+ </div>
 </body>
 </html>

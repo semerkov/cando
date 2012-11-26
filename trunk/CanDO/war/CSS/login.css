@@ -1,23 +1,40 @@
 @charset "utf-8";
 
+body {
+	background-color: #FFF;
+	color: #000;
+	height: 100%;
+	width: 100%;
+	margin: 0px;
+	padding: 0px;
+	font: 100%/1.4 Arial;
+	overflow:hidden;
+	background: url(images/ui-bg_diagonals-thick_90_eeeeee_40x40.png) repeat 0 center;
+}
+#login_form{
+	width: auto;
+	margin: 25% 27%;
+}
 #email{
 	width:640px;
 	height:50px; 
-	background-color: #FAFFBD;
 	font-family:'MS Serif', 'New York', serif;
 	font-size: 3em;
+	-moz-border-radius: 6px;
+	-webkit-border-radius: 6px;
+	-khtml-border-radius: 6px;
+	border-radius: 6px;
 }
 
 #password{
 	width:640px;
 	height:50px;
-	background-color: #FAFFBD;
 	font-family:'MS Serif', 'New York', serif;
 	font-size: 3em;
 }
 
 #login_button{
-	font-size: 3em;
+	font-size: 2em;
 	border-radius:10px; 
-	margin:15px;
+	margin-left: 38%;
 }
