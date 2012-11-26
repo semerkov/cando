@@ -91,4 +91,5 @@ public class CanDOSecurityService implements ICanDOSecurityService {
 
 		return user;
 	}
+
 }
