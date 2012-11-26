@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
 import javax.persistence.NoResultException;
 import javax.servlet.ServletConfig;
 import javax.servlet.http.Cookie;
@@ -29,7 +30,6 @@ public class LoginServlet extends HttpServlet {
 	public static final int EXISTING_REMEMBER_COOKIE_TIME = 604800;
 	public static final String REMEMBER_COOKIE_USER = "userCookie";
 	public static final String REMEMBER_COOKIE_HASH = "userCookieHash";
-	private static final EntityManager em = EMF.get().createEntityManager();
 	private CanDOSecurityService security;
 	private static final Logger log = Logger.getLogger(LoginServlet.class
 			.getName());
@@ -51,18 +51,18 @@ public class LoginServlet extends HttpServlet {
 			String email = request.getParameter("email");
 			String password = request.getParameter("password");
 			String rememberMe = request.getParameter("rememberMe");
-			if (email != "" && password != "") {
+			if (email != null && password != null) {
 				try {
 					User user = security.login(email, password);
 
 					HttpSession session = request.getSession();
 					log.info("create session: " + session.getId());
-					session.setAttribute("user", user);
+					session.setAttribute("user",user.getEmail());
 
 					Date curDate = new Date();
-					byte[] rememberCookiesHash = null;
+					byte[] rememberCookiesHash = "".getBytes();
 
-					if (rememberMe == "true") {
+					if (rememberMe.equals("1")) {
 						rememberCookiesHash = Crypto.hashPassword(curDate
 								.toString());
 						Cookie c = new Cookie(REMEMBER_COOKIE_USER,
@@ -77,7 +77,7 @@ public class LoginServlet extends HttpServlet {
 					user.setLastEntryDate(curDate);
 					user.setRememberCookiesHash(rememberCookiesHash);
 					user.setRememberIpAdress(request.getRemoteAddr());
-					em.merge(user);
+					security.saveUser(user);
 					ServletUtils.writeJson(response, "ready");
 					log.info("login is successful: " + user.getEmail());
 				} catch (LoginNameNotFoundException ex) {
