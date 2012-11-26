@@ -51,7 +51,7 @@ public class LoginServlet extends HttpServlet {
 			String email = request.getParameter("email");
 			String password = request.getParameter("password");
 			String rememberMe = request.getParameter("rememberMe");
-			if (email != null && password != null && rememberMe != null) {
+			if (email != "" && password != "") {
 				try {
 					User user = security.login(email, password);
 
@@ -78,6 +78,7 @@ public class LoginServlet extends HttpServlet {
 					user.setRememberCookiesHash(rememberCookiesHash);
 					user.setRememberIpAdress(request.getRemoteAddr());
 					em.merge(user);
+					ServletUtils.writeJson(response, "ready");
 					log.info("login is successful: " + user.getEmail());
 				} catch (LoginNameNotFoundException ex) {
 					ServletUtils.writeJson(response, "LoginNameNotFound");

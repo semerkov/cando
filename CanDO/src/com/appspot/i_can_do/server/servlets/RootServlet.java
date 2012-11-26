@@ -23,12 +23,20 @@ public class RootServlet extends HttpServlet {
 			throws IOException, ServletException {
 		log.info("Servlet created");
 
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/login");
+		RequestDispatcher dispatcher = null;
 
+		boolean isLogin = false;
+		
 		HttpSession session = request.getSession();
 		User user = (User) session.getAttribute("user");
-
-		if (user == null) {
+		
+		
+		if(user!=null)
+		{
+			isLogin=true;
+		}
+		else
+		{
 			String email = "";
 			String hash = "";
 			String ipAdress = request.getRemoteAddr();
@@ -46,19 +54,30 @@ public class RootServlet extends HttpServlet {
 					user = login.validateRememberCookies(email, hash, ipAdress);
 					if (user != null) {
 						session.setAttribute("user", user);
-						dispatcher = request.getRequestDispatcher("/calendar");
+						isLogin = true;
 					} 
 				}
 
 			}
+		}
+		if(isLogin)
+		{
+			dispatcher = request.getRequestDispatcher("/calendar.html");
+		}
+		else
+		{
+			dispatcher = request.getRequestDispatcher("/login.jsp");
 		}
 
 		if (dispatcher != null) {
 			try {
 				dispatcher.forward(request, response);
 				return;
-			} catch (Exception ex) {
+			} catch (ServletException ex) {
 
+			}
+			catch(IOException ex){
+				
 			}
 		}
 	}

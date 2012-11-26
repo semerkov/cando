@@ -2,28 +2,38 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<link rel="stylesheet" type="text/css" href="CSS\mycss.css" />
+<title>CanDO - Log in</title>
+
+<link href="CSS/jquery-ui-1.9.1.custom.min.css" rel="stylesheet"
+	type="text/css" />
+<link href="CSS/login.css" rel="stylesheet"
+	type="text/css" />
 
 <!-- JQuery Framework -->
-	  	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
+<script src="js/jquery-1.8.2.js" type="text/javascript" charset="utf-8"></script>
+<script src="js/jquery-ui-1.9.1.custom.min.js"></script>
 
-<title>CanDO - Log in</title>
+<script type="text/javascript" src="js/login.js"></script>
+
 </head>
 <body>
 <div class="container">
   <div class="header"><jsp:include page="header.jsp" flush="true" /></div>
   <div class="content">
   	<div style="margin-left:80px;" >
-      <form id="login_form" name="login_form" method="post" action="">
+      <form id="login_form">
       <label> Login:</label>
       <br/>
-      <input type="text" name="login_login" style="width:640px; height:50px; background-color: #FAFFBD;font-family:'MS Serif', 'New York', serif; font-size: 3em;" />
+      <input type="text" name="email" id="email"/>
       <br/>
       <label> Password:</label>
       <br/>
-      <input type="password" name="login_password" style="width:640px; height:50px;background-color: #FAFFBD; font-family:'MS Serif', 'New York', serif; font-size: 3em;" />
+      <input type="password" name="password" id="password" class=""/>
       <br/>
-      <input name="login_submit" type="button" tabIndex="4"; style="font-size: 3em; border-radius:10px; margin:15px;" value="Enter" onclick="alert('Data won`t validate. Its a gag'); self.location='home.jsp';"/>
+      <label> Remember ME:</label>
+      <input type="checkbox" name="rememberMe" id="rememberMe" value="0"/>
+      <br/>
+      <input type="button" id="login_button" tabIndex="4"; value="Enter"/>
       <br/>
       <span>You do not have an account? <a href="register.jsp" style="font-style:oblique">Sign up here!</a></span>
     </form>
