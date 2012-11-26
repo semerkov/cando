@@ -27,6 +27,6 @@
 <div class="item" id="myTodoItem">
 	<div class="square"></div>
 	<button class="calendarEdit ui-icon ui-icon-pencil ui-button ui-widget ui-state-default ui-corner-all"></button>
-	<div class="calendar_id">some task key</div>
+	<div class="calendar_id"></div>
 	<div class="calendar_name">Tasks</div>
 </div>

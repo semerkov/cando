@@ -404,14 +404,6 @@ ul.nav a:hover,ul.nav a:active,ul.nav a:focus {
 	color: #FFF;
 	font-size: 16px;
 }
-#addCalendarSubmit{
-	width: 80px;
-}
-#addCalendarSubmit span{
-	font-size: 14px;
-	font-weight: lighter;
-	padding: 1px;
-}
 
 .calendarEdit:hover {
 	color: #333;
@@ -495,25 +487,21 @@ ul.nav a:hover,ul.nav a:active,ul.nav a:focus {
 }
 
 #editEventsForm {
-	padding:20px;
+	padding:10px;
 	z-index:306;
 	position:absolute;
 	top:300px;
 	left:300px;
-	border:1px solid #000;
-	background-color:#FFF;
-	width:300px;
+	width:auto;
 	display:none;
 }
 #addEventsForm {
-	padding:20px;
+	padding:10px;
 	z-index:306;
 	position:absolute;
 	top:300px;
 	left:300px;
-	border:1px solid #000;
-	background-color:#FFF;
-	width:300px;
+	width:auto;
 	display:none;
 }
 #editCalendarForm {
@@ -534,28 +522,23 @@ ul.nav a:hover,ul.nav a:active,ul.nav a:focus {
 	color: #FFF;
 	font-size: 16px;
 }
-#editCalendarForm .addEditForm{
-	margin:0 15px;
+.addEditForm input{
+	width:99%;
 }
-#editCalendarForm .addEditForm input{
-	width:100%;
+#editCalendarForm .addEditForm{
+	margin:0 4px;
 }
 #viewEventForm {
-	padding:20px;
+	padding:10px;
 	z-index:306;
 	position:absolute;
 	top:300px;
 	left:300px;
-	border:1px solid #000;
-	background-color:#FFF;
-	width:300px;
+	width:auto;
 	display:none;
 }
 #saveCalendarButton{
 	width: 90px;
-	padding: 0px;
-}
-#saveCalendarButton span{
 	padding: 0px;
 }
 .event_id {
@@ -600,4 +583,21 @@ ul.nav a:hover,ul.nav a:active,ul.nav a:focus {
 	top: 100px;
 	left: 100px;
 	display: none;
+}
+#selectEventsCalendar{
+	width:100%;
+	background-color: white;
+	border: 2px inset;
+}
+#selectEventsCalendarEditForm{
+	width:100%;
+	background-color: white;
+	border: 2px inset;
+}
+#addEventSubmit span, #addCalendarSubmit span,#saveCalendarButton span{
+	padding: 2px;
+}
+#viewEventContainer label{
+	color: grey;
+	font-size: 14px;
 }

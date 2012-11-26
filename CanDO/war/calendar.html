@@ -208,109 +208,126 @@
 		</div>
 	</div>
 	
-		
-	<div id="editEventsForm">
-		<form>
-			<div style="text-align: center; padding-bottom: 10px;">Edit
-				event</div>
-			<div class="eventEditForm">
-				<div>
-					<div style="width: 50%; float: right;">
-						<input type="text" name="eventEditName" id="eventEditName"
-							placeholder="Event name" /><br> <input type="text"
-							name="eventEditDesc" id="eventEditDesc"
-							placeholder="Event description" /><br> <input type="text"
-							name="eventEditDateStart" id="eventEditDateStart" /><br> <input
-							type="text" name="eventEdirDateFinish" id="eventEdirDateFinish" />
-					</div>
-					<div>
-						<label>Name of event:</label><br> <label>Description:</label><br>
-						<label>Start time:</label><br> <label>Finish time:</label>
-					</div>
-				</div>
-				<br>
-				<div style="text-align: center; width: 100%">Notification time
-				</div>
-				<div style="text-align: center;">
-					<label>Days</label><input type="text" name="" class="beforeDays" size="2"
-						value="0" /> <label>Hours</label><input type="text" name="" class="beforeHours"
-						size="2" value="0" /> <label>Minutes</label><input type="text"
-						name="" class="beforeMinutes" size="2" value="0" />
-				</div>
-				<div style="text-align: center">
-					<input type="button" name="editEventsUpdateButton"
-						id="editEventsUpdateButton" value="Update" />
-				</div>
+	<!-- Add new event form -->
+	<div id="addEventsForm" class="ui-dialog ui-widget ui-widget-content ui-corner-all ui-draggable ui-resizable">
+		<div class="ui-dialog-titlebar ui-widget-header ui-helper-clearfix ui-corner-all">
+			Add new event
+			<div class="form_title ui-dialog-titlebar-close">
+				<span class="ui-icon ui-icon-closethick ui-corner-all" onClick="hidePopupDialog();">close</span>
 			</div>
-		</form>
+		</div>
+		<div class="addEditForm">
+			<table style="width: 100%;">
+				<tr>
+					<td><label>Name of event:</label></td>
+					<td><input type="text" name="eventAddName" id="eventAddName"
+						placeholder="Event name" /></td>
+				</tr>
+				<tr>
+					<td><label>Description:</label></td>
+					<td><input type="text"
+						name="eventAddDesc" id="eventAddDesc"
+						placeholder="Event description" /></td>
+				</tr>
+				<tr>
+					<td><label>Start time:</label></td>
+					<td><input type="text"
+						name="eventAddDateStart" id="eventAddDateStart" /></td>
+					
+				</tr>
+				<tr>
+					<td><label>Finish time:</label></td>
+					<td><input
+						type="text" name="eventAddDateFinish" id="eventAddDateFinish" /></td>
+				</tr>
+				<tr>
+					<td><label>Event calendar:</label></td>
+					<td><select id="selectEventsCalendar" class="ui-corner-all"></select></td>
+				</tr>
+			</table>
+			<div style="margin: 0 32%;">Notification time</div>
+			<div style="text-align: center;">
+				<label>Days</label><input type="text" class="beforeDays" size="2"
+					value="0" /> <label>Hours</label><input type="text" name="" class="beforeHours"
+					size="2" value="0" /> <label>Minutes</label><input type="text"
+					name="" class="beforeMinutes" size="2" value="0" />
+			</div>
+			<div style="text-align: center">
+					<button type="button" name="addEventButton"
+					id="addEventSubmit">Create event!</button>
+			</div>
+		</div>
 	</div>
 	
-	<div id="addEventsForm">
-		<form>
-			<div style="text-align: center; padding-bottom: 10px;">Add
-				event</div>
-			<div class="addEditForm">
-				<div>
-					<div style="width: 50%; float: right;">
-						<input type="text" name="eventAddName" id="eventAddName"
-							placeholder="Event name" /><br> <input type="text"
-							name="eventAddDesc" id="eventAddDesc"
-							placeholder="Event description" /><br> <input type="text"
-							name="evntAddDateStart" id="evntAddDateStart" /><br> <input
-							type="text" name="eventAddDateFinish" id="eventAddDateFinish" />
-					</div>
-					<div>
-						<label>Name of event:</label><br> <label>Description:</label><br>
-						<label>Start time:</label><br> <label>Finish time:</label>
-					</div>
-				</div>
-				<br>
-				<div style="text-align: center; width: 100%">Notification time
-				</div>
-				<div style="text-align: center;">
-					<label>Days</label><input type="text" class="beforeDays" size="2"
-						value="0" /> <label>Hours</label><input type="text" name="" class="beforeHours"
-						size="2" value="0" /> <label>Minutes</label><input type="text"
-						name="" class="beforeMinutes" size="2" value="0" />
-				</div>
-				<div style="text-align: center">
-					<input type="button" name="addCalendarButton"
-						id="addCalendarSubmit" value="Create event!" />
-				</div>
+	<!-- Edit event form -->
+	<div id="editEventsForm" class="ui-dialog ui-widget ui-widget-content ui-corner-all ui-draggable ui-resizable">
+		<div class="ui-dialog-titlebar ui-widget-header ui-helper-clearfix ui-corner-all">
+			Edit event
+			<div class="form_title ui-dialog-titlebar-close">
+				<span class="ui-icon ui-icon-closethick ui-corner-all" onClick="hidePopupDialog();">close</span>
 			</div>
-		</form>
+		</div>
+				<div class="addEditForm">
+			<table style="width: 100%;">
+				<tr>
+					<td><label>Name of event:</label></td>
+					<td><input type="text" name="eventEditName" id="eventEditName"
+						placeholder="Event name" /></td>
+				</tr>
+				<tr>
+					<td><label>Description:</label></td>
+					<td><input type="text"
+						name="eventEditDesc" id="eventEditDesc"
+						placeholder="Event description" /></td>
+				</tr>
+				<tr>
+					<td><label>Start time:</label></td>
+					<td><input type="text"
+						name="eventEditDateStart" id="eventEditDateStart" /></td>
+					
+				</tr>
+				<tr>
+					<td><label>Finish time:</label></td>
+					<td><input
+						type="text" name="eventEditDateFinish" id="eventEditDateFinish" /></td>
+				</tr>
+				<tr>
+					<td><label>Event calendar:</label></td>
+					<td><select id="selectEventsCalendarEditForm" class="ui-corner-all"></select></td>
+				</tr>
+			</table>
+			<div style="margin: 0 32%;">Notification time</div>
+			<div style="text-align: center;">
+				<label>Days</label><input type="text" id="warningTimeDaysEditForm" class="beforeDays" size="2"
+					value="0" /> <label>Hours</label><input type="text" id="warningTimeHoursEditForm" class="beforeHours"
+					size="2" value="0" /> <label>Minutes</label><input type="text"
+					id="warningTimeMinutesEditForm" class="beforeMinutes" size="2" value="0" />
+			</div>
+			<div style="text-align: center">
+					<button type="button" id="editEventSubmit">Save event</button>
+			</div>
+		</div>
 	</div>
-	
-	<div id="viewEventForm">
-		<form>
-			<div style="text-align: center; padding-bottom: 10px;">Edit
-				event</div>
-			<div class="eventEditForm">
-				<div>
-					<div style="width: 50%; float: right;">
-						<label>events name</label> <label>description</label><br> <label>start
-							time</label><br> <label>finish time</label><br>
-					</div>
-					<div>
-						<label>Name of event:</label><br> <label>Description:</label><br>
-						<label>Start time:</label><br> <label>Finish time:</label>
-					</div>
-				</div>
-				<br>
-				<div style="text-align: center; width: 100%">Notification time
-				</div>
-				<div style="text-align: center;">
-					<label>Days: </label>00 <label>Hours: </label>00 <label>Minutes:
-					</label>00
-				</div>
-				<div style="text-align: center">
-					<input type="button" style="width: 60px;" name="viewShowOkButton"
-						id="viewShowOkButton" value="Ok" /> <input type="button"
-						name="viewShowEditEventButton" id="viewShowEditEventButton"
-						value="Edit event" />
-				</div>
+	<!-- View event form -->
+	<div id="viewEventForm" class="ui-dialog ui-widget ui-widget-content ui-corner-all ui-draggable ui-resizable">
+		<div class="ui-dialog-titlebar ui-widget-header ui-helper-clearfix ui-corner-all">
+			Event
+			<div class="form_title" style="float: right;position: relative;top: 4px;">
+				<span class="ui-icon ui-icon-closethick ui-corner-all" style="float:right;" onClick="hidePopupDialog();">close</span>
+				<span class="ui-icon ui-icon-trash ui-corner-all" style="float:right; margin-right: 8px;" onClick="removeEventConfirm();">delete</span>	
 			</div>
-		</form>
+		</div>
+		<div class="eventEditForm">
+			<div id="viewEventContainer">
+				
+			</div>
+			<div style="text-align: center">
+				<button type="button" name="viewShowOkButton"
+				id="viewShowOkButton">Ok</button>
+				<button type="button" name="viewShowEditEventButton"
+				id="viewShowEditEventButton">Edit event</button>
+			</div>
+		</div>
 	</div>
 
 
