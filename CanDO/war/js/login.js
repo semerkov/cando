@@ -1,4 +1,5 @@
 $(document).ready(function(e) {
+	$( "button" ).button();
 	$('#email').bind('focusout', function() {
 		testEmail();
 	});
