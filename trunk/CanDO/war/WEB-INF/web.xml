@@ -54,4 +54,12 @@
 		<servlet-name>LoginServlet</servlet-name>
 		<url-pattern>/login</url-pattern>
 	</servlet-mapping>
+		<servlet>
+		<servlet-name>RootServlet</servlet-name>
+		<servlet-class>com.appspot.i_can_do.server.servlets.RootServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>RootServlet</servlet-name>
+		<url-pattern>/</url-pattern>
+	</servlet-mapping>
 </web-app>
