@@ -172,6 +172,37 @@ public class CanDOService {
 		}
 	}
 
+	public EventCalendar getCalendar(String eventKey, Key userKey){
+		EntityTransaction txn = em.getTransaction();
+		txn.begin();
+		Key eventFindKey = KeyFactory.stringToKey(eventKey);
+		EventCalendar result = null;
+		try {
+			Query query = em
+					.createNamedQuery("CalendarKeeper.getCalendarsKeysByUserKey");
+
+			query.setParameter("userKey", userKey);
+
+			List<Key> calendarsKeys = (List<Key>) query.getResultList();
+			calendars:
+			for (Key key : calendarsKeys) {
+				EventCalendar c = em.find(EventCalendar.class, key);
+				List<Event> events = c.getEvents();
+				for(Event event : events){
+					if(event.getKey().equals(eventFindKey)){
+						result = c;
+						break calendars;
+					}
+				}
+			}
+			txn.commit();
+		} finally {
+			if (txn.isActive()) {
+				txn.rollback();
+			}
+		}
+		return result;
+	}
 	public Event getEventByKey(String eventKey){
 		Key key = KeyFactory.stringToKey(eventKey);
 		return  em.find(Event.class, key);

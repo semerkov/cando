@@ -33,42 +33,83 @@ function getCurrentCalendarName()
 }
 
 function calendarTableClicks(){
+	// add new event
 	$('.day.active').click(function(e) {
 		$(this).addClass('ui-state-active');
+		//set position
 		var s = this.getBoundingClientRect();
-		showPopupDialog('addEventsForm',s.top + (Math.abs(s.top - s.bottom) / 2) - 260,  s.left + (Math.abs(s.left - s.right) / 2) - 170);
+		var top = s.top + (Math.abs(s.top - s.bottom) / 2) - 350;
+		top = top > 0? top : 20;
+		var left = s.left + (Math.abs(s.left - s.right) / 2)- 190;
+		left = left < $(window).width() - 390 ? left : left - 125;
+		// set select calendars
+		var options = "";
+		for(i=0; i < arr_active_calendar_id.length; i++ ){
+			var option = "<option value="+arr_active_calendar_id[i]+">"+arr_active_calendar_name[i]+"</option>";
+			options += option;
+		}
+		//prepare add event form
+		$('#selectEventsCalendar').html(options);
+		$('#eventAddName').css('border-color', 'white');
+		$('#eventAddDateStart').css('border-color', 'white');
+		$('#eventAddName').val("");
+		$('#eventAddDesc').val("");
+		$('#eventAddDateStart').val("");
+		$('#eventAddDateFinish').val("");
+		showPopupDialog('addEventsForm', top, left);
 		e.stopPropagation();
 	});
+	
 	<!--не доконца работает-->
 	var dateS = new Date();
 	var dateF = new Date();
 	/*date.setDate(Date.parse());*/
-	$('#eventEditDateStart').datetimepicker({
+	$('#eventAddDateStart').datetimepicker({
 		dateFormat: 'dd.mm.yy',
 		minDateTime: dateS,
 		onClose: function(datetimeText, datepickerInstance){
 				var d = new Date();
 				/*d.setDate(Date.parse(datetimeText));*/
-				alert(d.toLocaleDateString());
                 $('#eventEdirDateFinish',document).datetimepicker({minDateTime: d});			
 		}
 	});
-	$('#eventEdirDateFinish').datetimepicker({
+	$('#eventAddDateStart').datetimepicker({
 		dateFormat: 'dd.mm.yy',
 		minDateTime: dateS
 		});
-	$('#evntAddDateStart').datetimepicker({
-		dateFormat: 'dd.mm.yy',
-		minDateTime: dateS});
 	$('#eventAddDateFinish').datetimepicker({
 		dateFormat: 'dd.mm.yy',
-		minDateTime: dateS});
-	
-	$('#calendarTableWrapper li').click(function(e){
-		var H = $(window).height();
-		var W = $(window).width();
-		var t = $('#viewEventForm');
-		showPopupDialog('viewEventForm',(H - t.height())/2, (W - t.width())/2);
+		minDateTime: dateS
+		});
+	$('#eventEditDateStart').datetimepicker({
+		dateFormat: 'dd.mm.yy',
+		minDateTime: dateS
+		});
+	$('#eventEditDateFinish').datetimepicker({
+		dateFormat: 'dd.mm.yy',
+		minDateTime: dateS
+		});
+	$('#calendarTableWrapper li').click(function(e){	
+		var eventKey = $(this).children('div.event_id').text();
+		$.ajax({
+			url : 'calendar',
+			type : 'POST',
+			data : {
+				'action' : 'viewEvent',
+				'eventKey' : eventKey
+			},
+			success : function(data) {
+				$('#viewEventContainer').html(data);
+				var H = $(window).height();
+				var W = $(window).width();
+				var t = $('#viewEventForm');
+				showPopupDialog('viewEventForm',(H - t.height())/2, (W - t.width())/2);
+			},
+			error : function(data) {
+				alert("Error updateCalendar")
+			}
+		});
+		
 		e.stopPropagation();
 	});
 	
@@ -81,20 +122,47 @@ function calendarTableClicks(){
 		var H = $(window).height();
 		var W = $(window).width();
 		var t = $('#editEventsForm');
+		
+		$.ajax({
+			url : 'calendar',
+			type : 'POST',
+			data : {
+				'action' : 'getEvent',
+				'eventKey' : $('#selectedViewEventKey').text()
+			},
+			dataType: 'json',
+			success : function(data) {
+				$('#eventEditName').val(data[0]);
+				$('#eventEditDesc').val(data[1]);
+				$('#eventEditDateStart').val(data[2]);
+				$('#eventEditDateFinish').val(data[3]);
+				
+				var index = arr_active_calendar_name.indexOf(data[4]);
+				var options = "<option value="+arr_active_calendar_id[index]+">"+data[4]+"</option>";
+				for(var i=0; i < arr_active_calendar_id.length; i++ ){
+					if(i != index) {
+						var option = "<option value="+arr_active_calendar_id[i]+">"+arr_active_calendar_name[i]+"</option>";
+						options += option;
+					}
+				}
+				$('#selectEventsCalendarEditForm').html(options);
+				$('#warningTimeDaysEditForm').val(data[5]);
+				$('#warningTimeHoursEditForm').val(data[6]);
+				$('#warningTimeMinutesEditForm').val(data[7]);
+			},
+			error : function(data) {
+				alert("Error edit event form!");
+			}
+		});
+		
 		showPopupDialog('editEventsForm',(H - t.height())/2, (W - t.width())/2);
 		e.stopPropagation();
-	});
-	$('#editEventsUpdateButton').click(function(e){
-		hidePopupDialog();
-		e.stopPropagation();
-	});
-	
+	});	
 };
 
 $(document).ready(
 		function() {
 			retrieveEventCalendarMenu();
-			retrieveCalender("this");
 
 			todoMenuClicks();
 			$( ".ui-draggable" ).draggable();
@@ -127,6 +195,73 @@ $(document).ready(
 						}
 					});
 				}					
+				e.stopPropagation();
+			});
+			$('#addEventSubmit').click(function(e){
+				var name = $('#eventAddName').val();
+				var finishTime = $('#eventAddDateFinish').val();
+				if (name == "") {
+					$('#eventAddName').css('border-color', 'red');
+					return;
+				} else {
+					$('#eventAddName').css('border-color', 'green');
+				}
+				if(finishTime == ""){
+					$('#eventAddDateFinish').css('border-color', 'red');
+					return;
+				}else{
+					$('#eventAddDateFinish').css('border-color', 'green');
+				}
+				
+				$.ajax({
+					url : 'calendar',
+					type : 'POST',
+					data : {
+						'action' : 'addEvent',
+						'calendarKey' : $('#selectEventsCalendar :selected').val(),
+						'eventName' : name,
+						'description' : $('#eventAddDesc').val(),
+						'eventStartDay' : $('#eventAddDateStart').val(),
+						'eventFinishDay' : finishTime
+					},
+					success : function(data) {
+						retrieveCalender("this");
+						hidePopupDialog();
+
+					},
+					error : function(data) {
+						alert("Error add event")
+					}
+				});
+				
+				e.stopPropagation();
+			});
+			
+			$('#editEventSubmit').click(function(e){
+				$.ajax({
+					url : 'calendar',
+					type : 'POST',
+					data : {
+						'action' : 'updateEvent',
+						'eventKey' : $('#selectedViewEventKey').text(),
+						'eventName' : $('#eventEditName').val(),
+						'eventDesc' : $('#eventEditDesc').val(),
+						'eventStartDay' : $('#eventEditDateStart').val(),
+						'eventFinishDay' : $('#eventEditDateFinish').val(),
+						'warningTimeDays' : $('#warningTimeDaysEditForm').val(),
+						'warningTimeHours' : $('#warningTimeHoursEditForm').val(),
+						'warningTimeMinutes' : $('#warningTimeMinutesEditForm').val()
+					},
+					success : function(data) {
+						retrieveCalender("this");
+						hidePopupDialog();
+						//$('#selectEventsCalendarEditForm').html(options);
+						
+					},
+					error : function(data) {
+						alert("Error edit event form!");
+					}
+				});
 				e.stopPropagation();
 			});
 			
@@ -230,10 +365,15 @@ function showEditCalendarForm(){
 	};
 	
 function showOnlyThisCalendar() {
-	$('.myCalendar').find('.item.active .calendar_id').each(function(index, element) {
-		$(element).click();
+	$('.myCalendar').find('.item.active').each(function(index, element) {
+		$(element).toggleClass('active', false);
+		$(element).children('div.square').toggleClass('active', false);
     });
-	$(".myCalendar div:contains("+$(calendar_id).text()+")").parent().click();
+	var sItem = $(".myCalendar div:contains("+$(calendar_id).text()+")").parent();
+	$(sItem).toggleClass('active', true);
+	$(sItem).children('div.square').toggleClass('active', true);
+	getActiveCalendars();
+	selectedCalendarsChanged();
 	hidePopupDialog();
 	//retrive table for selected items
 	
@@ -274,6 +414,40 @@ function removeCalendarConfirm() {
 	});
 }
 
+function removeEventConfirm() {
+	hidePopupDialog();
+	$("#confirm").dialog({
+		position : [ "center", "center" ],
+		title: "Remove this event",
+		buttons : {
+			"Yes" : function() {
+				$.ajax({
+					url : 'calendar',
+					type : 'POST',
+					async : 'false',
+					data : {
+						'action' : 'removeEvent',
+						'eventKey' : $('#selectedViewEventKey').text()
+					},
+					success : function(data) {
+						retrieveCalender("this");
+						hidePopupDialog();
+
+					},
+					error : function(data) {
+						alert("Error remove event")
+					}
+				});
+				$(this).dialog("close");
+			},
+			"No" : function() {
+				$(this).dialog("close");
+				hidePopupDialog();
+			}
+		}
+	});
+}
+
 function retrieveCalender(monthAction) {
 	if (monthAction == "this") {
 		retrieveCalenderTable((new Date()).getFullYear(), (new Date())
@@ -291,9 +465,6 @@ function selectedCalendarsChanged(){
 }
 
 function retrieveCalenderTable(year, month, monthAction) {
-	$('#calendarTableWrapper')
-			.html(
-					"<table><tr><td style='text-align:center;'>Please wait...</td></tr></table>");
 	$
 			.ajax({
 				url : 'calendar',
@@ -304,7 +475,7 @@ function retrieveCalenderTable(year, month, monthAction) {
 					'currentMonth' : month,
 					'monthAction' : monthAction,
 					'currentYear' : year,
-					'selectedCalendars' : $(arr_active_calendar_id).length
+					'selectedCalendars' : arr_active_calendar_id.join(',')
 				},
 				success : function(data) {
 					$('#calendarTableWrapper').html(data);
@@ -389,6 +560,7 @@ function retrieveEventCalendarMenu() {
 			$('.myCalendar').html(data);
 			calendarMenuClicks();
 			getActiveCalendars();
+			retrieveCalender("this");
 		},
 		error : function(data) {
 			alert("Error retrieve EventCalendarMenu")
@@ -407,6 +579,8 @@ function calendarMenuClicks() {
 			$(this).toggleClass('active', true);
 			square.toggleClass('active', true);
 		}
+		getActiveCalendars();
+		selectedCalendarsChanged();
 		e.stopPropagation();
 	});
 	
