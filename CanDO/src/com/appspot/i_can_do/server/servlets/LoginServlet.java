@@ -27,7 +27,7 @@ public class LoginServlet extends HttpServlet {
 	public static final int EXISTING_REMEMBER_COOKIE_TIME = 604800;
 	public static final String REMEMBER_COOKIE_USER = "userCookie";
 	public static final String REMEMBER_COOKIE_HASH = "userCookieHash";
-	private static CanDOSecurityService security;
+	private static final CanDOSecurityService security = CanDOSecurityService.instance();
 	private static final Logger log = Logger.getLogger(LoginServlet.class
 			.getName());
 	private static final List<String> SECURITY_ACTIONS = Arrays
@@ -35,7 +35,6 @@ public class LoginServlet extends HttpServlet {
 
 	@Override
 	public void init(ServletConfig config) {
-		security = CanDOSecurityService.instance();
 		log.info("Servlet created");
 	}
 
@@ -67,7 +66,7 @@ public class LoginServlet extends HttpServlet {
 						c.setMaxAge(EXISTING_REMEMBER_COOKIE_TIME);
 						response.addCookie(c);
 						c = new Cookie(REMEMBER_COOKIE_HASH,
-								rememberCookiesHash.toString());
+							Arrays.toString(rememberCookiesHash));
 						c.setMaxAge(EXISTING_REMEMBER_COOKIE_TIME);
 						response.addCookie(c);
 					}
@@ -100,7 +99,7 @@ public class LoginServlet extends HttpServlet {
 			user = security.findUser(email);
 		} catch (NoResultException ex) {}
 		if (user != null) {
-			if (user.getRememberCookiesHash().toString().equals(hash)
+			if (Arrays.toString(user.getRememberCookiesHash()).equals(hash)
 					&& user.getRememberIpAdress().equals(ipAdress)
 					&& ((new Date()).getTime() - user.getLastEntryDate()
 							.getTime()) < EXISTING_REMEMBER_COOKIE_TIME * 100) {

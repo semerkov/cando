@@ -19,10 +19,7 @@
 <body>
 	<div id="login_form" class="ui-dialog ui-widget ui-widget-content ui-corner-all ui-draggable ui-resizable">
 		<div class="ui-dialog-titlebar ui-widget-header ui-helper-clearfix ui-corner-all">
-			Login
-			<div class="form_title ui-dialog-titlebar-close">
-			<span class="ui-icon ui-icon-closethick ui-corner-all" onClick="hidePopupDialog();">close</span>
-			</div>
+			Login to CanDo
 		</div>   
 		<label> Email:</label>
 	    <br/>
