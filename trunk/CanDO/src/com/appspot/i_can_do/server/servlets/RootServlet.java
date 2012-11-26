@@ -16,8 +16,7 @@ import com.appspot.i_can_do.master.security.User;
 @SuppressWarnings("serial")
 public class RootServlet extends HttpServlet {
 	private static LoginServlet login = new LoginServlet();
-	private static final Logger log = Logger.getLogger(RootServlet.class
-			.getName());
+	private static final Logger log = Logger.getLogger(RootServlet.class.getName());
 
 	public void service(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
@@ -60,25 +59,23 @@ public class RootServlet extends HttpServlet {
 
 			}
 		}
+		
 		if(isLogin)
 		{
-			dispatcher = request.getRequestDispatcher("/calendar.html");
+			dispatcher = request.getRequestDispatcher("calendar.jsp");
 		}
 		else
 		{
-			dispatcher = request.getRequestDispatcher("/login.jsp");
+			dispatcher = request.getRequestDispatcher("login.jsp");
 		}
 
-		if (dispatcher != null) {
-			try {
-				dispatcher.forward(request, response);
-				return;
-			} catch (ServletException ex) {
-
-			}
-			catch(IOException ex){
+		try {
+			dispatcher.forward(request, response);
+			
+			}catch (ServletException ex) {
 				
-			}
+			}catch(IOException ex){	
 		}
 	}
 }
+
