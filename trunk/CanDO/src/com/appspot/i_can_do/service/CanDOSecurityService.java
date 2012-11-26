@@ -27,6 +27,7 @@ public class CanDOSecurityService implements ICanDOSecurityService {
 		return security;
 	}
 
+
 	@Override
 	public User addNewUser(User user, String password)
 			throws LoginNameExistException {
