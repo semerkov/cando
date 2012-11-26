@@ -15,6 +15,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.appspot.i_can_do.master.model.Event;
 import com.appspot.i_can_do.master.model.EventCalendar;
@@ -37,14 +38,14 @@ public class CalendarServlet extends HttpServlet {
 			"dd.MM.yyyy hh:mm");
 	private CanDOService canDOService;
 
-	private User testUser;// TODO remove test user when complete registration
+	private User user;// TODO remove test user when complete registration
 							// and etc.
 
 	@Override
 	public void init(ServletConfig config) {
 		canDOService = CanDOService.inctance();
 		log.info("Servlet created");
-
+		/*
 		String email = "user@email.com";
 		testUser = CanDOSecurityService.instance().findUser(email);
 		if (testUser == null) {
@@ -63,12 +64,45 @@ public class CalendarServlet extends HttpServlet {
 		} else {
 			log.warning("Test user exist");
 		}
+		*/
 	}
 
 	protected boolean isLoginState(HttpServletRequest request) {
 		User userObj = (User) request.getSession().getAttribute("User");
 		return userObj != null;
 	}
+
+	public void doGet(HttpServletRequest request, HttpServletResponse response)
+	{
+		if(user==null){
+		HttpSession session = request.getSession();
+		String userEmail = (String) session.getAttribute("user");
+		user = CanDOSecurityService.instance().findUser(userEmail);
+			if(user==null){
+				try{
+				request.getRequestDispatcher("/").forward(request, response);
+				return;
+				} catch (ServletException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		try {
+			request.getRequestDispatcher("calendar.jsp").forward(request, response);
+		} catch (ServletException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
 
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
@@ -180,14 +214,14 @@ public class CalendarServlet extends HttpServlet {
 			EventCalendar calendar = new EventCalendar();
 			calendar.setName(name);
 			calendar.setColor(color);
-			canDOService.addCalendar(calendar, testUser.getKey());
+			canDOService.addCalendar(calendar, user.getKey());
 			fillEventCalendarMenu(request, response);
 		}
 	}
 
 	public void fillEventCalendarMenu(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		List<EventCalendar> calendars = canDOService.getCalendars(testUser);
+		List<EventCalendar> calendars = canDOService.getCalendars(user);
 		request.setAttribute("calendars", calendars);
 		request.getRequestDispatcher(
 				"/WEB-INF/pages/createEventCalendarMenu.jsp").forward(request,
@@ -307,7 +341,7 @@ public class CalendarServlet extends HttpServlet {
 			HttpServletResponse response) {
 		String eventKey = request.getParameter("eventKey");
 		if (eventKey != null) {
-			EventCalendar calendar = canDOService.getCalendar(eventKey, testUser.getKey());
+			EventCalendar calendar = canDOService.getCalendar(eventKey, user.getKey());
 			calendar.getEvents().remove(canDOService.getEventByKey(eventKey));
 			canDOService.saveCalendar(calendar);
 		}
@@ -318,7 +352,7 @@ public class CalendarServlet extends HttpServlet {
 		String eventKey = request.getParameter("eventKey");
 		if (!"".equals(eventKey)) {
 			Event event = canDOService.getEventByKey(eventKey);
-			EventCalendar calendar = canDOService.getCalendar(eventKey, testUser.getKey());
+			EventCalendar calendar = canDOService.getCalendar(eventKey, user.getKey());
 			request.setAttribute("formatter", formatter);
 			request.setAttribute("event", event);
 			request.setAttribute("calendarName", calendar.getName());
@@ -333,7 +367,7 @@ public class CalendarServlet extends HttpServlet {
 		String eventKey = request.getParameter("eventKey");
 		if (eventKey != null) {
 			Event event = canDOService.getEventByKey(eventKey);
-			EventCalendar calendar = canDOService.getCalendar(eventKey, testUser.getKey());
+			EventCalendar calendar = canDOService.getCalendar(eventKey, user.getKey());
 			String[] data = new String[8];
 			data[0] = event.getName()!=null?event.getName() : "";
 			data[1] = event.getDescription()!=null?event.getDescription() : "";

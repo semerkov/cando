@@ -62,7 +62,7 @@ public class RootServlet extends HttpServlet {
 		
 		if(isLogin)
 		{
-			dispatcher = request.getRequestDispatcher("calendar.jsp");
+			dispatcher = request.getRequestDispatcher("calendar");
 		}
 		else
 		{
