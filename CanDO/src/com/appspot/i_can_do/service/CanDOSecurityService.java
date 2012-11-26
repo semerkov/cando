@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
 
@@ -62,7 +63,10 @@ public class CanDOSecurityService implements ICanDOSecurityService {
 
 	@Override
 	public User saveUser(User user) {
+		EntityTransaction txn = em.getTransaction();
+		txn.begin();
 		em.merge(user);
+		txn.commit();
 		return user;
 	}
 
