@@ -18,7 +18,7 @@ import com.appspot.i_can_do.service.utils.Crypto;
 
 public class CanDOSecurityService implements ICanDOSecurityService {
 	private static final EntityManager em = EMF.get().createEntityManager();
-	private static CanDOSecurityService security = new CanDOSecurityService();
+	private static CanDOSecurityService security;
 	private static final Logger log = Logger
 			.getLogger(CanDOSecurityService.class.getName());
 
