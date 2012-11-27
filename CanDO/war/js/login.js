@@ -53,11 +53,12 @@ function tryLogin() {
 			dataType : 'json',
 			success : function(data) {
 				if (data == "ready") {
-					window.location.replace("http://localhost:8888/");
+					window.location.replace("/");
 				} else {
 					$('#email').val("");
 					$('#password').val("");
-					alert(data);
+					testEmail();
+					testPassword();
 				}
 			},
 			error : function(data) {
