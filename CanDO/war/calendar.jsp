@@ -49,7 +49,7 @@ String name = user.getName();
 
 			<div class="calendarWrapper">
 				<div class="calendarSidebar ui-corner-all">
-                	<div style="text-align:center;">Hello,<%=name%>!(<a id="exit">Exit</a>)</div>
+                	<div style="text-align:center; display:none;">Hello,<%=name%>!(<a id="exit">Exit</a>)</div>
 					<div id="calendarSideBarDatepicker"></div>
 					<nav>
 						<button class="active">
