@@ -1,3 +1,13 @@
+<%@page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
+
+<%@page
+	import="com.appspot.i_can_do.master.security.User"%>
+
+<%
+User user = (User) request.getAttribute("user");
+String name = user.getName();
+%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -39,6 +49,7 @@
 
 			<div class="calendarWrapper">
 				<div class="calendarSidebar ui-corner-all">
+                	<div style="text-align:center;">Hello,<%=name%>!(<a id="exit">Exit</a>)</div>
 					<div id="calendarSideBarDatepicker"></div>
 					<nav>
 						<button class="active">

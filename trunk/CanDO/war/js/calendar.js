@@ -352,6 +352,23 @@ $(document).ready(
 			$('.beforeDays').spinner({min:'0',max:'90'});
 			$('.beforeHours').spinner({min:'0',max:'24'});
 			$('.beforeMinutes').spinner({min:'0',max:'60',step:'5'});
+			
+			$('#exit').click(function(e){
+				$.ajax({
+						url : 'calendar',
+						type : 'POST',
+						async : 'false',
+						data : {
+							'action' : 'exit'
+						},
+						success : function(data){
+							
+						},
+						error : function(data) {
+							alert("Error addCalendar")
+						}
+					});
+			});
 		});
 
 function showEditCalendarForm(){

@@ -92,6 +92,7 @@ public class CalendarServlet extends HttpServlet {
 			}
 		}
 		try {
+			request.setAttribute("user", user);
 			request.getRequestDispatcher("calendar.jsp").forward(request, response);
 		} catch (ServletException e) {
 			// TODO Auto-generated catch block
