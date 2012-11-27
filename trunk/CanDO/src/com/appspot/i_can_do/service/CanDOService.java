@@ -24,12 +24,13 @@ public class CanDOService {
 	private static final EntityManager em = EMF.get().createEntityManager();
 	private static final Logger log = Logger
 			.getLogger(CanDOSecurityService.class.getName());
-	private static CanDOService service = new CanDOService();
+	private static CanDOService service;
 
 	private CanDOService() {
 	}
 
 	public static CanDOService inctance() {
+		if(service==null)service = new CanDOService();
 		return service;
 	}
 
