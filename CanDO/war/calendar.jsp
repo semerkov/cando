@@ -90,7 +90,7 @@ String name = user.getName();
 					</nav>
 					<!-- warning events bar -->
 					<div id="warning_events_bar">
-						<div id="warning_events_header">Immediate events</div>
+						<div id="warning_events_header" class="ui-state-highlight">Immediate events</div>
 						<div id="warning_events"></div>
 					</div>
 					<div class="clearfloat"></div>
