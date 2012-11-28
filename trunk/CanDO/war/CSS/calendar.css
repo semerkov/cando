@@ -184,7 +184,7 @@ a:hover,a:active,a:focus {
 }
 
 .calendar ul,.calendar ol {
-	color: #363636;
+	color: white;
 	padding: 0 5px 5px 15px;
 	font: 12px/1.2 Arial;
 	text-align: left;
@@ -198,9 +198,6 @@ a:hover,a:active,a:focus {
 	visibility:hidden;
 }
 
-.calendar .day.active {
-	background-color: #D7EBF9
-}
 .calendar .day.today {
 	padding:2px;
 	background-image:none;
