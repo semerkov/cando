@@ -1,5 +1,6 @@
 $(document).ready(function(e) {
 	$( "button" ).button();
+	$( ".ui-draggable" ).draggable();
 	$('#email').bind('focusout', function() {
 		testEmail();
 	});
