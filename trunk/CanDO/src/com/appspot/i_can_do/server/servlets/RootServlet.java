@@ -1,6 +1,7 @@
 package com.appspot.i_can_do.server.servlets;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.logging.Logger;
 
 import javax.servlet.RequestDispatcher;
@@ -18,15 +19,29 @@ public class RootServlet extends HttpServlet {
 	private static LoginServlet login = new LoginServlet();
 	private static final Logger log = Logger.getLogger(RootServlet.class.getName());
 
-	public void service(HttpServletRequest request, HttpServletResponse response)
+
+	public void doPost(HttpServletRequest request, HttpServletResponse response){
+		HttpSession session = request.getSession();
+		
+			session.removeAttribute("user");
+			Cookie c = new Cookie(LoginServlet.REMEMBER_COOKIE_USER,"");
+			response.addCookie(c);
+			c = new Cookie(LoginServlet.REMEMBER_COOKIE_HASH,
+				"");
+			response.addCookie(c);
+	}
+	
+	
+	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
 		log.info("Servlet created");
+		
+		HttpSession session = request.getSession();
 
 		RequestDispatcher dispatcher = null;
 
 		boolean isLogin = false;
-		
-		HttpSession session = request.getSession();
+
 		String userEmail = (String) session.getAttribute("user");
 		
 		

@@ -355,17 +355,17 @@ $(document).ready(
 			
 			$('#exit').click(function(e){
 				$.ajax({
-						url : 'calendar',
+						url : '',
 						type : 'POST',
 						async : 'false',
 						data : {
 							'action' : 'exit'
 						},
 						success : function(data){
-							
+							window.location.replace("/");
 						},
 						error : function(data) {
-							alert("Error addCalendar")
+							alert("error exit");
 						}
 					});
 			});
