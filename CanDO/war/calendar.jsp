@@ -102,7 +102,7 @@ String name = user.getName();
 					<button name="todayButton" id="todayButton">Today</button>
 					<button name="prevMonth" id="prevMonth">&lt;</button>
 					<button name="nextMonth" id="nextMonth">&gt;</button>
-					<span id="currentMonth">November 2012</span>
+					<span id="currentMonth" class="ui-state-default">November 2012</span>
 				</div>
 				<table id="daysNameTable" width="100%" border="0" cellspacing="0"
 					cellpadding="0">
