@@ -11,6 +11,15 @@ $(document).ready(function(e) {
 		tryLogin();
 		e.stopPropagation();
 	});
+	
+	$(window).resize(function(){
+			$('#login_form').css({
+				position:'absolute',
+				left: ($(window).width() - $('#login_form').outerWidth())/2,
+				top: ($(window).height() - $('#login_form').outerHeight())/2
+			});
+	});
+	$(window).resize();
 });
 
 function testEmail() {
