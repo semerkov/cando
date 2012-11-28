@@ -601,3 +601,8 @@ ul.nav a:hover,ul.nav a:active,ul.nav a:focus {
 	color: grey;
 	font-size: 14px;
 }
+
+#exit:hover,#exit:active,#exit:focus {
+	text-decoration:underline;
+	cursor:pointer;
+}
