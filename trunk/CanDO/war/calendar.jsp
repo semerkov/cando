@@ -54,8 +54,9 @@ String name = user.getName();
                     </div>
 					<div id="calendarSideBarDatepicker"></div>
 					<nav>
+					
 						<button class="active">
-							<div class="calendarAdd ui-icon ui-icon-triangle-1-ne"></div>
+							<div id="calendarAdd" class="ui-icon ui-icon-triangle-1-ne"></div>
 							My calendars
 						</button>
 						<div class="myCalendar"></div>

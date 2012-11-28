@@ -7,7 +7,6 @@ html {
 }
 
 body {
-	background-color: #FFF;
 	color: #000;
 	height: 100%;
 	width: 100%;
@@ -15,7 +14,7 @@ body {
 	padding: 0px;
 	font: 100%/1.4 Arial;
 	overflow:hidden;
-	background: url(images/ui-bg_diagonals-thick_90_eeeeee_40x40.png) repeat 0 center;
+	background: url(images/ui-bg_diagonals-thick_15_0b3e6f_40x40.png) repeat 0 center;
 }
 
 /* ~~ Селекторы элементов/тегов ~~ */
@@ -65,9 +64,7 @@ a:hover,a:active,a:focus {
 }
 
 /* ~~ верхнему колонтитулу не задана ширина. Он растянется на всю ширину макета. Он содержит заполнитель для изображения, который должен быть заменен логотипом по ссылке ~~ */
-.header { /*
-	background: #FFF;
-	height: 10%;*/
+.header {
 	display: none; /* remove when header will be*/
 }
 
@@ -84,7 +81,6 @@ a:hover,a:active,a:focus {
 .header .account {
 	width: 15%;
 	height: 70px;
-	background-color: #FFF;
 	float: right;
 }
 
@@ -126,8 +122,6 @@ a:hover,a:active,a:focus {
 .calendarSidebar {
 	height: 100%;
 	width: 100%;
-	background: #FFF;
-	border: solid 1px #CCC;
 	font-size: 16px;
 }
 .calendarSidebar nav button{
@@ -175,6 +169,7 @@ a:hover,a:active,a:focus {
 	height: 100%;
 	width: 100%;
 	table-layout: fixed;
+	border:0px;
 }
 
 .calendar #calendarTableWrapper table tr {
@@ -196,7 +191,6 @@ a:hover,a:active,a:focus {
 }
 
 .calendar .day.active {
-	background-color: #FFF;
 }
 
 .calendar .day.nonactive {
@@ -223,7 +217,6 @@ a:hover,a:active,a:focus {
 	width: 20%;
 	position: relative;
 	float: left;
-	background-color: #FFF;
 	display: none;
 }
 
@@ -244,7 +237,6 @@ a:hover,a:active,a:focus {
 	height: 100%;
 	display: block;
 	width: 100%;
-	border: solid 1px #CCC;
 	float: right;
 }
 .todoWrapper .todoSidebar nav button{
@@ -369,7 +361,7 @@ ul.nav a:hover,ul.nav a:active,ul.nav a:focus {
 	background: url(../IMG/arrow_grey_left.png) no-repeat 0 center;
 }
 
-.calendarAdd {
+#calendarAdd {
 	position: absolute;
 	top: 4px;
 	right: 4px;
@@ -400,8 +392,6 @@ ul.nav a:hover,ul.nav a:active,ul.nav a:focus {
 	margin-top: 7px;
 	margin-bottom: 7px;
 	padding-left: 15px;
-	background-color: #36F;
-	color: #FFF;
 	font-size: 16px;
 }
 
@@ -440,7 +430,6 @@ ul.nav a:hover,ul.nav a:active,ul.nav a:focus {
 #calendarEditForm {
 	z-index: 301;
 	position: absolute;
-	background-color: #FFF;
 	width: 230px;
 	top: 100px;
 	left: 100px;
@@ -518,8 +507,6 @@ ul.nav a:hover,ul.nav a:active,ul.nav a:focus {
 	margin-top: 7px;
 	margin-bottom: 7px;
 	padding-left: 15px;
-	background-color: #36F;
-	color: #FFF;
 	font-size: 16px;
 }
 .addEditForm input{
@@ -578,7 +565,6 @@ ul.nav a:hover,ul.nav a:active,ul.nav a:focus {
 #todosEditForm {
 	z-index: 301;
 	position: absolute;
-	background-color: #FFF;
 	width: 230px;
 	top: 100px;
 	left: 100px;
@@ -591,7 +577,6 @@ ul.nav a:hover,ul.nav a:active,ul.nav a:focus {
 }
 #selectEventsCalendarEditForm{
 	width:100%;
-	background-color: white;
 	border: 2px inset;
 }
 #addEventSubmit span, #addCalendarSubmit span,#saveCalendarButton span{

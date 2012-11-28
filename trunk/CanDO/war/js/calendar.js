@@ -15,13 +15,13 @@ function getActiveCalendars()
 		var t = $(c).find('.item.active .calendar_id');
 		arr_active_calendar_id = new Array(t.length);
 			t.each(function(index, element) {
-                arr_active_calendar_id[index]=element.innerText;
+                arr_active_calendar_id[index]=$(element).text();
             });
 		
 		var n = $(c).find('.item.active .calendar_name');
 		arr_active_calendar_name = new Array(n.length);
 			n.each(function(index, element) {
-                arr_active_calendar_name[index]=element.innerText;
+                arr_active_calendar_name[index]=$(element).text();
             });
 	}
 		
@@ -57,7 +57,7 @@ function calendarTableClicks(){
 		$('#eventAddDateStart').val("");
 		$('#eventAddDateFinish').val("");
 		showPopupDialog('addEventsForm', top, left);
-		e.stopPropagation();
+		e.StopPropagation();
 	});
 	
 	<!--не доконца работает-->
@@ -110,54 +110,13 @@ function calendarTableClicks(){
 			}
 		});
 		
-		e.stopPropagation();
+		e.StopPropagation();
 	});
 	
 	$('#viewShowOkButton').click(function(e){
 		hidePopupDialog();
-		e.stopPropagation();
+		e.StopPropagation();
 	});
-	$('#viewShowEditEventButton').click(function(e){
-		hidePopupDialog();
-		var H = $(window).height();
-		var W = $(window).width();
-		var t = $('#editEventsForm');
-		
-		$.ajax({
-			url : 'calendar',
-			type : 'POST',
-			data : {
-				'action' : 'getEvent',
-				'eventKey' : $('#selectedViewEventKey').text()
-			},
-			dataType: 'json',
-			success : function(data) {
-				$('#eventEditName').val(data[0]);
-				$('#eventEditDesc').val(data[1]);
-				$('#eventEditDateStart').val(data[2]);
-				$('#eventEditDateFinish').val(data[3]);
-				
-				var index = arr_active_calendar_name.indexOf(data[4]);
-				var options = "<option value="+arr_active_calendar_id[index]+">"+data[4]+"</option>";
-				for(var i=0; i < arr_active_calendar_id.length; i++ ){
-					if(i != index) {
-						var option = "<option value="+arr_active_calendar_id[i]+">"+arr_active_calendar_name[i]+"</option>";
-						options += option;
-					}
-				}
-				$('#selectEventsCalendarEditForm').html(options);
-				$('#warningTimeDaysEditForm').val(data[5]);
-				$('#warningTimeHoursEditForm').val(data[6]);
-				$('#warningTimeMinutesEditForm').val(data[7]);
-			},
-			error : function(data) {
-				alert("Error edit event form!");
-			}
-		});
-		
-		showPopupDialog('editEventsForm',(H - t.height())/2, (W - t.width())/2);
-		e.stopPropagation();
-	});	
 };
 
 $(document).ready(
@@ -195,7 +154,7 @@ $(document).ready(
 						}
 					});
 				}					
-				e.stopPropagation();
+				e.StopPropagation();
 			});
 			$('#addEventSubmit').click(function(e){
 				var name = $('#eventAddName').val();
@@ -234,9 +193,49 @@ $(document).ready(
 					}
 				});
 				
-				e.stopPropagation();
+				e.StopPropagation();
 			});
-			
+			$('#viewShowEditEventButton').click(function(e){
+				hidePopupDialog();
+				var H = $(window).height();
+				var W = $(window).width();
+				var t = $('#editEventsForm');
+				
+				$.ajax({
+					url : 'calendar',
+					type : 'POST',
+					data : {
+						'action' : 'getEvent',
+						'eventKey' : $('#selectedViewEventKey').text()
+					},
+					dataType: 'json',
+					success : function(data) {
+						$('#eventEditName').val(data[0]);
+						$('#eventEditDesc').val(data[1]);
+						$('#eventEditDateStart').val(data[2]);
+						$('#eventEditDateFinish').val(data[3]);
+						
+						var index = arr_active_calendar_name.indexOf(data[4]);
+						var options = "<option value="+arr_active_calendar_id[index]+">"+data[4]+"</option>";
+						for(var i=0; i < arr_active_calendar_id.length; i++ ){
+							if(i != index) {
+								var option = "<option value="+arr_active_calendar_id[i]+">"+arr_active_calendar_name[i]+"</option>";
+								options += option;
+							}
+						}
+						$('#selectEventsCalendarEditForm').html(options);
+						$('#warningTimeDaysEditForm').val(data[5]);
+						$('#warningTimeHoursEditForm').val(data[6]);
+						$('#warningTimeMinutesEditForm').val(data[7]);
+					},
+					error : function(data) {
+						alert("Error edit event form!");
+					}
+				});
+				
+				showPopupDialog('editEventsForm',(H - t.height())/2, (W - t.width())/2);
+				e.StopPropagation();
+			});	
 			$('#editEventSubmit').click(function(e){
 				$.ajax({
 					url : 'calendar',
@@ -262,7 +261,7 @@ $(document).ready(
 						alert("Error edit event form!");
 					}
 				});
-				e.stopPropagation();
+				e.StopPropagation();
 			});
 			
 			$('.todoArrows').click(function() {
@@ -300,20 +299,20 @@ $(document).ready(
 						direction : "up"
 					}, 300);
 				}
-				e.stopPropagation();
+				e.StopPropagation();
 			});
 
 			$("#nextMonth").click(function(e) {
 				retrieveCalender("next");
-				e.stopPropagation();
+				e.StopPropagation();
 			});
 			$("#prevMonth").click(function(e) {
 				retrieveCalender("previous");
-				e.stopPropagation();
+				e.StopPropagation();
 			});
 			$("#todayButton").click(function(e) {
 				retrieveCalender("this");
-				e.stopPropagation();
+				e.StopPropagation();
 			});
 
 			$('#addCalendarSubmit').click(function(e) {
@@ -341,7 +340,7 @@ $(document).ready(
 						}
 					});
 				}
-				e.stopPropagation();
+				e.StopPropagation();
 			});	
 			
 			
@@ -598,7 +597,7 @@ function calendarMenuClicks() {
 		}
 		getActiveCalendars();
 		selectedCalendarsChanged();
-		e.stopPropagation();
+		e.StopPropagation();
 	});
 	
 	$("#myTodoItem").click(function() {
@@ -617,12 +616,12 @@ function calendarMenuClicks() {
 		}
 	});
 
-	$('.calendarAdd').click(
+	$('#calendarAdd').click(
 			function(e) {
 				var t = $(this);
 				showPopupDialog('calendarAddForm', t.offset().top + t.height(),
 						t.offset().left);
-				e.stopPropagation();
+				e.StopPropagation();
 			});
 
 	
@@ -638,7 +637,7 @@ function calendarMenuClicks() {
 				calendar_id = t.next('.calendar_id').first();
 				showPopupDialog('calendarEditForm',
 						t.offset().top + t.height(), t.offset().left);
-				e.stopPropagation();
+				e.StopPropagation();
 			});
 };
 
@@ -652,35 +651,8 @@ function todoMenuClicks() {
 			$(this).toggleClass('active', true);
 			square.toggleClass('active', true);
 		}
-		alert('item click');
-		e.stopPropagation();
+		e.StopPropagation();
 	});
-	/*
-	$("#myTodoItem").click(function() {
-		var calendar = $('.calendar');
-		if ($(this).hasClass('active')) {
-			$(".todoWrapper").css('display', "block");
-			if ($('.todoSidebar').css('display') == 'block') {
-				calendar.css('width', '58%');
-			} else {
-				calendar.css('width', '77%');
-			}
-
-		} else {
-			$(".todoWrapper").css('display', "none");
-			calendar.css('width', '77%');
-		}
-	});
-
-	$('.calendarAdd').click(
-			function(e) {
-				var t = $(this);
-				showPopupDialog('calendarAddForm', t.offset().top + t.height(),
-						t.offset().left);
-				e.stopPropagation();
-			});
-
-	*/
 	$('.todoSidebar .item').mouseenter(function(){
 		$(this).find('.todoEdit').css('display', 'block');
 	}).mouseleave(function(){
@@ -694,6 +666,6 @@ function todoMenuClicks() {
 				todo_id = t.find('.todo_id').first();
 				showPopupDialog('todosEditForm',
 						t.offset().top + t.height(), t.offset().left - $('#todosEditForm').width());
-				e.stopPropagation();
+				e.StopPropagation();
 			});
 };
