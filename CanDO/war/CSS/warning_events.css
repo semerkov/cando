@@ -1,6 +1,5 @@
 #warning_events_bar {
 	display: none;
-	background-color: #FFFFFF;
 	color: #1A1A1A;
 	padding: 0px;
 	margin: 0px;
@@ -39,7 +38,6 @@
 }
 
 .event_name {
-	font-family: "Comic Sans MS", cursive;
 	font-weight: 500;
 	text-align: center;
 	cursor:pointer;
@@ -48,11 +46,9 @@
 }
 
 .event_description {
-	font-family: Verdana, Geneva, sans-serif;
-	font-size:8px;
+	font-size:10px;
 }
 
 .start_time {
-	font-family: "Comic Sans MS", cursive;
 	text-align: right;
 }
