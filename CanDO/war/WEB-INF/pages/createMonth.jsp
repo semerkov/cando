@@ -61,7 +61,7 @@
 		</c:forEach>
 		<c:forEach var="i" begin="<%=dayOfMonth%>" end="<%=7 - offset%>"
 			step="1" varStatus="status">
-			<td class="day active ui-state-default <%if(checkToday && dayOfMonth==today){ %> today<% } %>"><%=dayOfMonth%><ul>
+			<td class="day active ui-state-default <%if(checkToday && dayOfMonth==today){ %> ui-state-highlight <% } %>"><%=dayOfMonth%><ul>
 				<%
 					calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
 				for(Event e : events){
@@ -81,7 +81,7 @@
 		<tr>
 			<c:forEach var="i" begin="<%=dayOfMonth%>" end="<%=dayOfMonth + 6%>"
 				step="1" varStatus="status">
-				<td class="day active ui-state-default <%if(checkToday && dayOfMonth==today){ %> today<% } %>"><%=dayOfMonth%><ul>
+				<td class="day active ui-state-default <%if(checkToday && dayOfMonth==today){ %> ui-state-highlight <% } %>"><%=dayOfMonth%><ul>
 				<%
 					calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
 				for(Event e : events){
@@ -99,7 +99,7 @@
 	<tr>
 		<c:forEach var="i" begin="<%=dayOfMonth%>" end="<%=lastDayOfMonth%>"
 			step="1" varStatus="status">
-			<td class="day active ui-state-default <%if(checkToday && dayOfMonth==today){ %> today<% } %>"><%=dayOfMonth%><ul>
+			<td class="day active ui-state-default <%if(checkToday && dayOfMonth==today){ %> ui-state-highlight <% } %>"><%=dayOfMonth%><ul>
 				<%
 					calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
 				for(Event e : events){

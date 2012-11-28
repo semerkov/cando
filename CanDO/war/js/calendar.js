@@ -57,7 +57,7 @@ function calendarTableClicks(){
 		$('#eventAddDateStart').val("");
 		$('#eventAddDateFinish').val("");
 		showPopupDialog('addEventsForm', top, left);
-		e.StopPropagation();
+		e.stopPropagation();
 	});
 	
 	<!--не доконца работает-->
@@ -109,13 +109,12 @@ function calendarTableClicks(){
 				alert("Error updateCalendar")
 			}
 		});
-		
-		e.StopPropagation();
+		e.stopPropagation();
 	});
 	
 	$('#viewShowOkButton').click(function(e){
 		hidePopupDialog();
-		e.StopPropagation();
+		e.stopPropagation();
 	});
 };
 
@@ -154,7 +153,7 @@ $(document).ready(
 						}
 					});
 				}					
-				e.StopPropagation();
+				e.stopPropagation();
 			});
 			$('#addEventSubmit').click(function(e){
 				var name = $('#eventAddName').val();
@@ -193,7 +192,7 @@ $(document).ready(
 					}
 				});
 				
-				e.StopPropagation();
+				e.stopPropagation();
 			});
 			$('#viewShowEditEventButton').click(function(e){
 				hidePopupDialog();
@@ -234,7 +233,7 @@ $(document).ready(
 				});
 				
 				showPopupDialog('editEventsForm',(H - t.height())/2, (W - t.width())/2);
-				e.StopPropagation();
+				e.stopPropagation();
 			});	
 			$('#editEventSubmit').click(function(e){
 				$.ajax({
@@ -261,7 +260,7 @@ $(document).ready(
 						alert("Error edit event form!");
 					}
 				});
-				e.StopPropagation();
+				e.stopPropagation();
 			});
 			
 			$('.todoArrows').click(function() {
@@ -299,20 +298,20 @@ $(document).ready(
 						direction : "up"
 					}, 300);
 				}
-				e.StopPropagation();
+				e.stopPropagation();
 			});
 
 			$("#nextMonth").click(function(e) {
 				retrieveCalender("next");
-				e.StopPropagation();
+				e.stopPropagation();
 			});
 			$("#prevMonth").click(function(e) {
 				retrieveCalender("previous");
-				e.StopPropagation();
+				e.stopPropagation();
 			});
 			$("#todayButton").click(function(e) {
 				retrieveCalender("this");
-				e.StopPropagation();
+				e.stopPropagation();
 			});
 
 			$('#addCalendarSubmit').click(function(e) {
@@ -340,7 +339,7 @@ $(document).ready(
 						}
 					});
 				}
-				e.StopPropagation();
+				e.stopPropagation();
 			});	
 			
 			
@@ -597,7 +596,7 @@ function calendarMenuClicks() {
 		}
 		getActiveCalendars();
 		selectedCalendarsChanged();
-		e.StopPropagation();
+		e.stopPropagation();
 	});
 	
 	$("#myTodoItem").click(function() {
@@ -621,7 +620,7 @@ function calendarMenuClicks() {
 				var t = $(this);
 				showPopupDialog('calendarAddForm', t.offset().top + t.height(),
 						t.offset().left);
-				e.StopPropagation();
+				e.stopPropagation();
 			});
 
 	
@@ -637,7 +636,7 @@ function calendarMenuClicks() {
 				calendar_id = t.next('.calendar_id').first();
 				showPopupDialog('calendarEditForm',
 						t.offset().top + t.height(), t.offset().left);
-				e.StopPropagation();
+				e.stopPropagation();
 			});
 };
 
@@ -651,7 +650,7 @@ function todoMenuClicks() {
 			$(this).toggleClass('active', true);
 			square.toggleClass('active', true);
 		}
-		e.StopPropagation();
+		e.stopPropagation();
 	});
 	$('.todoSidebar .item').mouseenter(function(){
 		$(this).find('.todoEdit').css('display', 'block');
@@ -666,6 +665,6 @@ function todoMenuClicks() {
 				todo_id = t.find('.todo_id').first();
 				showPopupDialog('todosEditForm',
 						t.offset().top + t.height(), t.offset().left - $('#todosEditForm').width());
-				e.StopPropagation();
+				e.stopPropagation();
 			});
 };
