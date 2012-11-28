@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.appspot.i_can_do.master.security.User;
+import com.appspot.i_can_do.service.utils.ServletUtils;
 
 @SuppressWarnings("serial")
 public class RootServlet extends HttpServlet {
@@ -20,15 +21,21 @@ public class RootServlet extends HttpServlet {
 	private static final Logger log = Logger.getLogger(RootServlet.class.getName());
 
 
-	public void doPost(HttpServletRequest request, HttpServletResponse response){
+	public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException{
 		HttpSession session = request.getSession();
 		
 			session.removeAttribute("user");
-			Cookie c = new Cookie(LoginServlet.REMEMBER_COOKIE_USER,"");
-			response.addCookie(c);
-			c = new Cookie(LoginServlet.REMEMBER_COOKIE_HASH,
-				"");
-			response.addCookie(c);
+			Cookie cookies[] = request.getCookies();
+			for (Cookie c : cookies) {
+				if (c.getName().equals(LoginServlet.REMEMBER_COOKIE_USER)) {
+					c.setMaxAge(0);
+					response.addCookie(c);
+				} else if (c.getName().equals(LoginServlet.REMEMBER_COOKIE_HASH)) {
+					c.setMaxAge(0);
+					response.addCookie(c);
+				}
+			}
+			ServletUtils.writeJson(response, "ready");
 	}
 	
 	
