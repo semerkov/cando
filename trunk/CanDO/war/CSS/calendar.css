@@ -14,7 +14,7 @@ body {
 	padding: 0px;
 	font: 100%/1.4 Arial;
 	overflow:hidden;
-	background: url(images/ui-bg_diagonals-thick_15_0b3e6f_40x40.png) repeat 0 center;
+	background: url(images/ui-bg_diagonals-thick_90_eeeeee_40x40.png) repeat 0 center;
 }
 
 /* ~~ Селекторы элементов/тегов ~~ */
@@ -184,7 +184,7 @@ a:hover,a:active,a:focus {
 }
 
 .calendar ul,.calendar ol {
-	color: white;
+	color: black;
 	padding: 0 5px 5px 15px;
 	font: 12px/1.2 Arial;
 	text-align: left;
