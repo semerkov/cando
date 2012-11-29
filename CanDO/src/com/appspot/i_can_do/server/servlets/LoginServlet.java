@@ -53,7 +53,7 @@ public class LoginServlet extends HttpServlet {
 
 					HttpSession session = request.getSession();
 					log.info("create session: " + session.getId());
-					session.setAttribute("user", user.getEmail());
+					session.setAttribute("user", user);
 
 					Date curDate = new Date();
 					byte[] rememberCookiesHash = null;

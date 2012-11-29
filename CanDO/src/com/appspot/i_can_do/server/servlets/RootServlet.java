@@ -49,10 +49,10 @@ public class RootServlet extends HttpServlet {
 
 		boolean isLogin = false;
 
-		String userEmail = (String) session.getAttribute("user");
+		User user = (User) session.getAttribute("user");
 		
 		
-		if(userEmail!=null)
+		if(user!=null)
 		{
 			isLogin=true;
 		}
@@ -72,9 +72,9 @@ public class RootServlet extends HttpServlet {
 				}
 				log.info("cookies check");
 				if ((!email.equals("")) && (!hash.equals(""))) {
-					User user = login.validateRememberCookies(email, hash, ipAdress);
+					user = login.validateRememberCookies(email, hash, ipAdress);
 					if (user != null) {
-						session.setAttribute("user", user.getEmail());
+						session.setAttribute("user", user);
 						isLogin = true;
 					} 
 				}

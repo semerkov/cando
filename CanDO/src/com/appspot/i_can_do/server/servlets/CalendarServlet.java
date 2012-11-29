@@ -45,30 +45,10 @@ public class CalendarServlet extends HttpServlet {
 	public void init(ServletConfig config) {
 		canDOService = CanDOService.inctance();
 		log.info("Servlet created");
-		/*
-		String email = "user@email.com";
-		testUser = CanDOSecurityService.instance().findUser(email);
-		if (testUser == null) {
-			// for test create new user
-			testUser = new User();
-			testUser.setEmail(email);
-			testUser.setName("Mario");
-			testUser.setSername("Gavani");
-			try {
-				CanDOSecurityService.instance()
-						.addNewUser(testUser, "password");
-				log.warning("Test user created");
-			} catch (LoginNameExistException e) {
-				log.warning("Test user exist");
-			}
-		} else {
-			log.warning("Test user exist");
-		}
-		*/
 	}
 
 	protected boolean isLoginState(HttpServletRequest request) {
-		User userObj = (User) request.getSession().getAttribute("User");
+		User userObj = (User) request.getSession().getAttribute("user");
 		return userObj != null;
 	}
 
@@ -76,8 +56,7 @@ public class CalendarServlet extends HttpServlet {
 	{
 		if(user==null){
 		HttpSession session = request.getSession();
-		String userEmail = (String) session.getAttribute("user");
-		user = CanDOSecurityService.instance().findUser(userEmail);
+		user = (User) session.getAttribute("user");
 			if(user==null){
 				try{
 				request.getRequestDispatcher("/").forward(request, response);
