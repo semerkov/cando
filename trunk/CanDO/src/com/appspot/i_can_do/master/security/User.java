@@ -1,5 +1,6 @@
 package com.appspot.i_can_do.master.security;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -16,7 +17,8 @@ import com.google.appengine.api.datastore.Key;
 @NamedQueries({
 		@NamedQuery(name = "User.getUsers", query = "SELECT u FROM User u"),
 		@NamedQuery(name = "User.getUser", query = "SELECT u FROM User u WHERE u.email = :userEmail")})
-public class User{
+public class User implements Serializable{
+	private static final long serialVersionUID = -3871586450241480038L;
 	
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
