@@ -34,7 +34,8 @@ public class CalendarServlet extends HttpServlet {
 					"retrieveEventCalendarMenu", "removeCalendar",
 					"updateCalendar", "addEvent", "updateEvent", "removeEvent",
 					"viewEvent","getEvent" });
-	private SimpleDateFormat formatter = new SimpleDateFormat();
+	private static SimpleDateFormat formatter = new SimpleDateFormat(
+			"dd.MM.yyyy HH:mm");
 	private CanDOService canDOService;
 
 	private User user;// TODO remove test user when complete registration
