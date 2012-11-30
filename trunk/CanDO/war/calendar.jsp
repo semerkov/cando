@@ -261,10 +261,10 @@ String name = user.getName();
 			</table>
 			<div style="margin: 0 32%;">Notification time</div>
 			<div style="text-align: center;">
-				<label>Days</label><input type="text" class="beforeDays" size="2"
-					value="0" /> <label>Hours</label><input type="text" name="" class="beforeHours"
+				<label>Days</label><input type="text" id="warningTimeDaysAddForm" class="beforeDays" size="2"
+					value="0" /> <label>Hours</label><input type="text" name="" id="warningTimeHoursAddForm" class="beforeHours"
 					size="2" value="0" /> <label>Minutes</label><input type="text"
-					name="" class="beforeMinutes" size="2" value="0" />
+					name="" id="warningTimeMinutesAddForm" class="beforeMinutes" size="2" value="0" />
 			</div>
 			<div style="text-align: center">
 					<button type="button" name="addEventButton"

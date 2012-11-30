@@ -30,7 +30,7 @@
 </table>
 <div style="text-align: center; width: 100%">Notification time</div>
 <div style="text-align: center;">
-	<label>Days: </label><%=warningTime.getDay() %> <label>Hours: </label><%=warningTime.getHours() %> <label>Minutes:
+	<label>Days: </label><%=warningTime.getDate()-1%> <label>Hours: </label><%=warningTime.getHours() %> <label>Minutes:
 	</label><%=warningTime.getMinutes() %>
 </div>
 <div id="selectedViewEventKey" style="display:none"><%=KeyFactory.keyToString(event.getKey())%></div>
