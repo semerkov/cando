@@ -178,7 +178,7 @@ $(document).ready(
 						'action' : 'addEvent',
 						'calendarKey' : $('#selectEventsCalendar :selected').val(),
 						'eventName' : name,
-						'description' : $('#eventAddDesc').val(),
+						'eventDesc' : $('#eventAddDesc').val(),
 						'eventStartDay' : $('#eventAddDateStart').val(),
 						'eventFinishDay' : finishTime,
 						'warningTimeDays' : $('#warningTimeDaysAddForm').val(),

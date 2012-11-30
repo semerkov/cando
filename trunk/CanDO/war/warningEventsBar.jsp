@@ -4,15 +4,15 @@
 	import="java.util.ArrayList,com.appspot.i_can_do.master.model.Event"%>
 <%@page import="java.util.Date"%>
 <%@page import="java.text.SimpleDateFormat"%>
-<%@page import="java.util.Calendar"%>
+
 
 <%
 	ArrayList<Event> events = (ArrayList<Event>) request
 			.getAttribute("events");
 	if (events != null) {
-	SimpleDateFormat df = new SimpleDateFormat();
+	SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy HH:mm");
 		for (Event event : events) {
-			String string = df.format(event.getStart().getTime());
+			String string = formatter.format(event.getStart().getTime());
 			String description = "".equals(event.getDescription())?"not specified":event.getDescription();
 %>
 
