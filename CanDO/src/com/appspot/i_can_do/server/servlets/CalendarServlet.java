@@ -34,8 +34,7 @@ public class CalendarServlet extends HttpServlet {
 					"retrieveEventCalendarMenu", "removeCalendar",
 					"updateCalendar", "addEvent", "updateEvent", "removeEvent",
 					"viewEvent","getEvent" });
-	private SimpleDateFormat formatter = new SimpleDateFormat(
-			"dd.MM.yyyy hh:mm");
+	private SimpleDateFormat formatter = new SimpleDateFormat();
 	private CanDOService canDOService;
 
 	private User user;// TODO remove test user when complete registration
@@ -236,6 +235,9 @@ public class CalendarServlet extends HttpServlet {
 		String eventFinishDay = request.getParameter("eventFinishDay");
 		String eventStartDay = request.getParameter("eventStartDay");
 		String eventDesc = request.getParameter("eventDesc");
+		int warningTimeDays = Integer.valueOf(request.getParameter("warningTimeDays"));
+		int warningTimeHours = Integer.valueOf(request.getParameter("warningTimeHours"));
+		int warningTimeMinutes = Integer.valueOf(request.getParameter("warningTimeMinutes"));
 		if (!("".equals(calendarKey) || "".equals(eventName) || ""
 				.equals(eventFinishDay))) {
 			EventCalendar calendar = canDOService.getCalendarByKey(calendarKey);
@@ -263,9 +265,11 @@ public class CalendarServlet extends HttpServlet {
 			event.setStart(start);
 			
 			Date warningTime = new Date();
-			warningTime.setHours(0);
+			warningTime.setTime(0);
+			warningTime.setDate(warningTimeDays+1);
+			warningTime.setHours(warningTimeHours);
+			warningTime.setMinutes(warningTimeMinutes);
 			event.setWarningTime(warningTime);
-			
 			
 			calendar.getEvents().add(event);
 			canDOService.saveCalendar(calendar);
@@ -308,7 +312,8 @@ public class CalendarServlet extends HttpServlet {
 			event.setStart(start);
 			
 			Date warningTime = new Date();
-			warningTime.setDate(warningTimeDays);
+			warningTime.setTime(0);
+			warningTime.setDate(warningTimeDays+1);
 			warningTime.setHours(warningTimeHours);
 			warningTime.setMinutes(warningTimeMinutes);
 			event.setWarningTime(warningTime);
@@ -355,7 +360,7 @@ public class CalendarServlet extends HttpServlet {
 			data[3] = formatter.format(event.getFinish());
 			data[4] = calendar.getName();
 			Date warningTime = event.getWarningTime();
-			data[5] = String.valueOf(warningTime.getDay());
+			data[5] = String.valueOf(warningTime.getDate()-1);
 			data[6] = String.valueOf(warningTime.getHours());
 			data[7] = String.valueOf(warningTime.getMinutes());
 			

@@ -180,7 +180,10 @@ $(document).ready(
 						'eventName' : name,
 						'description' : $('#eventAddDesc').val(),
 						'eventStartDay' : $('#eventAddDateStart').val(),
-						'eventFinishDay' : finishTime
+						'eventFinishDay' : finishTime,
+						'warningTimeDays' : $('#warningTimeDaysAddForm').val(),
+						'warningTimeHours' : $('#warningTimeHoursAddForm').val(),
+						'warningTimeMinutes' : $('#warningTimeMinutesAddForm').val()
 					},
 					success : function(data) {
 						retrieveCalender("this");
@@ -347,9 +350,9 @@ $(document).ready(
 				alert("edit event");
 			});
 			
-			$('.beforeDays').spinner({min:'0',max:'90'});
-			$('.beforeHours').spinner({min:'0',max:'24'});
-			$('.beforeMinutes').spinner({min:'0',max:'60',step:'5'});
+			$('.beforeDays').spinner({min:'0',max:'30'});
+			$('.beforeHours').spinner({min:'0',max:'23'});
+			$('.beforeMinutes').spinner({min:'0',max:'59',step:'5'});
 			
 			$('#exit').click(function(e){
 				$.ajax({
