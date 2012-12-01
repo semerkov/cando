@@ -122,8 +122,8 @@ function calendarTableClicks(){
 
 function setCalendarDayByClick(dateText,instance){
 	var selectedDate = new Date(dateText);
-	if(selectedDate.getFullYear()!=curSelectedDate.getFullYear()
-		||selectedDate.getMonth()!=curSelectedDate.getMonth())
+	if($('#currYear').text()!=selectedDate.getFullYear()
+		||$('#currMonth').text()!=selectedDate.getMonth())
 		{
 			retrieveCalenderTable(selectedDate.getFullYear(), selectedDate.getMonth(),"this");
 		}
