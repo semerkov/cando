@@ -511,6 +511,7 @@ function retrieveCalenderTable(year, month, monthAction) {
 	$.ajax({
 				url : 'calendar',
 				type : 'POST',
+				async: false,
 				data : {
 					// 'action' : 'addCalendar'
 					'action' : 'retrieveCalenderTable',
