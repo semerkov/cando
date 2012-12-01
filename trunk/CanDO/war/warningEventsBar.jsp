@@ -13,15 +13,17 @@
 	SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy HH:mm");
 		for (Event event : events) {
 			String string = formatter.format(event.getStart().getTime());
-			String description = "".equals(event.getDescription())?"not specified":event.getDescription();
+			String description = event.getDescription();
+			boolean active = true;
+			if("".equals(description)) active=false;
 %>
 
-	<div class="event_name">
+	<div class="event_name <%=active?"active_accordion":"ui-accordion-header ui-state-default ui-corner-all"%>">
     <%=event.getName()%>
     	<div class="start_time"><%=string%></div>
 	</div>
 	
-	<div class="event_description"><%=description%></div>
+	<div class="event_description <%=active?"":"ui-helper-hidden"%>"><%=description%></div>
 
 <%
 		

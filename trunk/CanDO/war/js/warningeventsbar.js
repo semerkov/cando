@@ -31,33 +31,12 @@ function loading(){
 
 function init(){
 	 $("#warning_events_bar").accordion({ 
-		 header: '.event_name',
-		 autoHeight: true
+		 header: '.active_accordion',
+		 autoHeight: true,
+		 collapsible: true,
+		 active: false
+		 /*event: 'mouseover'*/
 	 });
-	 
-	 $('.accordion .event_name').click(function() {
-		$(this).next().toggle('slow');
-		return false;
-	 }).next().hide();
-	/*
-	$('.event_description').css('display', 'none');
-	$('.event_name').click(function(e) {
-		var div = $(this).next('.event_description').first();
-		if ($(this).hasClass('active')) {
-			$(this).toggleClass('active', false);
-			div.hide("slide", {
-				direction : "up"
-			}, 300);
-		} else {
-			$(this).toggleClass('active', true);
-			div.show("slide", {
-				direction : "up"
-			}, 300);
-		}
-		e.stopPropagation();
-	});
-	*/
-
 }
 
 function close_events_bar(){
