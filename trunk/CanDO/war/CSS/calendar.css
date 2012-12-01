@@ -588,3 +588,6 @@ ul.nav a:hover,ul.nav a:active,ul.nav a:focus {
 	text-decoration:underline;
 	cursor:pointer;
 }
+select{
+	background-color: white;
+}
