@@ -31,7 +31,7 @@ String name = user.getName();
 
 <body>
 	<div class="container">
-
+    
 		<div class="header">
 			<div class="account">
 				<span class="header_login_area;"
@@ -125,23 +125,12 @@ String name = user.getName();
 				</div>
 				<div class="todoSidebar ui-corner-all">
 					<nav>
-						<button class="active">My to-do`s</button>
-						<div class="todoAdd ui-icon ui-icon-triangle-1-nw"></div>
-						<div class="myTodos">
-							<div class="item">
-								<div class="square"></div>
-                                <button class="todoRemove ui-icon-trash ui-icon"></button>
-                                <button class="todoEdit ui-icon-pencil ui-icon"></button>
-								Sergey to-do
-                                <div class="todo_id" style="display:none;">23</div>
-							</div>							
-							<div class="item active">
-								<div class="square active"></div>
-                                <button class="todoRemove ui-icon-trash ui-icon"></button>
-                                <button class="todoEdit ui-icon-pencil ui-icon"></button>
-								Read books
-                                <div class="todo_id" style="display:none;">23</div>
-							</div>
+						<button class="active">My to-do`s
+						<div class="todoAdd ui-icon ui-icon-triangle-1-nw"></div></button>
+						<div id="myTodos">
+							
+                            
+                            
 						</div>
 						<button class="active">Others to-do`s</button>
 						<div class="#othersTodos">

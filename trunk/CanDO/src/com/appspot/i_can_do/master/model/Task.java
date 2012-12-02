@@ -19,6 +19,7 @@ public class Task {
     private Key key;
 	private String name;
 	private Date date;
+	private String description;
 	@Enumerated(EnumType.STRING)
 	private State state;
 	
@@ -48,5 +49,13 @@ public class Task {
 	}
 	public void setState(State state) {
 		this.state = state;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 }
