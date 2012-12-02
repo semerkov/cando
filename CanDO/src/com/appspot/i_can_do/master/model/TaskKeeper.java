@@ -14,7 +14,8 @@ import com.google.appengine.api.datastore.Key;
 
 @Entity
 @NamedQueries({
-	@NamedQuery(name = "TaskKeeper.getTasksListsKeysByUserKey", query = "SELECT t.taskListKey FROM TaskKeeper t WHERE c.userKey = :userKey"),
+	@NamedQuery(name = "TaskKeeper.getTasksListsKeysByUserKey", query = "SELECT t.taskListKey FROM TaskKeeper t WHERE t.userKey = :userKey"),
+	@NamedQuery(name = "TaskKeeper.getTasksListsKeysByUserKeyAndPermission", query = "SELECT t.taskListKey FROM TaskKeeper t WHERE t.userKey = :userKey AND t.permission = :permission"),
 	@NamedQuery(name = "TaskKeeper.getTaskKeeperByTaskListKey", query = "SELECT t FROM TaskKeeper t WHERE t.taskListKey = :taskListKey")})
 public class TaskKeeper {
 	@Id

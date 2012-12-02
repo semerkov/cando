@@ -341,6 +341,27 @@ public class CanDOService {
 		return tasksList;
 	}
 	
+	public List<TaskList> getTaskLists(User user, Permission permission){
+		if (user == null)
+			throw new NullPointerException("User cannot be null!");
+		if (user.getKey() == null)
+			throw new IllegalArgumentException("Not persiste user!");
+
+		Query query = em
+				.createNamedQuery("TaskKeeper.getTasksListsKeysByUserKeyAndPermission");
+
+		query.setParameter("userKey", user.getKey());
+		query.setParameter("permission", permission);
+		
+		List<Key> tasksKeys = (List<Key>) query.getResultList();
+		List<TaskList> tasksList = new ArrayList<TaskList>();
+		for (Key key : tasksKeys) {
+			TaskList c = em.find(TaskList.class, key);
+			tasksList.add(c);
+		}
+		return tasksList;
+	}
+	
 	public TaskList getTaskListByKey(String taskKey){
 		Key key = KeyFactory.stringToKey(taskKey);
 		return em.find(TaskList.class, key);

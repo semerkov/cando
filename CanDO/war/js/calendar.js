@@ -9,140 +9,10 @@ var todo_id="";
 
 var curSelectedDate = new Date();
 
-function getActiveCalendars()
-{
-	var c = $('.myCalendar');
-	if(c!=null)
-	{
-		var t = $(c).find('.item.active .calendar_id');
-		arr_active_calendar_id = new Array(t.length);
-			t.each(function(index, element) {
-                arr_active_calendar_id[index]=$(element).text();
-            });
-		
-		var n = $(c).find('.item.active .calendar_name');
-		arr_active_calendar_name = new Array(n.length);
-			n.each(function(index, element) {
-                arr_active_calendar_name[index]=$(element).text();
-            });
-	}
-		
-}
-
-function getCurrentCalendarName()
-{
-	return $(".myCalendar div:contains("+$(calendar_id).text()+")").next(".calendar_name").text();
-}
-
-function calendarTableClicks(){
-	// add new event
-	$('.day.active').click(function(e) {
-		$(this).addClass('ui-state-active');
-		//set position
-		var s = this.getBoundingClientRect();
-		var top = s.top + (Math.abs(s.top - s.bottom) / 2) - 350;
-		top = top > 0? top : 20;
-		var left = s.left + (Math.abs(s.left - s.right) / 2)- 190;
-		left = left < $(window).width() - 390 ? left : left - 125;
-		// set select calendars
-		var options = "";
-		for(i=0; i < arr_active_calendar_id.length; i++ ){
-			var option = "<option value="+arr_active_calendar_id[i]+">"+arr_active_calendar_name[i]+"</option>";
-			options += option;
-		}
-		//prepare add event form
-		$('#selectEventsCalendar').html(options);
-		$('#eventAddName').css('border-color', 'white');
-		$('#eventAddDateStart').css('border-color', 'white');
-		$('#eventAddName').val("");
-		$('#eventAddDesc').val("");
-		$('#eventAddDateStart').val("");
-		$('#eventAddDateFinish').val("");
-		showPopupDialog('addEventsForm', top, left);
-		e.stopPropagation();
-	});
-	
-	<!--не доконца работает-->
-	var dateS = new Date();
-	var dateF = new Date();
-	/*date.setDate(Date.parse());*/
-	$('#eventAddDateStart').datetimepicker({
-		dateFormat: 'dd.mm.yy',
-		minDateTime: dateS,
-		onClose: function(datetimeText, datepickerInstance){
-				var d = new Date();
-				/*d.setDate(Date.parse(datetimeText));*/
-                $('#eventEdirDateFinish',document).datetimepicker({minDateTime: d});			
-		}
-	});
-	$('#eventAddDateStart').datetimepicker({
-		dateFormat: 'dd.mm.yy',
-		minDateTime: dateS
-		});
-	$('#eventAddDateFinish').datetimepicker({
-		dateFormat: 'dd.mm.yy',
-		minDateTime: dateS
-		});
-	$('#eventEditDateStart').datetimepicker({
-		dateFormat: 'dd.mm.yy',
-		minDateTime: dateS
-		});
-	$('#eventEditDateFinish').datetimepicker({
-		dateFormat: 'dd.mm.yy',
-		minDateTime: dateS
-		});
-	$('#calendarTableWrapper li').click(function(e){	
-		var eventKey = $(this).children('div.event_id').text();
-		$.ajax({
-			url : 'calendar',
-			type : 'POST',
-			data : {
-				'action' : 'viewEvent',
-				'eventKey' : eventKey
-			},
-			success : function(data) {
-				$('#viewEventContainer').html(data);
-				var H = $(window).height();
-				var W = $(window).width();
-				var t = $('#viewEventForm');
-				showPopupDialog('viewEventForm',(H - t.height())/2, (W - t.width())/2);
-			},
-			error : function(data) {
-				alert("Error updateCalendar")
-			}
-		});
-		e.stopPropagation();
-	});
-	
-	$('#viewShowOkButton').click(function(e){
-		hidePopupDialog();
-		e.stopPropagation();
-	});
-};
-
-function setCalendarDayByClick(dateText,instance){
-	var selectedDate = new Date(dateText);
-	if($('#currYear').text()!=selectedDate.getFullYear()
-		||$('#currMonth').text()!=selectedDate.getMonth())
-		{
-			retrieveCalenderTable(selectedDate.getFullYear(), selectedDate.getMonth(),"this");
-		}
-	$(".day.active.ui-state-active").removeClass('ui-state-active');
-	$(".day.active").each(function(index, element) {
-        if($(element).text()==selectedDate.getDate()){
-			$(element).addClass('ui-state-active');
-			selectedDate.setDate($(element).text());
-		}
-    });
-		
-	curSelectedDate = selectedDate;
-};
-
 $(document).ready(
 		function() {
 			retrieveEventCalendarMenu();
-
-			todoMenuClicks();
+			viewTasks();
 			$( ".ui-draggable" ).draggable();
 			$( "button" ).button();
 			$("input").addClass('ui-corner-all');
@@ -422,6 +292,142 @@ function showOnlyThisCalendar() {
 	
 };
 
+function getActiveCalendars()
+{
+	var c = $('.myCalendar');
+	if(c!=null)
+	{
+		var t = $(c).find('.item.active .calendar_id');
+		arr_active_calendar_id = new Array(t.length);
+			t.each(function(index, element) {
+                arr_active_calendar_id[index]=$(element).text();
+            });
+		
+		var n = $(c).find('.item.active .calendar_name');
+		arr_active_calendar_name = new Array(n.length);
+			n.each(function(index, element) {
+                arr_active_calendar_name[index]=$(element).text();
+            });
+	}
+		
+}
+
+function getCurrentCalendarName()
+{
+	return $(".myCalendar div:contains("+$(calendar_id).text()+")").next(".calendar_name").text();
+}
+
+function initAddEventForm(){
+	<!--не доконца работает-->
+	var dateS = new Date();
+	var dateF = new Date();
+	$('#eventAddDateStart').datetimepicker({
+		dateFormat: 'dd.mm.yy',
+		altFormat: 'mm/dd/yy',
+		minDateTime: dateS,
+		onClose: function(datetimeText, datepickerInstance){
+				var d = $.datepicker.parseDate("dd.mm.yy",datetimeText);
+				alert(datetimeText);
+                $('#eventAddDateFinish').datetimepicker("option","minDateTime", d);			
+		}
+	});
+	$('#eventAddDateFinish').datetimepicker({
+		dateFormat: 'dd.mm.yy',
+		minDateTime: dateS,
+		altFormat: 'mm/dd/yy'
+		});
+};
+
+function calendarTableClicks(){
+	// add new event
+	$('.day.active').click(function(e) {
+		
+		initAddEventForm();
+		
+		$(this).addClass('ui-state-active');
+		//set position
+		var s = this.getBoundingClientRect();
+		var top = s.top + (Math.abs(s.top - s.bottom) / 2) - 350;
+		top = top > 0? top : 20;
+		var left = s.left + (Math.abs(s.left - s.right) / 2)- 190;
+		left = left < $(window).width() - 390 ? left : left - 125;
+		// set select calendars
+		var options = "";
+		for(i=0; i < arr_active_calendar_id.length; i++ ){
+			var option = "<option value="+arr_active_calendar_id[i]+">"+arr_active_calendar_name[i]+"</option>";
+			options += option;
+		}
+		//prepare add event form
+		$('#selectEventsCalendar').html(options);
+		$('#eventAddName').css('border-color', 'white');
+		$('#eventAddDateStart').css('border-color', 'white');
+		$('#eventAddName').val("");
+		$('#eventAddDesc').val("");
+		$('#eventAddDateStart').val("");
+		$('#eventAddDateFinish').val("");
+		showPopupDialog('addEventsForm', top, left);
+		e.stopPropagation();
+	});
+	
+	<!--не доконца работает-->
+	var dateS = new Date();
+	var dateF = new Date();
+	
+	$('#eventEditDateStart').datetimepicker({
+		dateFormat: 'dd.mm.yy',
+		minDateTime: dateS
+		});
+	$('#eventEditDateFinish').datetimepicker({
+		dateFormat: 'dd.mm.yy',
+		minDateTime: dateS
+		});
+	$('#calendarTableWrapper li').click(function(e){	
+		var eventKey = $(this).children('div.event_id').text();
+		$.ajax({
+			url : 'calendar',
+			type : 'POST',
+			data : {
+				'action' : 'viewEvent',
+				'eventKey' : eventKey
+			},
+			success : function(data) {
+				$('#viewEventContainer').html(data);
+				var H = $(window).height();
+				var W = $(window).width();
+				var t = $('#viewEventForm');
+				showPopupDialog('viewEventForm',(H - t.height())/2, (W - t.width())/2);
+			},
+			error : function(data) {
+				alert("Error updateCalendar")
+			}
+		});
+		e.stopPropagation();
+	});
+	
+	$('#viewShowOkButton').click(function(e){
+		hidePopupDialog();
+		e.stopPropagation();
+	});
+};
+
+function setCalendarDayByClick(dateText,instance){
+	var selectedDate = new Date(dateText);
+	if($('#currYear').text()!=selectedDate.getFullYear()
+		||$('#currMonth').text()!=selectedDate.getMonth())
+		{
+			retrieveCalenderTable(selectedDate.getFullYear(), selectedDate.getMonth(),"this");
+		}
+	$(".day.active.ui-state-active").removeClass('ui-state-active');
+	$(".day.active").each(function(index, element) {
+        if($(element).text()==selectedDate.getDate()){
+			$(element).addClass('ui-state-active');
+			selectedDate.setDate($(element).text());
+		}
+    });
+		
+	curSelectedDate = selectedDate;
+};
+
 
 function removeCalendarConfirm() {
 	hidePopupDialog();
@@ -612,6 +618,24 @@ function retrieveEventCalendarMenu() {
 	$("body").css("cursor", "auto");
 };
 
+function viewTasks() {
+	$.ajax({
+		url : 'calendar',
+		type : 'POST',
+		data : {
+			'action' : 'viewTasks'
+		},
+		success : function(data) {
+			$('#myTodos').html(data);
+			todoMenuClicks();
+		},
+		error : function(data) {
+			alert("Error retrieve Tasks")
+		}
+	});
+	$("body").css("cursor", "auto");
+};
+
 function calendarMenuClicks() {
 	$(".myCalendar .item").click(function(e) {
 		var square = $(this).children('div').first();
@@ -680,10 +704,18 @@ function todoMenuClicks() {
 		}
 		e.stopPropagation();
 	});
+	$('.todoEdit').button();
+	$('.todoRemove').button();
 	$('.todoSidebar .item').mouseenter(function(){
 		$(this).find('.todoEdit').css('display', 'block');
 	}).mouseleave(function(){
 		$(this).find('.todoEdit').css('display', 'none');
+	});
+	
+	$('.todoSidebar .item').mouseenter(function(){
+		$(this).find('.todoRemove').css('display', 'block');
+	}).mouseleave(function(){
+		$(this).find('.todoRemove').css('display', 'none');
 	});
 	
 	$('.todoSidebar .todoEdit').click(
@@ -695,4 +727,66 @@ function todoMenuClicks() {
 						t.offset().top + t.height(), t.offset().left - $('#todosEditForm').width());
 				e.stopPropagation();
 			});
+	$('.todoSidebar .todoRemove').click(
+			function(e) {
+				removeTaskConfirm();
+				e.stopPropagation();
+			});	
+	$('#addTaskField').onBlur(function(e){
+		addTask();
+		e.stopPropagation();
+	});
 };
+function addTask(){
+		var str = $('#addTaskField').val();
+		alert(str);
+		if(str!=""){
+			$.ajax({
+			url : 'calendar',
+			type : 'POST',
+			data : {
+				'action' : 'addTask',
+				'taskName': str
+			},
+			success : function(data) {
+				viewTasks();
+			},
+			error : function(data) {
+				alert("Error add task");
+			}
+			});
+		}
+}
+function removeTaskConfirm() {
+	hidePopupDialog();
+	$("#confirm").dialog({
+		position : [ "center", "center" ],
+		title: "Remove this task?",
+		buttons : {
+			"Yes" : function() {
+				$.ajax({
+					url : 'calendar',
+					type : 'POST',
+					async : 'false',
+					data : {
+						'action' : 'removeTask',
+						'taskKey' : todo_id
+					},
+					success : function(data) {
+						viewTasks();
+						/*hidePopupDialog();*/
+
+					},
+					error : function(data) {
+						alert("Error remove task")
+					}
+				});
+				$(this).dialog("close");
+			},
+			"No" : function() {
+				$(this).dialog("close");
+				/*hidePopupDialog();*/
+			}
+		}
+	});
+}

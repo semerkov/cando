@@ -19,6 +19,10 @@ import javax.servlet.http.HttpSession;
 
 import com.appspot.i_can_do.master.model.Event;
 import com.appspot.i_can_do.master.model.EventCalendar;
+import com.appspot.i_can_do.master.model.Task;
+import com.appspot.i_can_do.master.model.TaskList;
+import com.appspot.i_can_do.master.security.Permission;
+import com.appspot.i_can_do.master.security.State;
 import com.appspot.i_can_do.master.security.User;
 import com.appspot.i_can_do.service.CanDOSecurityService;
 import com.appspot.i_can_do.service.CanDOService;
@@ -33,13 +37,22 @@ public class CalendarServlet extends HttpServlet {
 			.asList(new String[] { "retrieveCalenderTable", "addCalendar",
 					"retrieveEventCalendarMenu", "removeCalendar",
 					"updateCalendar", "addEvent", "updateEvent", "removeEvent",
-					"viewEvent","getEvent" });
+					"viewEvent", "getEvent", "viewTasks", "			viewTasks();", "removeTask", "updateTask", "changeTaskStatus" });
 	private static SimpleDateFormat formatter = new SimpleDateFormat(
 			"dd.MM.yyyy HH:mm");
 	private CanDOService canDOService;
 
 	private User user;// TODO remove test user when complete registration
-							// and etc.
+						// and etc.
+
+	private static final List<String> SECURITY_MONTH_ACTIONS = Arrays
+			.asList(new String[] { "this", "next", "previous" });
+	private static final List<Integer> SECURITY_MONTH = Arrays
+			.asList(new Integer[] { Calendar.JANUARY, Calendar.FEBRUARY,
+					Calendar.MARCH, Calendar.APRIL, Calendar.MAY,
+					Calendar.JUNE, Calendar.JULY, Calendar.AUGUST,
+					Calendar.SEPTEMBER, Calendar.OCTOBER, Calendar.NOVEMBER,
+					Calendar.DECEMBER });
 
 	@Override
 	public void init(ServletConfig config) {
@@ -52,15 +65,15 @@ public class CalendarServlet extends HttpServlet {
 		return userObj != null;
 	}
 
-	public void doGet(HttpServletRequest request, HttpServletResponse response)
-	{
-		if(user==null){
-		HttpSession session = request.getSession();
-		user = (User) session.getAttribute("user");
-			if(user==null){
-				try{
-				request.getRequestDispatcher("/").forward(request, response);
-				return;
+	public void doGet(HttpServletRequest request, HttpServletResponse response) {
+		if (user == null) {
+			HttpSession session = request.getSession();
+			user = (User) session.getAttribute("user");
+			if (user == null) {
+				try {
+					request.getRequestDispatcher("/")
+							.forward(request, response);
+					return;
 				} catch (ServletException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -72,7 +85,8 @@ public class CalendarServlet extends HttpServlet {
 		}
 		try {
 			request.setAttribute("user", user);
-			request.getRequestDispatcher("calendar.jsp").forward(request, response);
+			request.getRequestDispatcher("calendar.jsp").forward(request,
+					response);
 		} catch (ServletException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -80,9 +94,8 @@ public class CalendarServlet extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 	}
-	
 
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
@@ -120,19 +133,14 @@ public class CalendarServlet extends HttpServlet {
 			removeEvent(request, response);
 		} else if (action.equals("viewEvent")) {
 			viewEvent(request, response);
-		}else if (action.equals("getEvent")){
+		} else if (action.equals("getEvent")) {
 			getEvent(request, response);
+		} else if (action.equals("viewTasks")) {
+			viewTasks(request, response);
+		} else if (action.equals("addTask")) {
+			addTask(request, response);
 		}
 	}
-
-	private static final List<String> SECURITY_MONTH_ACTIONS = Arrays
-			.asList(new String[] { "this", "next", "previous" });
-	private static final List<Integer> SECURITY_MONTH = Arrays
-			.asList(new Integer[] { Calendar.JANUARY, Calendar.FEBRUARY,
-					Calendar.MARCH, Calendar.APRIL, Calendar.MAY,
-					Calendar.JUNE, Calendar.JULY, Calendar.AUGUST,
-					Calendar.SEPTEMBER, Calendar.OCTOBER, Calendar.NOVEMBER,
-					Calendar.DECEMBER });
 
 	private void retrieveCalenderTable(HttpServletRequest request,
 			HttpServletResponse response) throws IOException, ServletException {
@@ -236,20 +244,23 @@ public class CalendarServlet extends HttpServlet {
 		String eventFinishDay = request.getParameter("eventFinishDay");
 		String eventStartDay = request.getParameter("eventStartDay");
 		String eventDesc = request.getParameter("eventDesc");
-		int warningTimeDays = Integer.valueOf(request.getParameter("warningTimeDays"));
-		int warningTimeHours = Integer.valueOf(request.getParameter("warningTimeHours"));
-		int warningTimeMinutes = Integer.valueOf(request.getParameter("warningTimeMinutes"));
+		int warningTimeDays = Integer.valueOf(request
+				.getParameter("warningTimeDays"));
+		int warningTimeHours = Integer.valueOf(request
+				.getParameter("warningTimeHours"));
+		int warningTimeMinutes = Integer.valueOf(request
+				.getParameter("warningTimeMinutes"));
 		if (!("".equals(calendarKey) || "".equals(eventName) || ""
 				.equals(eventFinishDay))) {
 			EventCalendar calendar = canDOService.getCalendarByKey(calendarKey);
 			Event event = new Event();
 			event.setName(eventName);
-			if(eventDesc != null){
+			if (eventDesc != null) {
 				event.setDescription(eventDesc);
-			}else{
+			} else {
 				event.setDescription("");
 			}
-			
+
 			Date finish;
 			try {
 				finish = formatter.parse(eventFinishDay);
@@ -264,14 +275,14 @@ public class CalendarServlet extends HttpServlet {
 				start = new Date();
 			}
 			event.setStart(start);
-			
+
 			Date warningTime = new Date();
 			warningTime.setTime(0);
-			warningTime.setDate(warningTimeDays+1);
+			warningTime.setDate(warningTimeDays + 1);
 			warningTime.setHours(warningTimeHours);
 			warningTime.setMinutes(warningTimeMinutes);
 			event.setWarningTime(warningTime);
-			
+
 			calendar.getEvents().add(event);
 			canDOService.saveCalendar(calendar);
 		}
@@ -284,19 +295,22 @@ public class CalendarServlet extends HttpServlet {
 		String eventFinishDay = request.getParameter("eventFinishDay");
 		String eventStartDay = request.getParameter("eventStartDay");
 		String eventDesc = request.getParameter("eventDesc");
-		int warningTimeDays = Integer.valueOf(request.getParameter("warningTimeDays"));
-		int warningTimeHours = Integer.valueOf(request.getParameter("warningTimeHours"));
-		int warningTimeMinutes = Integer.valueOf(request.getParameter("warningTimeMinutes"));
+		int warningTimeDays = Integer.valueOf(request
+				.getParameter("warningTimeDays"));
+		int warningTimeHours = Integer.valueOf(request
+				.getParameter("warningTimeHours"));
+		int warningTimeMinutes = Integer.valueOf(request
+				.getParameter("warningTimeMinutes"));
 		if (!("".equals(eventKey) || "".equals(eventName) || ""
 				.equals(eventFinishDay))) {
 			Event event = canDOService.getEventByKey(eventKey);
 			event.setName(eventName);
-			if(eventDesc != null){
+			if (eventDesc != null) {
 				event.setDescription(eventDesc);
-			}else{
+			} else {
 				event.setDescription("");
 			}
-			
+
 			Date finish;
 			try {
 				finish = formatter.parse(eventFinishDay);
@@ -311,14 +325,14 @@ public class CalendarServlet extends HttpServlet {
 				start = new Date();
 			}
 			event.setStart(start);
-			
+
 			Date warningTime = new Date();
 			warningTime.setTime(0);
-			warningTime.setDate(warningTimeDays+1);
+			warningTime.setDate(warningTimeDays + 1);
 			warningTime.setHours(warningTimeHours);
 			warningTime.setMinutes(warningTimeMinutes);
 			event.setWarningTime(warningTime);
-			
+
 			canDOService.saveEvent(event);
 		}
 	}
@@ -327,7 +341,8 @@ public class CalendarServlet extends HttpServlet {
 			HttpServletResponse response) {
 		String eventKey = request.getParameter("eventKey");
 		if (eventKey != null) {
-			EventCalendar calendar = canDOService.getCalendar(eventKey, user.getKey());
+			EventCalendar calendar = canDOService.getCalendar(eventKey,
+					user.getKey());
 			calendar.getEvents().remove(canDOService.getEventByKey(eventKey));
 			canDOService.saveCalendar(calendar);
 		}
@@ -338,7 +353,8 @@ public class CalendarServlet extends HttpServlet {
 		String eventKey = request.getParameter("eventKey");
 		if (!"".equals(eventKey)) {
 			Event event = canDOService.getEventByKey(eventKey);
-			EventCalendar calendar = canDOService.getCalendar(eventKey, user.getKey());
+			EventCalendar calendar = canDOService.getCalendar(eventKey,
+					user.getKey());
 			request.setAttribute("formatter", formatter);
 			request.setAttribute("event", event);
 			request.setAttribute("calendarName", calendar.getName());
@@ -347,25 +363,73 @@ public class CalendarServlet extends HttpServlet {
 		}
 
 	}
-	
+
 	private void getEvent(HttpServletRequest request,
 			HttpServletResponse response) throws IOException {
 		String eventKey = request.getParameter("eventKey");
 		if (eventKey != null) {
 			Event event = canDOService.getEventByKey(eventKey);
-			EventCalendar calendar = canDOService.getCalendar(eventKey, user.getKey());
+			EventCalendar calendar = canDOService.getCalendar(eventKey,
+					user.getKey());
 			String[] data = new String[8];
-			data[0] = event.getName()!=null?event.getName() : "";
-			data[1] = event.getDescription()!=null?event.getDescription() : "";
+			data[0] = event.getName() != null ? event.getName() : "";
+			data[1] = event.getDescription() != null ? event.getDescription()
+					: "";
 			data[2] = formatter.format(event.getStart());
 			data[3] = formatter.format(event.getFinish());
 			data[4] = calendar.getName();
 			Date warningTime = event.getWarningTime();
-			data[5] = String.valueOf(warningTime.getDate()-1);
+			data[5] = String.valueOf(warningTime.getDate() - 1);
 			data[6] = String.valueOf(warningTime.getHours());
 			data[7] = String.valueOf(warningTime.getMinutes());
-			
+
 			ServletUtils.writeJson(response, data);
 		}
 	}
+
+	private void viewTasks(HttpServletRequest request,
+			HttpServletResponse response) throws IOException, ServletException {
+		List<TaskList> tasksLists = canDOService.getTaskLists(user, Permission.Owner);
+		if(tasksLists.isEmpty()){
+			tasksLists = (List<TaskList>) canDOService.addTaskList(new TaskList(), user.getKey());
+		}
+		
+		List<Task> tasks = new ArrayList<Task>();
+		for(TaskList taskList : tasksLists){
+			tasks.addAll(taskList.getTasks());
+		}
+		request.setAttribute("tasks", tasks);
+		request.getRequestDispatcher("/WEB-INF/pages/viewTasks.jsp").forward(
+				request, response);
+	}
+	
+	private void addTask(HttpServletRequest request, HttpServletResponse response) throws IOException{
+		String name =(String) request.getAttribute("taskName");
+		if(name!=null&&!"".equals(name)){
+			List<TaskList> tasksLists = canDOService.getTaskLists(user, Permission.Owner);
+			if(tasksLists.isEmpty()){
+				tasksLists = (List<TaskList>) canDOService.addTaskList(new TaskList(), user.getKey());
+			}
+			TaskList list = tasksLists.get(0);
+			Task task = new Task();
+			task.setName(name);
+			task.setState(State.Undone);
+			list.getTasks().add(task);
+			canDOService.saveTaskList(list);
+			ServletUtils.writeJson(response, "ready");
+		}else{
+			log.warning("not define name of task");
+		}
+		
+	}
+	private void removeTask(HttpServletRequest request, HttpServletResponse response){
+
+	}
+	private void updateTask(HttpServletRequest request, HttpServletResponse response){
+
+	}
+	private void changeTaskStatus(HttpServletRequest request, HttpServletResponse response){
+
+	}
+	
 }
