@@ -329,8 +329,29 @@ String name = user.getName();
 			</div>
 		</div>
 	</div>
-
-
+		<!-- edit task form -->
+	<div id="todosEditForm" class="ui-dialog ui-widget ui-widget-content ui-corner-all ui-draggable ui-resizable">
+		<div class="ui-dialog-titlebar ui-widget-header ui-helper-clearfix ui-corner-all">
+			Edit task
+			<div class="form_title ui-dialog-titlebar-close">
+				<span class="ui-icon ui-icon-closethick ui-corner-all" onClick="hidePopupDialog();">close</span>
+			</div>
+		</div>
+		<div class="editTaskForm" style="margin: 10px;">
+			<input type="text" name="taskNameEdit" id="taskNameEdit"
+				style="width: 98%;"/>
+            <br/>
+			<input type="text" name="taskDateEdit" id="taskDateEdit" placeholder="date"
+				style="width: 98%;"/>
+            <br/>
+			<input type="text"  name="taskDescriptionEdit" id="taskDescriptionEdit" placeholder="description"
+				style="width: 98%;"/>
+                <div style="text-align: center">
+			<button name="editTaskButton" id="editTaskButton">Confirm</button>
+            </div>
+		</div>
+	</div>
+	
 	<div id="confirm"></div>
 </body>
 </html>
