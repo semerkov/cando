@@ -21,7 +21,37 @@ $(document).ready(
 					setCalendarDayByClick(dateText,inst);
 				}
 			});
+				$('#editTaskButton').click(function(e){
+		if($('#taskNameEdit').val()==""){
+			$('#taskNameEdit').css('border-color','red');
+		}
+		else{
+			$('#taskNameEdit').css('border-color','gray');
 			
+			var taskName =$('#taskNameEdit').val();
+			var todo_date = $('#taskDateEdit').val();
+			var todo_description = $('#taskDescriptionEdit').val();
+			$.ajax({
+			url : 'calendar',
+			type : 'POST',
+			data : {
+				'action' : 'updateTask',
+				'taskKey': todo_id,
+				'taskName': taskName,
+				'todo_date': todo_date,
+				'todo_description':todo_description
+			},
+			success : function(data) {
+				viewTasks();
+				hidePopupDialog();
+			},
+			error : function(data) {
+				alert("Error edit task");
+			}
+			});
+		}
+		e.stopPropagation();
+	});
 			
 			$('#saveCalendarButton').click(function(e){	
 				var name = $('#editEventAddNameInput').val();
@@ -327,7 +357,7 @@ function initAddEventForm(){
 		minDateTime: dateS,
 		onClose: function(datetimeText, datepickerInstance){
 				var d = $.datepicker.parseDate("dd.mm.yy",datetimeText);
-				alert(datetimeText);
+				//alert(datetimeText);
                 $('#eventAddDateFinish').datetimepicker("option","minDateTime", d);			
 		}
 	});
@@ -721,9 +751,15 @@ function todoMenuClicks() {
 	
 	$('.todoSidebar .todoEdit').click(
 			function(e) {
+				$('#taskDateEdit').datetimepicker({dateFormat: 'dd.mm.yy'});
 				var t = $(this);
-				curTodoName = $(t.parent()).find('.taskName').first().text();
 				todo_id = $(t.parent()).find('.todo_id').first().text();
+				var taskName = $(t.parent()).find('.taskName').first().text();
+				var todo_date = $(t.parent()).find('.todo_date').first().text();
+				var todo_description = $(t.parent()).find('.todo_description').first().text();
+				$('#taskNameEdit').val(taskName);
+				$('#taskDateEdit').val(todo_date);
+				$('#taskDescriptionEdit').val(todo_description);
 				showPopupDialog('todosEditForm',
 						t.offset().top + t.height(), t.offset().left - $('#todosEditForm').width());
 				e.stopPropagation();
@@ -739,6 +775,7 @@ function todoMenuClicks() {
 		addTask();
 		e.stopPropagation();
 	});
+
 };
 function addTask(){
 		var str = $('#addTaskField').val();

@@ -24,7 +24,7 @@ SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy HH:mm");
 	<button class="todoEdit ui-icon-pencil ui-icon"></button>
 	<span class="taskName"><%=task.getName()%></span>
 	<div class="todo_id" style="display: none;"><%=key%></div>
-	<div class="todo_description" style="display: none;"><%=task.getDescription()%></div>
+	<div class="todo_description" style="display: none;"><%=task.getDescription()!=null?task.getDescription():""%></div>
 	<div class="todo_date" style="float:right; font-size: 9px;color: grey;margin-top: 5px; margin-right: 3px;"><%=task.getDate()!=null?formatter.format(task.getDate()):""%></div>
 </div>
 <%
