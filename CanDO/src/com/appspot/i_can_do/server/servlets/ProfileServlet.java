@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.appspot.i_can_do.master.model.Address;
+import com.appspot.i_can_do.master.model.Email;
 import com.appspot.i_can_do.master.model.Phone;
 import com.appspot.i_can_do.master.security.AddressEmailType;
 import com.appspot.i_can_do.master.security.PhoneType;
@@ -23,7 +24,9 @@ import com.google.appengine.api.datastore.KeyFactory;
 public class ProfileServlet extends HttpServlet{
 	private static final long serialVersionUID = -178538787888163996L;
 	private static final List<String> SECURITY_ACTIONS = Arrays
-			.asList(new String[] { "addAddress" });
+			.asList(new String[] { "addAddress","editAddress","removeAddress",
+								   "addEmail","editEmail","removeEmail",
+								   "addPhone","editPhone","removePhone"});
 	private static final AddressEmailType[] addressEmailTypes = AddressEmailType.values();
 	private static final PhoneType[] phoneTypes = PhoneType.values();
 	private static final CanDOSecurityService service = CanDOSecurityService.instance();
@@ -84,8 +87,75 @@ public class ProfileServlet extends HttpServlet{
 		
 		if(action.equals("addAddress")){
 			addAddress(request,response);
+		} else if(action.equals("addAddress")){
+			addAddress(request,response);
+		} else if(action.equals("editAddress")){
+			editAddress(request,response);
+		} else if(action.equals("removeAddress")){
+			removeAddress(request,response);
+		} else if(action.equals("addEmail")){
+			addEmail(request,response);
+		} else if(action.equals("editEmail")){
+			editEmail(request,response);
+		} else if(action.equals("removeEmail")){
+			removeEmail(request,response);
+		} else if(action.equals("addPhone")){
+			addPhone(request,response);
+		} else if(action.equals("editPhone")){
+			editPhone(request,response);
+		} else if(action.equals("removePhone")){
+			removePhone(request,response);
 		}
 		seeMyProfile(request,response);
+	}
+
+	private void removePhone(HttpServletRequest request,
+			HttpServletResponse response) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private void editPhone(HttpServletRequest request,
+			HttpServletResponse response) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private void addPhone(HttpServletRequest request,
+			HttpServletResponse response) {
+		String phone = request.getParameter("phone");
+		String phoneType =request.getParameter("phoneTypeCode");
+		if(phone != null && phoneType != null){
+			int code = Integer.parseInt(phoneType);
+			Phone p = new Phone(phone,phoneTypes[code]);
+			user.getProfile().getPhones().add(p);
+			service.saveUser(user);
+		}
+	}
+
+	private void removeEmail(HttpServletRequest request,
+			HttpServletResponse response) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private void editEmail(HttpServletRequest request,
+			HttpServletResponse response) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private void addEmail(HttpServletRequest request,
+			HttpServletResponse response) {
+		String email = request.getParameter("email");
+		String emailType =request.getParameter("emailTypeCode");
+		if(email != null && emailType != null){
+			int code = Integer.parseInt(emailType);
+			Email e = new Email(email,addressEmailTypes[code]);
+			user.getProfile().getEmails().add(e);
+			service.saveUser(user);
+		}
+		
 	}
 
 	private void seeMyProfile(HttpServletRequest request,
@@ -97,9 +167,9 @@ public class ProfileServlet extends HttpServlet{
 	private void addAddress(HttpServletRequest request,
 			HttpServletResponse response){
 		String address = request.getParameter("address");
-		String adddressType =request.getParameter("addressTypeCode");
-		if(address != null && adddressType != null){
-			int code = Integer.parseInt(adddressType);
+		String addressType =request.getParameter("addressTypeCode");
+		if(address != null && addressType != null){
+			int code = Integer.parseInt(addressType);
 			Address adr = new Address(address,addressEmailTypes[code]);
 			user.getProfile().getAddresses().add(adr);
 			service.saveUser(user);
@@ -117,6 +187,11 @@ public class ProfileServlet extends HttpServlet{
 			Address adr = new Address(address,addressEmailTypes[code]);
 			user.getProfile().getAddresses().add(adr);
 		}
+	}
+	
+	private void removeAddress(HttpServletRequest request,
+			HttpServletResponse response){
+		
 	}
 	
 }

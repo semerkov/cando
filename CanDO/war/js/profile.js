@@ -49,7 +49,7 @@ $(document).ready(function(e) {
 		if(current == 1 ){
 			$('#nextEmail').css('display', 'block');
 			$('#prevEmail').css('display', 'none');
-		} else if(current + emailVisiable >= email_count){
+		} else if(current + emailVisiable > email_count){
 			$('#nextEmail').css('display', 'none');
 			$('#prevEmail').css('display', 'block');
 		}else{
@@ -88,7 +88,7 @@ $(document).ready(function(e) {
 		if(current == 1 ){
 			$('#nextPhone').css('display', 'block');
 			$('#prevPhone').css('display', 'none');
-		} else if(current + phoneVisiable >= phone_count){
+		} else if(current + phoneVisiable > phone_count){
 			$('#nextPhone').css('display', 'none');
 			$('#prevPhone').css('display', 'block');
 		}else{
@@ -157,6 +157,57 @@ $(document).ready(function(e) {
 				},
 				error : function(data) {
 					alert("Error add new address")
+				}
+			});
+		}
+		e.stopPropagation();
+	});
+	
+	$('#profileAddEmailButton').click(function(e){
+		var name = $('#newEmailText').val();
+		var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+		if (!re.test(name)) {
+			$('#newEmailText').css('border-color', 'red');
+		} else {
+			$('#newEmailText').css('border-color', 'green');
+			$.ajax({
+				url : 'profile',
+				type : 'POST',
+				data : {
+					'action' : 'addEmail',
+					'email' : name,
+					'emailTypeCode' : $('#newEmailType :selected').val()
+				},
+				success : function(data) {
+					location.reload();
+				},
+				error : function(data) {
+					alert("Error add new email")
+				}
+			});
+		}
+		e.stopPropagation();
+	});
+	
+	$('#profileAddPhoneButton').click(function(e){
+		var name = $('#newPhoneText').val();
+		if (name == "") {
+			$('#newPhoneText').css('border-color', 'red');
+		} else {
+			$('#newPhoneText').css('border-color', 'green');
+			$.ajax({
+				url : 'profile',
+				type : 'POST',
+				data : {
+					'action' : 'addPhone',
+					'phone' : name,
+					'phoneTypeCode' : $('#newPhoneType :selected').val()
+				},
+				success : function(data) {
+					location.reload();
+				},
+				error : function(data) {
+					alert("Error add new phone")
 				}
 			});
 		}
