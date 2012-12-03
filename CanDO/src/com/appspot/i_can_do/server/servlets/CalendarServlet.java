@@ -437,7 +437,7 @@ public class CalendarServlet extends HttpServlet {
 			if((KeyFactory.keyToString(list.getTasks().get(i).getKey())).equals(key)){
 				find = true;
 				list.getTasks().remove(i);
-				canDOService.removeTaskByKey(key);
+				//canDOService.removeTaskByKey(key);
 				canDOService.saveTaskList(list);
 			}
 		}
