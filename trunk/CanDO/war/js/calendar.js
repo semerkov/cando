@@ -4,8 +4,8 @@ var curCalendarName="";
 var arr_active_calendar_id;
 var arr_active_calendar_name;
 
-var curTodoName="";
-var todo_id="";
+var todo_id;
+var curTodoName;
 
 var curSelectedDate = new Date();
 
@@ -694,6 +694,8 @@ function calendarMenuClicks() {
 
 function todoMenuClicks() {
 	$(".todoSidebar .item").click(function(e) {
+		todo_id = $(this).find('.todo_id').first().text();
+		changeTaskState(todo_id);
 		var square = $('.square',this).first();
 		if ($(this).hasClass('active')) {
 			$(this).toggleClass('active', false);
@@ -708,38 +710,38 @@ function todoMenuClicks() {
 	$('.todoRemove').button();
 	$('.todoSidebar .item').mouseenter(function(){
 		$(this).find('.todoEdit').css('display', 'block');
+		$(this).find('.todoRemove').css('display', 'block');
+		$(this).find('.todo_date').css('display', 'none');
 	}).mouseleave(function(){
 		$(this).find('.todoEdit').css('display', 'none');
+		$(this).find('.todoRemove').css('display', 'none');
+		$(this).find('.todo_date').css('display', 'block');
 	});
 	
-	$('.todoSidebar .item').mouseenter(function(){
-		$(this).find('.todoRemove').css('display', 'block');
-	}).mouseleave(function(){
-		$(this).find('.todoRemove').css('display', 'none');
-	});
 	
 	$('.todoSidebar .todoEdit').click(
 			function(e) {
 				var t = $(this);
-				curTodoName = t.parent().text();
-				todo_id = t.find('.todo_id').first();
+				curTodoName = $(t.parent()).find('.taskName').first().text();
+				todo_id = $(t.parent()).find('.todo_id').first().text();
 				showPopupDialog('todosEditForm',
 						t.offset().top + t.height(), t.offset().left - $('#todosEditForm').width());
 				e.stopPropagation();
 			});
 	$('.todoSidebar .todoRemove').click(
 			function(e) {
-				removeTaskConfirm();
+				var t = $(this);
+				var todo_id = $(t.parent()).find('.todo_id').first().text();
+				removeTaskConfirm(todo_id);
 				e.stopPropagation();
 			});	
-	$('#addTaskField').onBlur(function(e){
+	$('#addTaskField').blur(function(e){
 		addTask();
 		e.stopPropagation();
 	});
 };
 function addTask(){
 		var str = $('#addTaskField').val();
-		alert(str);
 		if(str!=""){
 			$.ajax({
 			url : 'calendar',
@@ -756,8 +758,24 @@ function addTask(){
 			}
 			});
 		}
-}
-function removeTaskConfirm() {
+};
+function changeTaskState(taskKey){
+			$.ajax({
+			url : 'calendar',
+			type : 'POST',
+			data : {
+				'action' : 'changeTaskState',
+				'taskKey': taskKey
+			},
+			success : function(data) {
+				//viewTasks();
+			},
+			error : function(data) {
+				alert("Error change Task State");
+			}
+			});
+};
+function removeTaskConfirm(todo_id) {
 	hidePopupDialog();
 	$("#confirm").dialog({
 		position : [ "center", "center" ],
