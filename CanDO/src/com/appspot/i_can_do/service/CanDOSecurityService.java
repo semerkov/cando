@@ -10,6 +10,8 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
 
+import com.appspot.i_can_do.master.model.ProfileKeeper;
+import com.appspot.i_can_do.master.security.Permission;
 import com.appspot.i_can_do.master.security.User;
 import com.appspot.i_can_do.service.exceptions.LoginFailedException;
 import com.appspot.i_can_do.service.exceptions.LoginNameExistException;
@@ -31,16 +33,31 @@ public class CanDOSecurityService implements ICanDOSecurityService {
 	@Override
 	public User addNewUser(User user, String password)
 			throws LoginNameExistException {
-		User userToAdd = findUser(user.getEmail());
-		if (userToAdd == null) {
-			userToAdd = user;
-			byte[] pHash = Crypto.hashPassword(password);
-			userToAdd.setPasswordHash(pHash);
-			em.persist(userToAdd);
-			em.refresh(userToAdd);
-			log.info("User created: "+user.getEmail());
-		} else {
-			throw new LoginNameExistException();
+		User userToAdd = null;
+		EntityTransaction txn = em.getTransaction();
+		txn.begin();
+		try {
+			 userToAdd = findUser(user.getEmail());
+			 if (userToAdd == null) {
+				userToAdd = user;
+				byte[] pHash = Crypto.hashPassword(password);
+				userToAdd.setPasswordHash(pHash);
+				em.persist(userToAdd);
+				txn.commit();
+				
+				txn.begin();
+				ProfileKeeper pKeeper = new ProfileKeeper(userToAdd.getKey(), userToAdd.getProfile().getKey(), Permission.Owner);
+				em.persist(pKeeper);
+				txn.commit();
+				
+				log.info("User created: "+user.getEmail());
+			} else {
+				throw new LoginNameExistException();
+			}
+		} finally {
+			if (txn.isActive()) {
+				txn.rollback();
+			}
 		}
 		return userToAdd;
 	}

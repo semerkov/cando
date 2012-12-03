@@ -3,6 +3,7 @@ package com.appspot.i_can_do.master.security;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,7 +11,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
 
+import com.appspot.i_can_do.master.model.Profile;
 import com.google.appengine.api.datastore.Key;
 
 @Entity
@@ -24,8 +27,8 @@ public class User implements Serializable{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Key key;
 	private String email;
-	private String name;
-	private String sername;
+	@OneToOne(cascade=CascadeType.PERSIST)
+	private Profile profile;
 	private Date lastEntryDate;
 	private byte[] rememberCookiesHash;
 	private String rememberIpAdress;
@@ -34,20 +37,23 @@ public class User implements Serializable{
 	@Column(nullable = false)
 	private byte[] passwordHash;
 
+	public User(){
+		profile = new Profile();
+	}
 	public String getName() {
-		return name;
+		return profile.getName();
 	}
 
 	public void setName(String name) {
-		this.name = name;
+		profile.setName(name);
 	}
 
 	public String getSername() {
-		return sername;
+		return profile.getSername();
 	}
 
 	public void setSername(String sername) {
-		this.sername = sername;
+		profile.setSername(sername);
 	}
 
 	public String getEmail() {
@@ -108,5 +114,13 @@ public class User implements Serializable{
 
 	public void setRememberIpAdress(String rememberIpAdress) {
 		this.rememberIpAdress = rememberIpAdress;
+	}
+
+	public Profile getProfile() {
+		return profile;
+	}
+
+	public void setProfile(Profile profile) {
+		this.profile = profile;
 	}
 }

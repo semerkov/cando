@@ -34,13 +34,10 @@ String name = user.getName();
     
 		<div class="header">
 			<div class="account">
-				<span class="header_login_area;"
-					style="vertical-align: bottom; text-height: 14; font-style: oblique;">
-					<a href="login.jsp">Login</a>/<a href="register.jsp">Register</a>
-				</span>
+				<button onClick="seeMyProfile();">My profile</button>
 			</div>
 
-			<div id="logo" onclick="self.location='home.jsp'">CanDO</div>
+			<!--  <div id="logo" onclick="self.location='home.jsp'">CanDO</div>-->
 
 			<div class="clearfloat"></div>
 		</div>
