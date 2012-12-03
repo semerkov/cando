@@ -86,7 +86,7 @@
 				<div id="image_container">
 					Picture
 					<div id="image" class="ui-corner-all">
-						<img src="IMG/camera.png" width="300" height="300"
+						<img src="IMG/avatar.jpg" width="300" height="300"
 							alt="your photo">
 					</div>
 				</div>
