@@ -28,6 +28,7 @@ import com.appspot.i_can_do.service.CanDOSecurityService;
 import com.appspot.i_can_do.service.CanDOService;
 import com.appspot.i_can_do.service.exceptions.LoginNameExistException;
 import com.appspot.i_can_do.service.utils.ServletUtils;
+import com.google.appengine.api.datastore.KeyFactory;
 
 @SuppressWarnings("serial")
 public class CalendarServlet extends HttpServlet {
@@ -37,7 +38,7 @@ public class CalendarServlet extends HttpServlet {
 			.asList(new String[] { "retrieveCalenderTable", "addCalendar",
 					"retrieveEventCalendarMenu", "removeCalendar",
 					"updateCalendar", "addEvent", "updateEvent", "removeEvent",
-					"viewEvent", "getEvent", "viewTasks", "			viewTasks();", "removeTask", "updateTask", "changeTaskStatus" });
+					"viewEvent", "getEvent", "viewTasks", "addTask", "removeTask", "updateTask", "changeTaskState" });
 	private static SimpleDateFormat formatter = new SimpleDateFormat(
 			"dd.MM.yyyy HH:mm");
 	private CanDOService canDOService;
@@ -139,6 +140,12 @@ public class CalendarServlet extends HttpServlet {
 			viewTasks(request, response);
 		} else if (action.equals("addTask")) {
 			addTask(request, response);
+		} else if (action.equals("removeTask")) {
+			removeTask(request, response);
+		} else if (action.equals("changeTaskState")) {
+			changeTaskState(request, response);
+		} else if (action.equals("updateTask")) {
+			updateTask(request, response);
 		}
 	}
 
@@ -404,7 +411,7 @@ public class CalendarServlet extends HttpServlet {
 	}
 	
 	private void addTask(HttpServletRequest request, HttpServletResponse response) throws IOException{
-		String name =(String) request.getAttribute("taskName");
+		String name =(String) request.getParameter("taskName");
 		if(name!=null&&!"".equals(name)){
 			List<TaskList> tasksLists = canDOService.getTaskLists(user, Permission.Owner);
 			if(tasksLists.isEmpty()){
@@ -420,16 +427,72 @@ public class CalendarServlet extends HttpServlet {
 		}else{
 			log.warning("not define name of task");
 		}
+	}
+	private void removeTask(HttpServletRequest request, HttpServletResponse response) throws IOException{
+		String key =(String) request.getParameter("taskKey");
+		List<TaskList> tasksLists = canDOService.getTaskLists(user, Permission.Owner);
+		TaskList list = tasksLists.get(0);
+		boolean find = false;
+		for(int i=0;i<list.getTasks().size();i++){
+			if((KeyFactory.keyToString(list.getTasks().get(i).getKey())).equals(key)){
+				find = true;
+				list.getTasks().remove(i);
+				canDOService.removeTaskByKey(key);
+				canDOService.saveTaskList(list);
+			}
+		}
+		if(find){		
+			ServletUtils.writeJson(response, "ready");
+		}
+		else
+			log.warning("task key not found");
 		
 	}
-	private void removeTask(HttpServletRequest request, HttpServletResponse response){
-
+	private void updateTask(HttpServletRequest request, HttpServletResponse response) throws IOException{
+		String key =(String) request.getParameter("taskKey");
+		List<TaskList> tasksLists = canDOService.getTaskLists(user, Permission.Owner);
+		TaskList list = tasksLists.get(0);
+		boolean find = false;
+		for(int i=0;i<list.getTasks().size();i++){
+			if((KeyFactory.keyToString(list.getTasks().get(i).getKey())).equals(key)){
+				find = true;
+				State st = list.getTasks().get(i).getState();
+				if(State.Undone==st)
+					st=State.Done;
+				else
+					st=State.Undone;
+				list.getTasks().get(i).setState(st);
+				canDOService.saveTaskList(list);
+			}
+		}
+		if(find){		
+			ServletUtils.writeJson(response, "ready");
+		}
+		else
+			log.warning("task key not found");
 	}
-	private void updateTask(HttpServletRequest request, HttpServletResponse response){
-
-	}
-	private void changeTaskStatus(HttpServletRequest request, HttpServletResponse response){
-
+	private void changeTaskState(HttpServletRequest request, HttpServletResponse response) throws IOException{
+		String key =(String) request.getParameter("taskKey");
+		List<TaskList> tasksLists = canDOService.getTaskLists(user, Permission.Owner);
+		TaskList list = tasksLists.get(0);
+		boolean find = false;
+		for(int i=0;i<list.getTasks().size();i++){
+			if((KeyFactory.keyToString(list.getTasks().get(i).getKey())).equals(key)){
+				find = true;
+				State st = list.getTasks().get(i).getState();
+				if(State.Undone==st)
+					st=State.Done;
+				else
+					st=State.Undone;
+				list.getTasks().get(i).setState(st);
+				canDOService.saveTaskList(list);
+			}
+		}
+		if(find){		
+			ServletUtils.writeJson(response, "ready");
+		}
+		else
+			log.warning("task key not found");
 	}
 	
 }
