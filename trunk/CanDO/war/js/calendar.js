@@ -822,7 +822,6 @@ function removeTaskConfirm(todo_id) {
 				$.ajax({
 					url : 'calendar',
 					type : 'POST',
-					async : 'false',
 					data : {
 						'action' : 'removeTask',
 						'taskKey' : todo_id
@@ -833,7 +832,7 @@ function removeTaskConfirm(todo_id) {
 
 					},
 					error : function(data) {
-						alert("Error remove task")
+						alert("Error remove task");
 					}
 				});
 				$(this).dialog("close");
