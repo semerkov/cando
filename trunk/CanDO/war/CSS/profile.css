@@ -1,0 +1,152 @@
+@charset "utf-8";
+
+body {
+	background-color: #FFF;
+	color: #000;
+	height: 100%;
+	width: 100%;
+	margin: 0px;
+	padding: 0px;
+	font: 100%/1.4 Arial;
+	overflow:hidden;
+	background: url(images/ui-bg_diagonals-thick_90_eeeeee_40x40.png) repeat 0 center;
+}
+p{
+	-webkit-margin-before: 0em;
+	-webkit-margin-after: 0em;
+}
+select{
+	background-color: white;
+	height:24px;
+}
+.edit:hover {
+	color: #333;
+	cursor: pointer;
+}
+.edit {
+	width: 20px !important;
+	height: 20px !important;
+	margin: 0px !important;
+	margin-right: 7px !important;
+	padding: 0px !important;
+	float: right;
+	display:none;
+	overflow:hidden;
+}
+.edit .ui-button-text{
+	padding: 0px;
+}
+#profile_form{
+	width: auto;
+	min-width: 700px;
+	height:auto; 
+}
+#container{
+	padding:15px 20px;
+	width: auto;
+	height:auto; 
+}
+.side{
+	float: left;
+	padding: 0 5px;
+}
+#image_container{
+	width:310px;
+	height:340px;
+}
+#image{
+	width:300px;
+	height:300px;
+	border: 5px solid #DEEDF7;
+}
+#about{
+	width:310px;
+	height:auto;
+}
+#aboutText{
+	width:302px;
+	border: 2px solid #DEEDF7;
+}
+#account_data{
+	width: 400px;
+}
+#account_data table{
+	width : 100%;
+}
+#addressList, #emailList, #phoneList{
+	background-color: white;
+	width:100%;
+	height: 100px;
+	padding: 4px;
+	border: 2px solid #DEEDF7;
+}
+.address, .email, .phone{
+	display: none;
+}
+.active{
+	display: block;
+}
+.type{
+	font-style: italic;
+}
+#nextSidebar{
+	float: right;
+}
+#prevSidebar{
+	float: left;
+}
+#nextAddress, #prevAddress, #prevEmail, #nextEmail, #nextPhone, #prevPhone{
+	display: none;
+}
+#nextAddress, #prevAddress{
+	top: 25px;
+}
+#nextAddress:hover, #prevAddress:hover, #prevEmail:hover, #nextEmail:hover, #nextPhone:hover, #prevPhone:hover{
+	cursor: pointer;
+}
+.phoneText{
+	font-size: 14px;
+}
+.phone{
+	height: 25px;
+}
+.addressText{
+	height: 50px;
+}
+.addressText, .emailText, .phoneText{
+	margin-left: 15px;
+}
+.popupMask {
+	opacity: 0.5;
+	background-color: #EEEEEE;
+	display: none;
+	left: 0;
+	position: absolute;
+	top: 0;
+	z-index: 100;
+}
+
+.addForm {
+	text-align: center;
+}
+#profileAddAddress, #profileAddEmail, #profileAddPhone{
+	display:none;
+	z-index:101;
+}
+#editPopup{
+	z-index: 101;
+	position: absolute;
+	width: 230px;
+	top: 100px;
+	left: 100px;
+	display: none;
+}
+#editPopup button{
+	width: 228px;
+	font-size: 17px;
+	margin:1px;
+	-moz-border-radius: 2px; /* Firefox */
+	-webkit-border-radius: 2px; /* Safari, Chrome */
+	-khtml-border-radius: 2px; /* KHTML */
+	border-radius: 2px;
+}

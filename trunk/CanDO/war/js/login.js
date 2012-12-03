@@ -1,3 +1,5 @@
+var context = "http://localhost:8888/";
+
 $(document).ready(function(e) {
 	$( "button" ).button();
 	$( ".ui-draggable" ).draggable();
@@ -63,7 +65,7 @@ function tryLogin() {
 			dataType : 'json',
 			success : function(data) {
 				if (data == "ready") {
-					window.location.replace("/");
+					document.location.href = context;
 				} else {
 					$('#email').val("");
 					$('#password').val("");

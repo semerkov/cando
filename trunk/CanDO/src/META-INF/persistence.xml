@@ -14,6 +14,11 @@
 		<class>com.appspot.i_can_do.master.model.Task</class>
 		<class>com.appspot.i_can_do.master.model.TaskList</class>	
 		<class>com.appspot.i_can_do.master.model.TaskKeeper</class>
+		<class>com.appspot.i_can_do.master.model.Profile</class>
+		<class>com.appspot.i_can_do.master.model.ProfileKeeper</class>
+		<class>com.appspot.i_can_do.master.model.Address</class>
+		<class>com.appspot.i_can_do.master.model.Email</class>
+		<class>com.appspot.i_can_do.master.model.Phone</class>
 		<exclude-unlisted-classes />
 		<properties>
 			<property name="datanucleus.NontransactionalRead" value="true" />

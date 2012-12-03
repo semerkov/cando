@@ -62,4 +62,12 @@
 		<servlet-name>RootServlet</servlet-name>
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
+	<servlet>
+		<servlet-name>ProfileServlet</servlet-name>
+		<servlet-class>com.appspot.i_can_do.server.servlets.ProfileServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ProfileServlet</servlet-name>
+		<url-pattern>/profile</url-pattern>
+	</servlet-mapping>
 </web-app>

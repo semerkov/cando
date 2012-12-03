@@ -13,10 +13,16 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.appspot.i_can_do.master.model.Address;
+import com.appspot.i_can_do.master.model.Email;
 import com.appspot.i_can_do.master.model.Event;
 import com.appspot.i_can_do.master.model.EventCalendar;
+import com.appspot.i_can_do.master.model.Phone;
+import com.appspot.i_can_do.master.model.Profile;
 import com.appspot.i_can_do.master.model.Task;
 import com.appspot.i_can_do.master.model.TaskList;
+import com.appspot.i_can_do.master.security.AddressEmailType;
+import com.appspot.i_can_do.master.security.PhoneType;
 import com.appspot.i_can_do.master.security.State;
 import com.appspot.i_can_do.master.security.User;
 import com.appspot.i_can_do.service.CanDOSecurityService;
@@ -85,6 +91,12 @@ public class InitTestBaseServlet extends HttpServlet {
 		dropWithQuery("DELETE FROM Task t");
 		dropWithQuery("DELETE FROM TaskList t");
 		dropWithQuery("DELETE FROM TaskKeeper t");
+		dropWithQuery("DELETE FROM User t");
+		dropWithQuery("DELETE FROM Address t");
+		dropWithQuery("DELETE FROM Email t");
+		dropWithQuery("DELETE FROM Phone t");
+		dropWithQuery("DELETE FROM Profile t");
+		dropWithQuery("DELETE FROM ProfileKeeper t");
 		log.warning("DataBase dropped");
 	}
 	
@@ -113,6 +125,25 @@ public class InitTestBaseServlet extends HttpServlet {
 			testUser.setEmail(email);
 			testUser.setName("Mario");
 			testUser.setSername("Gavani");
+			Profile profile = testUser.getProfile();
+			Address address1 = new Address("a very long address a very very long Home address", AddressEmailType.Home);
+			Address address2 = new Address("a very long address a very very long Work address", AddressEmailType.Work);
+			Address address3 = new Address("a very long address a very very long Study address", AddressEmailType.Study);
+			
+			profile.getAddresses().add(address1);
+			profile.getAddresses().add(address2);
+			profile.getAddresses().add(address3);
+			
+			profile.getEmails().add(new Email(email,AddressEmailType.Work));
+			profile.getEmails().add(new Email(email + " 2",AddressEmailType.Study));
+			profile.getEmails().add(new Email(email + " 3",AddressEmailType.Home));
+			
+			profile.getPhones().add(new Phone("27-27-35", PhoneType.Home));
+			profile.getPhones().add(new Phone("093-498-29-43", PhoneType.Mobile));
+			profile.getPhones().add(new Phone("911", PhoneType.Work));
+			profile.getPhones().add(new Phone("103", PhoneType.Work));
+			
+			profile.setAbout("Iam just a famous Itiliano boy, Mario Gavani!");
 			try {
 				CanDOSecurityService.instance()
 						.addNewUser(testUser, "password");

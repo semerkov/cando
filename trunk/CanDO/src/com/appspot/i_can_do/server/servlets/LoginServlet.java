@@ -51,9 +51,7 @@ public class LoginServlet extends HttpServlet {
 				try {
 					User user = security.login(email, password);
 
-					HttpSession session = request.getSession();
-					log.info("create session: " + session.getId());
-					session.setAttribute("user", user);
+					
 
 					Date curDate = new Date();
 					byte[] rememberCookiesHash = null;
@@ -75,6 +73,11 @@ public class LoginServlet extends HttpServlet {
 					user.setRememberIpAdress(request.getRemoteAddr());
 					security.saveUser(user);
 					ServletUtils.writeJson(response, "ready");
+					
+					HttpSession session = request.getSession();
+					log.info("create session: " + session.getId());
+					session.setAttribute("user", user);
+					
 					log.info("login is successful: " + user.getEmail());
 				} catch (LoginNameNotFoundException ex) {
 					ServletUtils.writeJson(response, "LoginNameNotFound");
