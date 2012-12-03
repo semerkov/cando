@@ -450,6 +450,22 @@ public class CalendarServlet extends HttpServlet {
 	}
 	private void updateTask(HttpServletRequest request, HttpServletResponse response) throws IOException{
 		String key =(String) request.getParameter("taskKey");
+		String name =(String) request.getParameter("taskName");
+		String taskDate =(String) request.getParameter("todo_date");
+		Date date = null;
+		
+		if("".equals(taskDate)){
+			date = null;
+		}else{
+			try {
+				date = formatter.parse(taskDate);
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		String description =(String) request.getParameter("todo_description");
 		List<TaskList> tasksLists = canDOService.getTaskLists(user, Permission.Owner);
 		TaskList list = tasksLists.get(0);
 		boolean find = false;
@@ -461,7 +477,9 @@ public class CalendarServlet extends HttpServlet {
 					st=State.Done;
 				else
 					st=State.Undone;
-				list.getTasks().get(i).setState(st);
+				list.getTasks().get(i).setName(name);
+				list.getTasks().get(i).setDate(date);
+				list.getTasks().get(i).setDescription(description);
 				canDOService.saveTaskList(list);
 			}
 		}
