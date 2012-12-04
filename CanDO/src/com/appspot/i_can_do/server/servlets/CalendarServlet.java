@@ -433,12 +433,13 @@ public class CalendarServlet extends HttpServlet {
 		List<TaskList> tasksLists = canDOService.getTaskLists(user, Permission.Owner);
 		TaskList list = tasksLists.get(0);
 		boolean find = false;
-		for(int i=0;i<list.getTasks().size();i++){
-			if((KeyFactory.keyToString(list.getTasks().get(i).getKey())).equals(key)){
+		for(Task task:list.getTasks()){
+			if((KeyFactory.keyToString(task.getKey())).equals(key)){
 				find = true;
-				list.getTasks().remove(i);
+				list.getTasks().remove(task);
 				//canDOService.removeTaskByKey(key);
 				canDOService.saveTaskList(list);
+				
 			}
 		}
 		if(find){		
