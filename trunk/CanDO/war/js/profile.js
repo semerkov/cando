@@ -1,4 +1,4 @@
-var context = "http://localhost:8888/";
+
 
 $(document).ready(function(e) {	
 	$( "button" ).button();
@@ -261,5 +261,5 @@ function center(id){
 	});
 }
 function seeMyCalendar(){
-	document.location.href = context + "calendar";
+	document.location.href ="/";
 }

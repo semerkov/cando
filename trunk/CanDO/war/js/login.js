@@ -1,4 +1,4 @@
-var context = "http://localhost:8888/";
+var context = "/";
 
 $(document).ready(function(e) {
 	$( "button" ).button();

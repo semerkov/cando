@@ -281,7 +281,7 @@ $(document).ready(
 			
 			$('#exit').click(function(e){
 				$.ajax({
-						url : '',
+						url : '/',
 						type : 'POST',
 						async : 'false',
 						data : {
@@ -844,7 +844,7 @@ function removeTaskConfirm(todo_id) {
 		}
 	});
 }
-var context = "http://localhost:8888/";
+
 function seeMyProfile(){
-	document.location.href = context + "profile";
+	document.location.href = "/profile";
 }
