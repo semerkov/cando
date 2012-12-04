@@ -12,14 +12,15 @@
 ArrayList<Task> tasks = (ArrayList<Task>) request.getAttribute("tasks");
 if (tasks != null) {
 SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy HH:mm");
+String active="";
 	for (Task task : tasks) {
-		String active="";
+		active="";
 		String key = KeyFactory.keyToString(task.getKey());
 		if(task.getState()==State.Done) active="active";
 
 %>
 <div class="item <%=active%>">
-	<div class="square"></div>
+	<div class="square <%=active%>"></div>
 	<button class="todoRemove ui-icon-trash ui-icon"></button>
 	<button class="todoEdit ui-icon-pencil ui-icon"></button>
 	<span class="taskName"><%=task.getName()%></span>
