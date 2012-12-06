@@ -104,12 +104,12 @@
 							<td>
 								<p>First Name:</p> <input type="text" id="firstName"
 								class="ui-widget-input ui-corner-all"
-								value="<%=profile.getName()%>"></input>
+								value="<%=profile.getName()%>"/>
 							</td>
 							<td>
 								<p>Last Name:</p> <input type="text" id="lastName"
 								class="ui-widget-input ui-corner-all"
-								value="<%=profile.getSername()%>"></input>
+								value="<%=profile.getSername()%>">
 							</td>
 						</tr>
 					</table>
@@ -130,11 +130,9 @@
 												<%=a.getType()%>
 											</div>
 										</div>
-										<div style="height: 30px; width: 30px; float: right;">
-											<button class="edit">
-												<span class="ui-icon ui-icon-pencil"></span>
-											</button>
-										</div>
+                                        <button class="edit">
+                                            <span class="ui-icon ui-icon-pencil"></span>
+                                        </button>
 										<div class="addressText"><%=a.getAddress()%></div>
 										<div class="addressKey" style="display: none;"><%=KeyFactory.keyToString(a.getKey())%></div>
 									</div>
@@ -289,8 +287,8 @@
 		<button onсlick="showOnlyThisCalendar();">Edit</button>
 		<img src="IMG/close_icon.png"
 			style="float: right; background-color: #FFF; cursor: pointer; top: -12px; right: 1px; position: absolute;"
-			onсlick="hidePopupDialog();" />
-		<button onсlick="removeCalendarConfirm();">Remove</button>
+			onclick="hidePopupDialog();" />
+		<button onclick="removeCalendarConfirm();">Remove</button>
 	</div>
 </body>
 </html>

@@ -41,15 +41,15 @@ $(document).ready(function(e) {
 	
 	var email_count = parseInt($('#email_count').text());
 	var email_curr = parseInt($('#email_curr').text());
-	var emailVisiable = 3;
+	var emailVisible = 3;
 	showEmailNav(email_curr);
 	
 	function showEmailNav(current){
-		if(email_count <=emailVisiable || current > email_count || current < 1) return;
+		if(email_count <=emailVisible || current > email_count || current < 1) return;
 		if(current == 1 ){
 			$('#nextEmail').css('display', 'block');
 			$('#prevEmail').css('display', 'none');
-		} else if(current + emailVisiable > email_count){
+		} else if(current + emailVisible > email_count){
 			$('#nextEmail').css('display', 'none');
 			$('#prevEmail').css('display', 'block');
 		}else{
@@ -80,15 +80,15 @@ $(document).ready(function(e) {
 	
 	var phone_count = parseInt($('#phone_count').text());
 	var phone_curr = parseInt($('#phone_curr').text());
-	var phoneVisiable = 3;
+	var phoneVisible = 3;
 	showPhoneNav(email_curr);
 	
 	function showPhoneNav(current){
-		if(phone_count <= phoneVisiable || current > email_count || current < 1) return;
+		if(phone_count <= phoneVisible || current > email_count || current < 1) return;
 		if(current == 1 ){
 			$('#nextPhone').css('display', 'block');
 			$('#prevPhone').css('display', 'none');
-		} else if(current + phoneVisiable > phone_count){
+		} else if(current + phoneVisible > phone_count){
 			$('#nextPhone').css('display', 'none');
 			$('#prevPhone').css('display', 'block');
 		}else{
@@ -228,21 +228,33 @@ function addNewPhone(){
 	showPopupDialog('profileAddPhone');
 	center('profileAddPhone');
 }
+function remove(){
+    var div = $(this).parent();
+    if(div.hasClass('address')){
+        alert(1);
+    }else if(div.hasClass('email')){
+        alert(2);
+    }else if(div.hasClass('phone')){
+        alert(3);
+    }
+}
+
 var showPopupDialog = function(dialogId, topPosition, leftPosition) {
 	var maskHeight = $(document).height();
 	var maskWidth = $(window).width();
-
-	$('#popupMask').css({
+    var mask = $('#popupMask');
+	mask.css({
 		'width' : maskWidth,
 		'height' : maskHeight
 	});
-	$('#popupMask').css('display', 'block');
+	mask.css('display', 'block');
 
-	$("#" + dialogId).css('top', topPosition);
-	$("#" + dialogId).css('left', leftPosition);
-	$("#" + dialogId).toggleClass('popupDialog', true);
+    var dialog = $("#" + dialogId);
+    dialog.css('top', topPosition);
+    dialog.css('left', leftPosition);
+    dialog.toggleClass('popupDialog', true);
 
-	$("#" + dialogId).fadeIn(200);
+    dialog.fadeIn(200);
 };
 
 var hidePopupDialog = function() {
@@ -254,10 +266,11 @@ var hidePopupDialog = function() {
 	}
 };
 function center(id){
-	$('#'+id).css({
+    var form = $('#'+id);
+    form.css({
 		position:'absolute',
-		left: ($(window).width() - $('#'+id).outerWidth())/2,
-		top: ($(window).height() - $('#'+id).outerHeight())/2
+		left: ($(window).width() - form.outerWidth())/2,
+		top: ($(window).height() -form.outerHeight())/2
 	});
 }
 function seeMyCalendar(){
