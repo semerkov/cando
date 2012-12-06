@@ -10,6 +10,7 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
 
+import com.appspot.i_can_do.master.model.Profile;
 import com.appspot.i_can_do.master.model.ProfileKeeper;
 import com.appspot.i_can_do.master.security.Permission;
 import com.appspot.i_can_do.master.security.User;
@@ -82,10 +83,17 @@ public class CanDOSecurityService implements ICanDOSecurityService {
 
 	@Override
 	public User saveUser(User user) {
-		EntityTransaction txn = em.getTransaction();
-		txn.begin();
-		em.merge(user);
-		txn.commit();
+        EntityTransaction txn = em.getTransaction();
+        txn.begin();
+        try {
+            em.merge(user);
+            txn.commit();
+            }
+        finally {
+            if (txn.isActive()) {
+                txn.rollback();
+            }
+        }
 		return user;
 	}
 
