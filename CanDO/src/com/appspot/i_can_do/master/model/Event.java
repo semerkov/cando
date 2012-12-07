@@ -18,11 +18,8 @@ public class Event{
     private Key key;
 	private String name;
 	private String description;
-	@Temporal(TemporalType.DATE)
 	private Date start;
-	@Temporal(TemporalType.DATE)
 	private Date finish;
-	@Temporal(TemporalType.DATE)
 	private Date warningTime;
 	
 	public Event(){}
