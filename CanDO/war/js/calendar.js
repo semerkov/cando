@@ -21,105 +21,23 @@ $(document).ready(
 					setCalendarDayByClick(dateText,inst);
 				}
 			});
-				$('#editTaskButton').click(function(e){
-		if($('#taskNameEdit').val()==""){
-			$('#taskNameEdit').css('border-color','red');
-		}
-		else{
-			$('#taskNameEdit').css('border-color','gray');
-			
-			var taskName =$('#taskNameEdit').val();
-			var todo_date = $('#taskDateEdit').val();
-			var todo_description = $('#taskDescriptionEdit').val();
-			$.ajax({
-			url : 'calendar',
-			type : 'POST',
-			data : {
-				'action' : 'updateTask',
-				'taskKey': todo_id,
-				'taskName': taskName,
-				'todo_date': todo_date,
-				'todo_description':todo_description
-			},
-			success : function(data) {
-				viewTasks();
-				hidePopupDialog();
-			},
-			error : function(data) {
-				alert("Error edit task");
-			}
-			});
-		}
-		e.stopPropagation();
-	});
-			
-			$('#saveCalendarButton').click(function(e){	
-				var name = $('#editEventAddNameInput').val();
-				if (name == "") {
-					$('#editEventAddNameInput').css('border-color', 'red');
-				} else {
-					$('#editEventAddNameInput').css('border-color', 'green');
-					
-					$.ajax({
-						url : 'calendar',
-						type : 'POST',
-						data : {
-							'action' : 'updateCalendar',
-							'calendarKey' : calendar_id.text(),
-							'calendarName' : name
-						},
-						success : function(data) {
-							retrieveEventCalendarMenu();
-							hidePopupDialog();
+			$('#editTaskButton').click(function(e){
+                    editTaskButtonClick();
+                e.stopPropagation();
+            });
+            $('#todosEditForm').keypress(function(e){
+                if(e.which==13) editTaskButtonClick();
+                e.stopPropagation();
+            });
 
-						},
-						error : function(data) {
-							alert("Error updateCalendar")
-						}
-					});
-				}					
+
+			$('#saveCalendarButton').click(function(e){
+                saveCalendar();
 				e.stopPropagation();
 			});
-			$('#addEventSubmit').click(function(e){
-				var name = $('#eventAddName').val();
-				var finishTime = $('#eventAddDateFinish').val();
-				if (name == "") {
-					$('#eventAddName').css('border-color', 'red');
-					return;
-				} else {
-					$('#eventAddName').css('border-color', 'green');
-				}
-				if(finishTime == ""){
-					$('#eventAddDateFinish').css('border-color', 'red');
-					return;
-				}else{
-					$('#eventAddDateFinish').css('border-color', 'green');
-				}
-				
-				$.ajax({
-					url : 'calendar',
-					type : 'POST',
-					data : {
-						'action' : 'addEvent',
-						'calendarKey' : $('#selectEventsCalendar :selected').val(),
-						'eventName' : name,
-						'eventDesc' : $('#eventAddDesc').val(),
-						'eventStartDay' : $('#eventAddDateStart').val(),
-						'eventFinishDay' : finishTime,
-						'warningTimeDays' : $('#warningTimeDaysAddForm').val(),
-						'warningTimeHours' : $('#warningTimeHoursAddForm').val(),
-						'warningTimeMinutes' : $('#warningTimeMinutesAddForm').val()
-					},
-					success : function(data) {
-						retrieveCalender("this");
-						hidePopupDialog();
 
-					},
-					error : function(data) {
-						alert("Error add event")
-					}
-				});
-				
+			$('#addEventSubmit').click(function(e){
+                addEvent();
 				e.stopPropagation();
 			});
 			$('#viewShowEditEventButton').click(function(e){
@@ -297,6 +215,106 @@ $(document).ready(
 			});
 		});
 
+function addEvent(){
+    var name = $('#eventAddName').val();
+    var finishTime = $('#eventAddDateFinish').val();
+    if (name == "") {
+        $('#eventAddName').css('border-color', 'red');
+        return;
+    } else {
+        $('#eventAddName').css('border-color', 'green');
+    }
+    if(finishTime == ""){
+        $('#eventAddDateFinish').css('border-color', 'red');
+        return;
+    }else{
+        $('#eventAddDateFinish').css('border-color', 'green');
+    }
+
+    $.ajax({
+        url : 'calendar',
+        type : 'POST',
+        data : {
+            'action' : 'addEvent',
+            'calendarKey' : $('#selectEventsCalendar :selected').val(),
+            'eventName' : name,
+            'eventDesc' : $('#eventAddDesc').val(),
+            'eventStartDay' : $('#eventAddDateStart').val(),
+            'eventFinishDay' : finishTime,
+            'warningTimeDays' : $('#warningTimeDaysAddForm').val(),
+            'warningTimeHours' : $('#warningTimeHoursAddForm').val(),
+            'warningTimeMinutes' : $('#warningTimeMinutesAddForm').val()
+        },
+        success : function(data) {
+            retrieveCalender("this");
+            hidePopupDialog();
+
+        },
+        error : function(data) {
+            alert("Error add event")
+        }
+    });
+
+}
+
+function saveCalendar(){
+    var name = $('#editEventAddNameInput').val();
+    if (name == "") {
+        $('#editEventAddNameInput').css('border-color', 'red');
+    } else {
+        $('#editEventAddNameInput').css('border-color', 'green');
+
+        $.ajax({
+            url : 'calendar',
+            type : 'POST',
+            data : {
+                'action' : 'updateCalendar',
+                'calendarKey' : calendar_id.text(),
+                'calendarName' : name
+            },
+            success : function(data) {
+                retrieveEventCalendarMenu();
+                hidePopupDialog();
+
+            },
+            error : function(data) {
+                alert("Error updateCalendar")
+            }
+        });
+    }
+}
+
+function editTaskButtonClick(){
+    if($('#taskNameEdit').val()==""){
+        $('#taskNameEdit').css('border-color','red');
+    }
+    else{
+        $('#taskNameEdit').css('border-color','gray');
+
+        var taskName =$('#taskNameEdit').val();
+        var todo_date = $('#taskDateEdit').val();
+        var todo_description = $('#taskDescriptionEdit').val();
+        $.ajax({
+            url : 'calendar',
+            type : 'POST',
+            data : {
+                'action' : 'updateTask',
+                'taskKey': todo_id,
+                'taskName': taskName,
+                'todo_date': todo_date,
+                'todo_description':todo_description
+            },
+            success : function(data) {
+                viewTasks();
+                hidePopupDialog();
+            },
+            error : function(data) {
+                alert("Error edit task");
+            }
+        });
+    }
+}
+
 function showEditCalendarForm(){
 		hidePopupDialog();
 		var H = $(window).height();
@@ -305,7 +323,7 @@ function showEditCalendarForm(){
 		showPopupDialog('editCalendarForm',(H - t.height())/2, (W - t.width())/2);
 		$("#editEventAddNameInput").css('border-color','white');
 		$("#editEventAddNameInput").val(getCurrentCalendarName());
-	};
+	}
 	
 function showOnlyThisCalendar() {
 	$('.myCalendar').find('.item.active').each(function(index, element) {
@@ -320,7 +338,7 @@ function showOnlyThisCalendar() {
 	hidePopupDialog();
 	//retrive table for selected items
 	
-};
+}
 
 function getActiveCalendars()
 {
@@ -366,7 +384,7 @@ function initAddEventForm(){
 		minDateTime: dateS,
 		altFormat: 'mm/dd/yy'
 		});
-};
+}
 
 function calendarTableClicks(){
 	// add new event
@@ -774,7 +792,11 @@ function todoMenuClicks() {
 	$('#addTaskField').blur(function(e){
 		addTask();
 		e.stopPropagation();
-	});
+	}).keypress(function(e){
+            if ( e.which == 13 ) {
+            addTask();
+            }
+            e.stopPropagation()});
 
 };
 function addTask(){
