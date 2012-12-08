@@ -96,10 +96,15 @@ String name = user.getName();
 
 			<div class="calendar">
 				<div class="calendarHeader">
-					<button name="todayButton" id="todayButton">Today</button>
-					<button name="prevMonth" id="prevMonth">&lt;</button>
-					<button name="nextMonth" id="nextMonth">&gt;</button>
+					<button name="todayButton" id="todayButton" >Today</button>
+					<button name="prevMonth" id="prevMonth" >&lt;</button>
+					<button name="nextMonth" id="nextMonth" >&gt;</button>
 					<span id="currentMonth" class="ui-state-default">November 2012</span>
+                    <div id="radioCalendarView" style="float: right; margin-right: 10%; ">
+                            <input type="radio" id="radio1" name="radio" /><label for="radio1">Month</label>
+                            <input type="radio" id="radio2" name="radio" checked="checked" /><label for="radio2">Week</label>
+                            <input type="radio" id="radio3" name="radio" /><label for="radio3">Day</label>
+                    </div>
 				</div>
 				<table id="daysNameTable" width="100%" border="0" cellspacing="0"
 					cellpadding="0">
@@ -330,7 +335,7 @@ String name = user.getName();
 		</div>
 	</div>
 		<!-- edit task form -->
-	<div id="todosEditForm" class="ui-dialog ui-widget ui-widget-content ui-corner-all ui-draggable ui-resizable">
+	<div id="todosEditForm" class="ui-dialog ui-widget ui-widget-content ui-corner-all ui-draggable ui-resizable" role="dialog">
 		<div class="ui-dialog-titlebar ui-widget-header ui-helper-clearfix ui-corner-all">
 			Edit task
 			<div class="form_title ui-dialog-titlebar-close">
@@ -344,8 +349,8 @@ String name = user.getName();
 			<input type="text" name="taskDateEdit" id="taskDateEdit" placeholder="date"
 				style="width: 98%;"/>
             <br/>
-			<input type="text"  name="taskDescriptionEdit" id="taskDescriptionEdit" placeholder="description"
-				style="width: 98%;"/>
+			<textarea name="taskDescriptionEdit" id="taskDescriptionEdit" placeholder="description" rows="6" cols="50"
+				style="width: 98%; font-size: 14px;"></textarea>
                 <div style="text-align: center">
 			<button name="editTaskButton" id="editTaskButton">Confirm</button>
             </div>
