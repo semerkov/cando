@@ -1,3 +1,5 @@
+<%@page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
+
 <%@ page import="java.util.Date,com.appspot.i_can_do.master.model.Event,java.text.SimpleDateFormat, com.google.appengine.api.datastore.KeyFactory" %>
 <% 
 	final Event event = (Event) request.getAttribute("event");

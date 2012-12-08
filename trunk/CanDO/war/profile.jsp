@@ -167,11 +167,9 @@
 												<%=e.getType()%>
 											</div>
 										</div>
-										<div style="height: 25px; width: 25px; float: right;">
-											<button class="edit">
-												<span class="ui-icon ui-icon-pencil"></span>
-											</button>
-										</div>
+                                        <button class="edit">
+                                            <span class="ui-icon ui-icon-pencil"></span>
+                                        </button>
 										<span class="emailText"><%=e.getEmail()%></span>
 										<div class="emailKey" style="display: none;"><%=KeyFactory.keyToString(e.getKey())%></div>
 									</div>
@@ -202,11 +200,9 @@
 												<%=e.getType() %>
 											</div>
 										</div>
-										<div style="height: 25px; width: 25px; float: right;">
-											<button class="edit">
-												<span class="ui-icon ui-icon-pencil"></span>
-											</button>
-										</div>
+                                        <button class="edit">
+                                            <span class="ui-icon ui-icon-pencil"></span>
+                                        </button>
 										<span class="phoneText"><%=e.getPhoneNumber()%></span>
 										<div class="phoneKey" style="display: none;"><%=KeyFactory.keyToString(e.getKey())%></div>
 									</div>
@@ -288,7 +284,7 @@
 		<img src="IMG/close_icon.png"
 			style="float: right; background-color: #FFF; cursor: pointer; top: -12px; right: 1px; position: absolute;"
 			onclick="hidePopupDialog();" />
-		<button onclick="removeCalendarConfirm();">Remove</button>
+		<button onclick="remove();">Remove</button>
 	</div>
 </body>
 </html>

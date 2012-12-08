@@ -29,11 +29,11 @@ public class Profile implements Serializable {
 	
 	private String name;
 	private String sername;
-	@OneToMany(cascade=CascadeType.ALL)
+	@OneToMany(fetch=FetchType.LAZY, cascade=CascadeType.ALL)
 	private List<Address> addresses;
-	@OneToMany(cascade=CascadeType.ALL)
+	@OneToMany(fetch=FetchType.LAZY, cascade=CascadeType.ALL)
 	private List<Email> emails;
-	@OneToMany(cascade=CascadeType.ALL)
+	@OneToMany(fetch=FetchType.LAZY, cascade=CascadeType.ALL)
 	private List<Phone> phones;
 	
 	public Profile(){
