@@ -14,6 +14,11 @@ $(document).ready(function(e) {
 		tryLogin();
 		e.stopPropagation();
 	});
+    $('#login_form').keypress(function(e) {
+        if(e.which==13)
+             tryLogin();
+        e.stopPropagation();
+    });
 	
 	$(window).resize(function(){
 			$('#login_form').css({
@@ -35,7 +40,7 @@ function testEmail() {
 
 	$('#email').css('border-color', 'grey');
 	return true;
-};
+}
 
 function testPassword() {
 	if ($('#password').val() == "") {
@@ -43,12 +48,15 @@ function testPassword() {
 	} else {
 		$('#password').css('border-color', 'grey');
 	}
-};
+}
 
 function tryLogin() {
+    $('#password').css('border-color', 'grey');
+    $('#email').css('border-color', 'grey');
+
 	if (!testEmail()) {
-		$('#email').val() = "";
-		$('#password').val() = "";
+		//$('#email').val("");
+		$('#password').val("");
 	} else {
 		var tEmail = $('#email').val();
 		var tPassword = $('#password').val();
@@ -78,4 +86,4 @@ function tryLogin() {
 			}
 		});
 	}
-};
+}

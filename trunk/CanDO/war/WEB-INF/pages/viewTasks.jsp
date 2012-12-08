@@ -32,4 +32,4 @@ String active="";
 	}
 }
 %>
-<input type="text" name="addTaskField" id="addTaskField" placeholder="Task name" />
+<div style="text-align: center;"><input type="text" name="addTaskField" id="addTaskField" placeholder="Task name" /></div>
