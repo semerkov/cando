@@ -13,6 +13,9 @@ $(document).ready(
 		function() {
 			retrieveEventCalendarMenu();
 			viewTasks();
+
+            $('#radioCalendarView').buttonset();
+
 			$( ".ui-draggable" ).draggable();
 			$( "button" ).button();
 			$("input").addClass('ui-corner-all');

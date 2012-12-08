@@ -90,25 +90,24 @@ a:hover,a:active,a:focus {
 
 #nextMonth {
 	float: left;
-	margin: 2% 3px;
+	margin: 0 3px;
 	width: 5%;
 }
 
 #prevMonth {
 	float: left;
-	margin: 2% 3px;
+	margin: 0 3px;
 	width: 5%;
 }
 
 #todayButton {
 	float: left;
-	margin: 2% 5px;
+	margin: 0 5px;
 	width: 10%;
 }
 
 #currentMonth {
-	position: relative;
-	right: 10%;
+    text-align: center;
 	font-size: 40px;
 	text-shadow: 5px 3px 8px black;
 }
@@ -136,11 +135,10 @@ a:hover,a:active,a:focus {
 }
 
 .calendarHeader {
-	height: 5%;
+	height: 8%;
 	width: 100%;
 	float: left;
 	position: relative;
-	margin: 0px 0px;
 	text-align: center;
 }
 .calendarHeader button span.ui-button-text{
@@ -562,7 +560,6 @@ ul.nav a:hover,ul.nav a:active,ul.nav a:focus {
 #todosEditForm {
 	z-index: 301;
 	position: absolute;
-	width: 230px;
 	top: 100px;
 	left: 100px;
 	display: none;
