@@ -1,6 +1,4 @@
-
-
-$(document).ready(function(e) {	
+$(document).ready(function(e) {
 	$( "button" ).button();
 	$( ".ui-draggable" ).draggable();
 	
@@ -120,7 +118,7 @@ $(document).ready(function(e) {
 	$(window).resize(function(){
 		center('profile_form');
 	});
-	$('.edit').parent('div').parent('div').mouseenter(function(){
+	$('.edit').parent('div').mouseenter(function(){
 		$(this).find('.edit').css('display', 'block');
 	}).mouseleave(function(){
 		$(this).find('.edit').css('display', 'none');
@@ -129,11 +127,10 @@ $(document).ready(function(e) {
 	$('.edit').click(
 			function(e) {
 				var t = $(this);
-				/*curCalendarName = t.parent().text();
-				calendar_id = t.next('.calendar_id').first();*/
+                setClickedItem(t.parent());
 				showPopupDialog('editPopup',
 						t.offset().top + t.height(), t.offset().left);
-				e.stopPropagation();
+                e.stopPropagation();
 			});
 	
 	$(window).resize();
@@ -213,6 +210,10 @@ $(document).ready(function(e) {
 		}
 		e.stopPropagation();
 	});
+
+    $('#picture').on("change", function(event){
+       $('#imageUploadForm').submit();
+    });
 });
 
 
@@ -229,13 +230,125 @@ function addNewPhone(){
 	center('profileAddPhone');
 }
 function remove(){
-    var div = $(this).parent();
-    if(div.hasClass('address')){
-        alert(1);
-    }else if(div.hasClass('email')){
-        alert(2);
-    }else if(div.hasClass('phone')){
-        alert(3);
+    $.ajax({
+        url : 'profile',
+        type : 'POST',
+        data : {
+            'action' : 'remove',
+            'type' : getClickedItemType(),
+            'key' : getClickedItemKey()
+        },
+        success : function() {
+            location.reload();
+        },
+        error : function() {
+            alert("Error while removing!")
+        }
+    });
+}
+
+function edit(){
+    $.ajax({
+        url : 'profile',
+        type : 'POST',
+        data : {
+            'action' : 'edit',
+            'type' : getClickedItemType(),
+            'key' : getClickedItemKey()
+        },
+        success : function(data) {
+            var container = "#editContainer";
+            $(container).html(data);
+
+            hidePopupDialog();
+            showPopupDialog('editContainer');
+            center('editContainer');
+
+            $( container + " button" ).button();
+            $( container + ".ui-draggable" ).draggable();
+
+            $('button.save').click(function(e){
+                var form = $(this).parent('div').parent('div');
+                var text = form.find('.saveItemText').val();
+                if(checkForEmpty(form.find('.saveItemText'))){
+                    saveItem(form.find('.type').text(),form.find('.key').text(),form.find('.editSelect :selected').val(),text);
+                }
+                e.stopPropagation();
+            });
+        },
+        error : function() {
+            alert("Error while editing!")
+        }
+    });
+}
+
+function saveItem(type, key, typeCode, text ){
+    $.ajax({
+        url : 'profile',
+        type : 'POST',
+        data : {
+            'action' : 'save',
+            'type' : type,
+            'typeCode' : typeCode,
+            'text' : text,
+            'key' : key
+        },
+        success : function(data) {
+            location.reload();
+        },
+        error : function(data) {
+            alert("Error save" + type);
+        }
+    });
+}
+function saveProfile(){
+    if(checkForEmpty($('#aboutText')) & checkForEmpty($('#firstName')) & checkForEmpty($('#lastName'))){
+        $.ajax({
+            url : 'profile',
+            type : 'POST',
+            data : {
+                'action' : 'saveProfile',
+                'name' : $('#firstName').val(),
+                'sername' : $('#lastName').val(),
+                'about' : $('#aboutText').val()
+            },
+            success : function(data) {
+                seeMyCalendar();
+            },
+            error : function(data) {
+                alert("Error save profile");
+            }
+        });
+    }
+}
+var clickedItem = null;
+function setClickedItem(item){
+        if(clickedItem != null){
+            clickedItem.removeClass('clicked');
+        }
+        clickedItem = $(item).addClass('clicked');
+}
+function getClickedItemType(){
+    var type = "none";
+    if(clickedItem.hasClass('address')){
+        type = 'address';
+    }else if(clickedItem.hasClass('email')){
+        type =  'email';
+    }else if(clickedItem.hasClass('phone')){
+        type = 'phone';
+    }
+    return type;
+}
+function getClickedItemKey(){
+    return $(clickedItem).find('.key').text();
+}
+function checkForEmpty(input){
+    if (input.val() == "") {
+        input.css('border-color', 'red');
+        return false;
+    } else {
+        input.css('border-color', 'green');
+        return true;
     }
 }
 
@@ -269,10 +382,11 @@ function center(id){
     var form = $('#'+id);
     form.css({
 		position:'absolute',
-		left: ($(window).width() - form.outerWidth())/2,
-		top: ($(window).height() -form.outerHeight())/2
+		left: ($(window).outerWidth() - form.outerWidth())/2,
+		top: ($(window).outerHeight() -form.outerHeight())/2
 	});
 }
+
 function seeMyCalendar(){
-	document.location.href ="/";
+    document.location.href = "/";
 }

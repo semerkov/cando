@@ -1,7 +1,6 @@
 package com.appspot.i_can_do.service;
 
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -10,14 +9,14 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
 
-import com.appspot.i_can_do.master.model.Profile;
-import com.appspot.i_can_do.master.model.ProfileKeeper;
+import com.appspot.i_can_do.master.model.*;
 import com.appspot.i_can_do.master.security.Permission;
 import com.appspot.i_can_do.master.security.User;
 import com.appspot.i_can_do.service.exceptions.LoginFailedException;
 import com.appspot.i_can_do.service.exceptions.LoginNameExistException;
 import com.appspot.i_can_do.service.exceptions.LoginNameNotFoundException;
 import com.appspot.i_can_do.service.utils.Crypto;
+import com.google.appengine.api.datastore.Key;
 
 public class CanDOSecurityService implements ICanDOSecurityService {
 	private static final EntityManager em = EMF.get().createEntityManager();
@@ -122,5 +121,62 @@ public class CanDOSecurityService implements ICanDOSecurityService {
 
 		return user;
 	}
+
+    public void removeAddress(Profile profile, Key address){
+        EntityTransaction txn = em.getTransaction();
+        txn.begin();
+        try {
+            if(address != null){
+                Address address1 = em.find(Address.class, address);
+                profile.getAddresses().remove(address1);
+                txn.commit();
+                log.warning("Address removed: " + address1);
+            }else{
+                log.warning("Address removed key is null!!");
+            }
+        } finally {
+            if (txn.isActive()) {
+                txn.rollback();
+            }
+        }
+    }
+
+    public void removeEmail(Profile profile, Key email){
+        EntityTransaction txn = em.getTransaction();
+        txn.begin();
+        try {
+            if(email != null){
+                Email email1 = em.find(Email.class, email);
+                profile.getEmails().remove(email1);
+                txn.commit();
+                log.warning("Email removed: " + email1);
+            }else{
+                log.warning("Email removed key is null!!");
+            }
+        } finally {
+            if (txn.isActive()) {
+                txn.rollback();
+            }
+        }
+    }
+
+    public void removePhone(Profile profile, Key phone){
+        EntityTransaction txn = em.getTransaction();
+        txn.begin();
+        try {
+            if(phone != null){
+                Phone phone1 = em.find(Phone.class, phone);
+                profile.getPhones().remove(phone1);
+                txn.commit();
+                log.warning("Phone removed: " + phone1);
+            }else{
+                log.warning("Phone removed key is null!!");
+            }
+        } finally {
+            if (txn.isActive()) {
+                txn.rollback();
+            }
+        }
+    }
 
 }
