@@ -1,4 +1,3 @@
-<%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
@@ -7,8 +6,8 @@
         import="java.text.SimpleDateFormat,java.util.Calendar,java.util.List,java.util.ArrayList, com.appspot.i_can_do.master.model.EventCalendar, com.appspot.i_can_do.master.model.Event, com.google.appengine.api.datastore.KeyFactory"%>
 <%@ page import="java.util.Date" %>
 
-<link rel="stylesheet" href="<%= request.getContextPath() %>/CSS/calendar.css"/>" type="text/css"/>
-<link rel="stylesheet" href="<%= request.getContextPath() %>/CSS/WeekCalendar.css"/>" type="text/css"/>
+<link rel="stylesheet" href="<%= request.getContextPath() %>/CSS/calendar.css"/>
+<link rel="stylesheet" href="<%= request.getContextPath() %>/CSS/WeekCalendar.css"/>
 
 <%
     final Calendar calendar = (Calendar) request.getAttribute("calendar");
@@ -30,13 +29,15 @@
     <%
     for(int i = 0;i<24;i++){
     %>
+    <div>
         <div><%=i%>:00</div>
         <div><%=i%>:30</div>
+    </div>
     <%
     }
     %>
-</td>
-<td>
+	</td>
+	<td>
     <%
         for(int i = 0;i<24;i++){
     %>
