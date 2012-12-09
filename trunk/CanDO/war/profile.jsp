@@ -16,7 +16,7 @@
 
 <%@ page
 	import="com.appspot.i_can_do.master.security.User, com.appspot.i_can_do.master.model.Profile,java.util.Calendar,java.util.List,java.util.ArrayList, com.appspot.i_can_do.master.model.Phone, com.appspot.i_can_do.master.model.Email, com.appspot.i_can_do.master.model.Address,
-	com.appspot.i_can_do.master.security.AddressEmailType,com.appspot.i_can_do.master.security.PhoneType, com.google.appengine.api.datastore.KeyFactory "%>
+	com.appspot.i_can_do.master.security.AddressEmailType,com.appspot.i_can_do.master.security.PhoneType, com.google.appengine.api.datastore.KeyFactory, com.appspot.i_can_do.service.utils.ServletUtils"%>
 <%
 	User user = (User) request.getAttribute("user");
 	Profile profile = user.getProfile();
@@ -24,38 +24,6 @@
 	List<Email> emails = profile.getEmails();
 	List<Phone> phones = profile.getPhones();
 %>
-
-<%!String addressEmailOptions(AddressEmailType type) {
-		String result = "";
-		if(type != null){
-			result = "<option value=" + type.ordinal() + ">"
-					+ type.toString() + "</option>";
-		}
-		AddressEmailType[] types = AddressEmailType.values();
-		for (AddressEmailType t : types) {
-			if (!t.equals(type)) {
-				result += "<option value=" + t.ordinal() + ">" + t.toString()
-						+ "</option>";
-			}
-		}
-		return result;
-	}
-
-	String phoneOptions(PhoneType type) {
-		String result = "";
-		if(type != null){
-			result = "<option value=" + type.ordinal() + ">"
-					+ type.toString() + "</option>";
-		}
-		PhoneType[] types = PhoneType.values();
-		for (PhoneType t : types) {
-			if (!t.equals(type)) {
-				result += "<option value=" + t.ordinal() + ">" + t.toString()
-						+ "</option>";
-			}
-		}
-		return result;
-	}%>
 
 </head>
 <body>
@@ -77,7 +45,7 @@
 					style="float: right;" onclick="seeMyCalendar();">close</span> <span
 					class="ui-icon ui-icon-check ui-corner-all"
 					style="float: right; margin-right: 8px;"
-					onClick="removeEventConfirm();">save</span>
+					onClick="saveProfile();">save</span>
 			</div>
 		</div>
 		<div id="container">
@@ -86,9 +54,23 @@
 				<div id="image_container">
 					Picture
 					<div id="image" class="ui-corner-all">
-						<img src="IMG/avatar.jpg" width="300" height="300"
+                        <%
+                            if(user.getProfile().getImageFile() != null){
+                        %>
+                        <img src="/profile?type=showAvatar" />
+                        <%
+                            } else {
+                        %>
+                        <img src="IMG/avatar.jpg" width="300" height="300"
 							alt="your photo">
+                        <%
+                            }
+                        %>
 					</div>
+                    <form id="imageUploadForm" method="post" enctype="multipart/form-data" action="profile">
+                        <input type="file" name="picture" id="picture"
+                               accept="image/gif, image/jpeg, image/png" required="required"/>
+                    </form>
 				</div>
 				<div id="about">
 					<p>About:</p>
@@ -133,8 +115,8 @@
                                         <button class="edit">
                                             <span class="ui-icon ui-icon-pencil"></span>
                                         </button>
-										<div class="addressText"><%=a.getAddress()%></div>
-										<div class="addressKey" style="display: none;"><%=KeyFactory.keyToString(a.getKey())%></div>
+										<div class="text"><%=a.getAddress()%></div>
+										<div class="key"><%=KeyFactory.keyToString(a.getKey())%></div>
 									</div>
 									<%
 										}
@@ -170,8 +152,8 @@
                                         <button class="edit">
                                             <span class="ui-icon ui-icon-pencil"></span>
                                         </button>
-										<span class="emailText"><%=e.getEmail()%></span>
-										<div class="emailKey" style="display: none;"><%=KeyFactory.keyToString(e.getKey())%></div>
+										<span class="text"><%=e.getEmail()%></span>
+										<div class="key"><%=KeyFactory.keyToString(e.getKey())%></div>
 									</div>
 									<%
 										}
@@ -203,8 +185,8 @@
                                         <button class="edit">
                                             <span class="ui-icon ui-icon-pencil"></span>
                                         </button>
-										<span class="phoneText"><%=e.getPhoneNumber()%></span>
-										<div class="phoneKey" style="display: none;"><%=KeyFactory.keyToString(e.getKey())%></div>
+										<span class="text"><%=e.getPhoneNumber()%></span>
+										<div class="key"><%=KeyFactory.keyToString(e.getKey())%></div>
 									</div>
 									<%
 										}
@@ -236,7 +218,7 @@
 			</div>
 		</div>
 		<div class="addForm">
-		<select id="newAddressType" class="ui-corner-all" style="float:left; width:30%;margin: 4px;"><%=addressEmailOptions(null) %></select>
+		<select id="newAddressType" class="ui-corner-all" style="float:left; width:30%;margin: 4px;"><%=ServletUtils.addressEmailOptions(null) %></select>
 			<input type="text" name="newAddressText" id="newAddressText"
 				style="width: 65%;" placeholder="Write address" />
 			<button name="profileAddAddressButton" id="profileAddAddressButton">Create</button>
@@ -254,7 +236,7 @@
 			</div>
 		</div>
 		<div class="addForm">
-			<select id="newEmailType" class="ui-corner-all" style="float:left; width:30%;margin: 4px;"><%=addressEmailOptions(null) %></select>
+			<select id="newEmailType" class="ui-corner-all" style="float:left; width:30%;margin: 4px;"><%=ServletUtils.addressEmailOptions(null) %></select>
 			<input type="text" name="newEmailText" id="newEmailText"
 				style="width: 65%;" placeholder="Write email address" />
 			<button name="profileAddEmailButton" id="profileAddEmailButton">Create</button>
@@ -272,7 +254,7 @@
 			</div>
 		</div>
 		<div class="addForm">
-			<select id="newPhoneType" class="ui-corner-all" style="float:left; width:30%;margin: 4px;"><%=phoneOptions(null) %></select>
+			<select id="newPhoneType" class="ui-corner-all" style="float:left; width:30%;margin: 4px;"><%=ServletUtils.phoneOptions(null) %></select>
 			<input type="text" name="newPhoneText" id="newPhoneText"
 				style="width: 65%;" placeholder="Write phone number" />
 			<button name="profileAddPhoneButton" id="profileAddPhoneButton">Create</button>
@@ -280,11 +262,15 @@
 	</div>
 	<!-- Edit pop-up-->
 	<div id="editPopup" class="ui-corner-all">
-		<button onсlick="showOnlyThisCalendar();">Edit</button>
+		<button onclick="edit()">Edit</button>
 		<img src="IMG/close_icon.png"
 			style="float: right; background-color: #FFF; cursor: pointer; top: -12px; right: 1px; position: absolute;"
-			onclick="hidePopupDialog();" />
+			onclick="hidePopupDialog();" alt="Remove edit form"/>
 		<button onclick="remove();">Remove</button>
 	</div>
+
+    <!-- #editContainer -->
+    <div id="editContainer"></div>
+    <!-- /#editContainer -->
 </body>
 </html>
