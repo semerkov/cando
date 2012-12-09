@@ -62,7 +62,7 @@ public class ProfileServlet extends HttpServlet{
             if(type.equalsIgnoreCase("showAvatar"))
             {
                 Blob avatar = user.getProfile().getImageFile();
-                response.setContentType("image/jpeg");
+                response.setContentType(user.getProfile().getMimeType());
                 response.getOutputStream().write(avatar.getBytes());
             }
         }
@@ -287,13 +287,12 @@ public class ProfileServlet extends HttpServlet{
                         ImagesService imagesService = ImagesServiceFactory.getImagesService();
 
                         Image oldImage = ImagesServiceFactory.makeImage(imageBytes);
-
                         Transform resize = ImagesServiceFactory.makeResize(300, 300);
-
                         Image newImage = imagesService.applyTransform(resize, oldImage);
-                        byte[] newImageData = newImage.getImageData();
 
-                        user.getProfile().setImageFile(new Blob(newImageData));
+                        user.getProfile().setMimeType(item.getContentType());
+                        user.getProfile().setImageFile(new Blob(newImage.getImageData()));
+
                         service.saveUser(user);
                         log.warning("User profile image saved");
 

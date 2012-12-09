@@ -47,7 +47,9 @@ public class InitTestBaseServlet extends HttpServlet {
 	protected void service(HttpServletRequest request, HttpServletResponse res)
 			throws ServletException, IOException {
 		dropAll();
-		initUser();
+		initUser1();
+        initUser2();
+        initUser3();
 		initTest();
 		
 		res.setContentType("text/html");
@@ -65,7 +67,74 @@ public class InitTestBaseServlet extends HttpServlet {
 		out.close();
 	}
 
-	public void dropAll() {
+    private void initUser3() {
+        String email = "user3@email.com";
+        testUser = CanDOSecurityService.instance().findUser(email);
+        if (testUser == null) {
+            // for test create new user
+            testUser = new User();
+            testUser.setEmail(email);
+            testUser.setName("Andrii");
+            testUser.setSername("Shevchenko");
+            Profile profile = testUser.getProfile();
+            Address address1 = new Address("London, some street", AddressEmailType.Home);
+            Address address2 = new Address("Ukraine, Verhovna Rada", AddressEmailType.Work);
+
+
+            profile.getAddresses().add(address1);
+            profile.getAddresses().add(address2);
+
+            profile.getEmails().add(new Email(email,AddressEmailType.Work));
+            profile.getEmails().add(new Email("footbol@email.com",AddressEmailType.Work));
+
+            profile.getPhones().add(new Phone("091-111-11-11", PhoneType.Mobile));
+
+
+            profile.setAbout("This is my official profile");
+            try {
+                CanDOSecurityService.instance()
+                        .addNewUser(testUser, "password");
+                log.warning("Test user3 created");
+            } catch (LoginNameExistException e) {
+                log.warning("Test user3 exist");
+            }
+        } else {
+            log.warning("Test user3 exist");
+        }
+    }
+
+    private void initUser2() {
+        String email = "user2@email.com";
+        testUser = CanDOSecurityService.instance().findUser(email);
+        if (testUser == null) {
+            // for test create new user
+            testUser = new User();
+            testUser.setEmail(email);
+            testUser.setName("Santa");
+            testUser.setSername("Claus");
+            Profile profile = testUser.getProfile();
+            Address address1 = new Address("Laplandia, New Year Street, 1", AddressEmailType.Home);
+
+
+            profile.getAddresses().add(address1);
+
+            profile.getEmails().add(new Email("santa@gifts.com",AddressEmailType.Work));
+
+
+            profile.setAbout("Ho-ho-ho!");
+            try {
+                CanDOSecurityService.instance()
+                        .addNewUser(testUser, "password");
+                log.warning("Test user2 created");
+            } catch (LoginNameExistException e) {
+                log.warning("Test user2 exist");
+            }
+        } else {
+            log.warning("Test user2 exist");
+        }
+    }
+
+    public void dropAll() {
 		/*EntityManager em = EMF.get().createEntityManager();
 		EntityTransaction txn = em.getTransaction();
 		txn.begin();
@@ -114,7 +183,7 @@ public class InitTestBaseServlet extends HttpServlet {
 		}
 	}
 	
-	public void initUser() {
+	public void initUser1() {
 		log.info("Servlet created");
 
 		String email = "user@email.com";
@@ -126,33 +195,30 @@ public class InitTestBaseServlet extends HttpServlet {
 			testUser.setName("Mario");
 			testUser.setSername("Gavani");
 			Profile profile = testUser.getProfile();
-			Address address1 = new Address("a very long address a very very long Home address", AddressEmailType.Home);
-			Address address2 = new Address("a very long address a very very long Work address", AddressEmailType.Work);
-			Address address3 = new Address("a very long address a very very long Study address", AddressEmailType.Study);
+			Address address1 = new Address("Italic, Milan, Napoleon street, 1 ", AddressEmailType.Home);
+			Address address3 = new Address("Ukraine, Kharkiv, Lenina, 13", AddressEmailType.Study);
 			
 			profile.getAddresses().add(address1);
-			profile.getAddresses().add(address2);
 			profile.getAddresses().add(address3);
 			
 			profile.getEmails().add(new Email(email,AddressEmailType.Work));
-			profile.getEmails().add(new Email(email + " 2",AddressEmailType.Study));
-			profile.getEmails().add(new Email(email + " 3",AddressEmailType.Home));
-			
-			profile.getPhones().add(new Phone("27-27-35", PhoneType.Home));
+			profile.getEmails().add(new Email("university@kture.com",AddressEmailType.Study));
+			profile.getEmails().add(new Email("weekend@home.com" ,AddressEmailType.Home));
+
 			profile.getPhones().add(new Phone("093-498-29-43", PhoneType.Mobile));
 			profile.getPhones().add(new Phone("911", PhoneType.Work));
 			profile.getPhones().add(new Phone("103", PhoneType.Work));
 			
-			profile.setAbout("Iam just a famous Itiliano boy, Mario Gavani!");
+			profile.setAbout("Hello, Iam Mario Gavani! You can write me email or share events with me");
 			try {
 				CanDOSecurityService.instance()
 						.addNewUser(testUser, "password");
-				log.warning("Test user created");
+				log.warning("Test user1 created");
 			} catch (LoginNameExistException e) {
-				log.warning("Test user exist");
+				log.warning("Test user1 exist");
 			}
 		} else {
-			log.warning("Test user exist");
+			log.warning("Test user1 exist");
 		}
 	}
 

@@ -71,11 +71,11 @@
 		<url-pattern>/profile</url-pattern>
 	</servlet-mapping>
     <servlet>
-        <servlet-name>ImageUpload</servlet-name>
-        <servlet-class>com.appspot.i_can_do.server.servlets.ImageUpload</servlet-class>
+        <servlet-name>ContactListServlet</servlet-name>
+        <servlet-class>com.appspot.i_can_do.server.servlets.ContactListServlet</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>ImageUpload</servlet-name>
-        <url-pattern>/imageUpload</url-pattern>
+        <servlet-name>ContactListServlet</servlet-name>
+        <url-pattern>/contactList</url-pattern>
     </servlet-mapping>
 </web-app>

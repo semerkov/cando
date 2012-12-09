@@ -82,7 +82,7 @@ function tryLogin() {
 				}
 			},
 			error : function(data) {
-				alert("Test internet connection!");
+
 			}
 		});
 	}
