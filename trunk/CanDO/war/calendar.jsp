@@ -101,7 +101,7 @@ String name = user.getName();
 					<button name="nextMonth" id="nextMonth" >&gt;</button>
 					<span id="currentMonth" class="ui-state-default"></span>
                     <div id="radioCalendarView" style="float: right; margin-right: 5%; font-size: 14px; ">
-                            <input type="radio" id="radio1" name="radio" checked="checked" /><label for="radio1" >Month</label>
+                            <input type="radio" id="radio1" name="radio" checked /><label for="radio1" >Month</label>
                             <input type="radio" id="radio2" name="radio"  /><label for="radio2">Week</label>
                             <input type="radio" id="radio3" name="radio" /><label for="radio3">Day</label>
                     </div>

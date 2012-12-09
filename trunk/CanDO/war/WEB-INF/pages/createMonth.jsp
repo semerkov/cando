@@ -52,6 +52,7 @@
 	
 
 %>
+
 <table width="100%" border="1" cellspacing="" cellpadding="0"
 	rules="all">
 	<tr>
@@ -125,3 +126,5 @@
 	<%=calendar.get(Calendar.MONTH)%></div>
 <div id="currYear" style="display: none;">
 	<%=calendar.get(Calendar.YEAR)%></div>
+<div id="currDay" style="display: none;">
+    <%=calendar.get(Calendar.DAY_OF_MONTH)%></div>
