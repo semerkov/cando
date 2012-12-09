@@ -1,0 +1,26 @@
+@charset "utf-8";
+
+html {
+    height: 100%;
+    width: 100%;
+    min-width: 1280px;
+}
+
+body {
+    color: #000;
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    font: 100%/1.4 Arial;
+    overflow:hidden;
+    background: url(images/ui-bg_diagonals-thick_90_eeeeee_40x40.png) repeat 0 center;
+}
+.container{
+
+}
+.contactListContainer{
+    margin: 0 auto;
+    height: 100%;
+    width: auto;
+}
