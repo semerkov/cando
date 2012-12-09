@@ -560,6 +560,51 @@ function retrieveCalender(monthAction) {
 				monthAction);
 	}
 }
+
+function retrieveCalenderWeek(monthAction) {
+    if (monthAction == "this") {
+        viewCalenderWeek((new Date()).getFullYear(), (new Date())
+            .getMonth(), monthAction);
+    } else if (monthAction == "next") {
+        viewCalenderWeek($('#currYear').text(), $('#currMonth').text(),
+            monthAction);
+    } else if (monthAction == "previous") {
+        viewCalenderWeek($('#currYear').text(), $('#currMonth').text(),
+            monthAction);
+    }
+}
+
+function viewCalenderWeek(year, month, monthAction) {
+    $.ajax({
+        url : 'calendar',
+        type : 'POST',
+        async: false,
+        data : {
+            'action' : 'retrieveCalenderWeek',
+            'currentMonth' : month,
+            'monthAction' : monthAction,
+            'currentYear' : year,
+            'selectedCalendars' : arr_active_calendar_id.join(',')
+        },
+        success : function(data) {
+            $('#calendarTableWrapper').html(data);
+
+            var calendarHeaderText = getMonthNameByNumber(parseInt($(
+                '#currMonth').text()))
+                + $('#currYear').text();
+            $('#currentMonth').html(calendarHeaderText);
+
+            calendarTableClicks();
+        },
+        error : function(data) {
+            $('#calendarTableWrapper')
+                .html(
+                    "<table><tr><td style='text-align:center;'>Can't load calendar</td></tr></table>");
+            console.log(data);
+        }
+    });
+    $("body").css("cursor", "auto");
+}
 function selectedCalendarsChanged(){
 	retrieveCalenderTable((new Date()).getFullYear(), (new Date()).getMonth(), "this");
 }
@@ -603,7 +648,7 @@ function retrieveCalenderTable(year, month, monthAction) {
 				}
 			});
 	$("body").css("cursor", "auto");	
-};
+}
 
 var showPopupDialog = function(dialogId, topPosition, leftPosition) {
 	var maskHeight = $(document).height();
@@ -667,7 +712,7 @@ function retrieveEventCalendarMenu() {
 		}
 	});
 	$("body").css("cursor", "auto");
-};
+}
 
 function viewTasks() {
 	$.ajax({
@@ -685,7 +730,7 @@ function viewTasks() {
 		}
 	});
 	$("body").css("cursor", "auto");
-};
+}
 
 function calendarMenuClicks() {
 	$(".myCalendar .item").click(function(e) {
@@ -741,7 +786,7 @@ function calendarMenuClicks() {
 						t.offset().top + t.height(), t.offset().left);
 				e.stopPropagation();
 			});
-};
+}
 
 function todoMenuClicks() {
 	$(".todoSidebar .item").click(function(e) {
@@ -801,7 +846,7 @@ function todoMenuClicks() {
             }
             e.stopPropagation()});
 
-};
+}
 function addTask(){
 		var str = $('#addTaskField').val();
 		if(str!=""){
@@ -820,7 +865,7 @@ function addTask(){
 			}
 			});
 		}
-};
+}
 function changeTaskState(taskKey){
 			$.ajax({
 			url : 'calendar',
@@ -836,7 +881,7 @@ function changeTaskState(taskKey){
 				alert("Error change Task State");
 			}
 			});
-};
+}
 function removeTaskConfirm(todo_id) {
 	hidePopupDialog();
 	$("#confirm").dialog({

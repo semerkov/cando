@@ -31,7 +31,7 @@
 </head>
 <body>
   <div id="selectable">
-      <div class="ui-widget-content">cmnsdf</div>
+      <div class="ui-widget-content">cmnsdf<div>dfgdgdfgd</div></div>
       <div class="ui-widget-content">df</div>
       <div class="ui-widget-content">s</div>
       <div class="ui-widget-content">dssfd</div>

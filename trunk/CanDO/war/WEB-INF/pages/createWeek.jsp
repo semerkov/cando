@@ -1,8 +1,11 @@
 <%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
-
 <%@ page
         import="java.text.SimpleDateFormat,java.util.Calendar,java.util.List,java.util.ArrayList, com.appspot.i_can_do.master.model.EventCalendar, com.appspot.i_can_do.master.model.Event, com.google.appengine.api.datastore.KeyFactory"%>
 <%@ page import="java.util.Date" %>
+
+<link rel="stylesheet" href="<%= request.getContextPath() %>/CSS/calendar.css"/>" type="text/css"/>
+<link rel="stylesheet" href="<%= request.getContextPath() %>/CSS/WeekCalendar.css"/>" type="text/css"/>
+
 <%
     final Calendar calendar = (Calendar) request
             .getAttribute("calendar");
@@ -27,19 +30,34 @@
     if(calendar.get(Calendar.YEAR) == now.get(Calendar.YEAR) && calendar.get(Calendar.MONTH) ==now.get(Calendar.MONTH)){
         checkToday=true;
     }
-%>
-<% for(int i = dayOfMonth; i<lastDayOfMonth;i++)
-{
-    Calendar c = Calendar.getInstance();
-    c.setTimeInMillis(calendar.getTimeInMillis());
-    c.set(Calendar.DATE,i);
-    Date date = c.getTime();
-%>
- <div>
-<%
-    for(int time =0;time<48;time++)   {
+     for(int i = dayOfMonth; i<lastDayOfMonth;i++){
+        Calendar c = Calendar.getInstance();
+        c.setTimeInMillis(calendar.getTimeInMillis());
+        c.set(Calendar.DATE,i);
+        Date date = c.getTime();
+        %>
+         <div id="selectable" class="dayOfWeek" >
+             <%
+                 for(int time =0;time<24;time++)   {
+                    %>
+             <div class="time_stamp"><%=time+":00"%></div>
 
-    }
+             <%
+                 }
+             %>
+        <%
+        for(int time =0;time<24;time++)   {
+             %>
+             <div>
+                <div class="half_hour ui-widget-content">
+
+                </div>
+                <div class="half_hour ui-widget-content">
+                     <div class="time_stamp"><%=time+":30"%></div>
+                </div>
+             </div>
+         <%
+        }
  %>
      </div>
 <%
