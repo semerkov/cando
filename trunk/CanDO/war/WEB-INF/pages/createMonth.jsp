@@ -122,9 +122,6 @@
 		</c:forEach>
 	</tr>
 </table>
-<div id="currMonth" style="display: none;">
-	<%=calendar.get(Calendar.MONTH)%></div>
-<div id="currYear" style="display: none;">
-	<%=calendar.get(Calendar.YEAR)%></div>
-<div id="currDay" style="display: none;">
-    <%=calendar.get(Calendar.DAY_OF_MONTH)%></div>
+<div id="currMonth" style="display: none;"><%=calendar.get(Calendar.MONTH)%></div>
+<div id="currYear" style="display: none;"><%=calendar.get(Calendar.YEAR)%></div>
+<div id="currDay" style="display: none;">1</div>
