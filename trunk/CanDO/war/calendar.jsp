@@ -31,24 +31,44 @@ String name = user.getName();
 
 <body>
 	<div class="container">
-    
-		<div class="header">
-			<div class="account">
-				<button onClick="seeMyProfile();">My profile</button>
-			</div>
 
-			<!--  <div id="logo" onclick="self.location='home.jsp'">CanDO</div>-->
+        <!-- <div class="header">
+            <div class="account">
+
+            </div>
+
+             <div id="logo" onclick="self.location='home.jsp'">CanDO</div>
 
 			<div class="clearfloat"></div>
-		</div>
+		</div>  -->
 
 		<div class="content">
 
 			<div class="calendarWrapper">
+                <div style="display: table-cell; vertical-align: middle;text-align: center; float: left; width: 60px;height: 60px; margin: 5px;">
+
+                    <%
+                        if(user.getProfile().getImageFile() != null){
+                    %>
+                    <img src="/calendar?type=showAvatar" width="60" height="60" alt="your photo"
+                         onclick="seeMyProfile();" style="cursor: pointer;"/>
+                    <%
+                    } else {
+                    %>
+                    <img src="IMG/avatar.jpg" width="60" height="60"
+                         alt="your photo" onclick="seeMyProfile();" style="cursor: pointer;"/>
+                    <%
+                        }
+                    %>
+                </div>
+                <div>
+                    <span style="font-size: 120%; cursor: pointer;"
+                          onclick="seeMyProfile();"><%=user.getName() +" "+ user.getSername()%></span>
+                    <button onClick="seeMyContactList();" style="float: left; font-size: 95%;">Contact
+                        List</button>
+                    <img src="IMG/log_out.png" id="exit"/>
+                </div>
 				<div class="calendarSidebar ui-corner-all">
-                	<div style="text-align: center;" class="ui-widget-header ui-widget ui-corner-all">
-                    	Hello, <%=name%>! (<a id="exit">Exit</a>)
-                    </div>
 					<div id="calendarSideBarDatepicker"></div>
 					<nav>
 					
@@ -127,14 +147,13 @@ String name = user.getName();
 				</div>
 				<div class="todoSidebar ui-corner-all">
 					<nav>
-						<button class="active">My to-do`s
-						<div class="todoAdd ui-icon ui-icon-triangle-1-nw"></div></button>
+						<button class="active">My tasks</button>
 						<div id="myTodos">
 							
                             
                             
 						</div>
-						<button class="active">Others to-do`s</button>
+						<button class="active">Others tasks</button>
 						<div class="#othersTodos">
 							<div class="item">
 								<div class="square"></div>

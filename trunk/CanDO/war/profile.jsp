@@ -107,7 +107,7 @@
 											Address a = addresses.get(i);
 									%>
 									<div class="address <%if (i == 0) {%>active<%}%>">
-										<div style="height: 30px; width: 80px; float: left;">
+										<div style="height: 30px; width: 95px; float: left;">
 											<div class="type">
 												<%=a.getType()%>
 											</div>

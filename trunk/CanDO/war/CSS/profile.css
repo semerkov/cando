@@ -118,7 +118,10 @@ select{
 .text{
 	margin-left: 15px;
 }
-.key, .type{
+.key{
+    display: none;
+}
+#editContainer .type{
     display: none;
 }
 .popupMask {
@@ -158,4 +161,7 @@ select{
 #editContainer{
     width: 308px;
     height: 120px;
+}
+.form_title span{
+    cursor: pointer;
 }

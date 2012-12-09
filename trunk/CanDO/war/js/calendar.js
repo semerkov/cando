@@ -16,22 +16,6 @@ $(document).ready(
 
             $('#radioCalendarView').buttonset();
 
-            $('#radioCalendarView').change(function(e){
-                var str = $(this).find("label[aria-pressed='true']").attr('for');
-                if(str=='radio1'){
-                    retrieveCalenderTable($('#currYear').text(), $('#currMonth').text(),"this");
-                }else if(str=='radio2'){
-                    //<<<<<<<<
-                    $('#calendarTableWrapper').html('');
-                }else if(str=='radio3'){
-
-                    $('#calendarTableWrapper').html('');
-                    viewCalenderDay($('#currYear').text(), $('#currMonth').text(),$('#currDay').text(),
-                        "this");
-                }
-                e.stopPropagation();
-            });
-
 			$( ".ui-draggable" ).draggable();
 			$( "button" ).button();
 			$("input").addClass('ui-corner-all');
@@ -390,6 +374,7 @@ function initAddEventForm(){
 	var dateF = new Date();
 	$('#eventAddDateStart').datetimepicker({
 		dateFormat: 'dd.mm.yy',
+		altFormat: 'mm/dd/yy',
 		minDateTime: dateS,
 		onClose: function(datetimeText, datepickerInstance){
 				var d = $.datepicker.parseDate("dd.mm.yy",datetimeText);
@@ -399,7 +384,8 @@ function initAddEventForm(){
 	});
 	$('#eventAddDateFinish').datetimepicker({
 		dateFormat: 'dd.mm.yy',
-		minDateTime: dateS
+		minDateTime: dateS,
+		altFormat: 'mm/dd/yy'
 		});
 }
 
@@ -473,7 +459,7 @@ function calendarTableClicks(){
 		hidePopupDialog();
 		e.stopPropagation();
 	});
-}
+};
 
 function setCalendarDayByClick(dateText,instance){
 	var selectedDate = new Date(dateText);
@@ -575,62 +561,20 @@ function retrieveCalender(monthAction) {
 	}
 }
 
-function retrieveCalenderWeek(action) {
-    if (action == "this") {
+function retrieveCalenderWeek(monthAction) {
+    if (monthAction == "this") {
         viewCalenderWeek((new Date()).getFullYear(), (new Date())
-            .getMonth(),(new Date()).getDate(), action);
-    } else if (action == "next") {
-        viewCalenderWeek($('#currYear').text(), $('#currMonth').text(),$('#currDay'),
-            action);
-    } else if (action == "previous") {
-        viewCalenderWeek($('#currYear').text(), $('#currMonth').text(),$('#currDay'),
-            action);
+            .getMonth(), monthAction);
+    } else if (monthAction == "next") {
+        viewCalenderWeek($('#currYear').text(), $('#currMonth').text(),
+            monthAction);
+    } else if (monthAction == "previous") {
+        viewCalenderWeek($('#currYear').text(), $('#currMonth').text(),
+            monthAction);
     }
 }
 
-function retrieveCalenderDay(action) {
-    if (action == "this") {
-        viewCalenderDay((new Date()).getFullYear(), (new Date())
-            .getMonth(),1, action);
-    } else if (action == "next") {
-        viewCalenderDay($('#currYear').text(), $('#currMonth').text(),$('#currDay').text(),
-            action);
-    } else if (action == "previous") {
-        viewCalenderDay($('#currYear').text(), $('#currMonth').text(),$('#currDay').text(),
-            action);
-    }
-}
-function viewCalenderDay(year, month,day, action) {
-    $.ajax({
-        url : 'calendar',
-        type : 'POST',
-        async: false,
-        data : {
-            'action' : 'retrieveCalenderDay',
-            'currentMonth' : month,
-            'dayAction' : action,
-            'currentYear' : year,
-            'currentDay': day,
-            'selectedCalendars' : arr_active_calendar_id.join(',')
-        },
-        success : function(data) {
-            $('#calendarTableWrapper').html(data);
-
-            var calendarHeaderText =$('#currDay').text()+getMonthNameByNumber(parseInt($(
-                '#currMonth').text()))
-                + $('#currYear').text();
-            $('#currentMonth').html(calendarHeaderText);
-        },
-        error : function(data) {
-            $('#calendarTableWrapper')
-                .html(
-                    "<table><tr><td style='text-align:center;'>Can't load calendar</td></tr></table>");
-            console.log(data);
-        }
-    });
-    $("body").css("cursor", "auto");
-}
-function viewCalenderWeek(year, month,day, action) {
+function viewCalenderWeek(year, month, monthAction) {
     $.ajax({
         url : 'calendar',
         type : 'POST',
@@ -638,9 +582,8 @@ function viewCalenderWeek(year, month,day, action) {
         data : {
             'action' : 'retrieveCalenderWeek',
             'currentMonth' : month,
-            'weekAction' : action,
+            'monthAction' : monthAction,
             'currentYear' : year,
-            'currentDay': day,
             'selectedCalendars' : arr_active_calendar_id.join(',')
         },
         success : function(data) {
@@ -651,7 +594,7 @@ function viewCalenderWeek(year, month,day, action) {
                 + $('#currYear').text();
             $('#currentMonth').html(calendarHeaderText);
 
-
+            calendarTableClicks();
         },
         error : function(data) {
             $('#calendarTableWrapper')
@@ -974,4 +917,7 @@ function removeTaskConfirm(todo_id) {
 
 function seeMyProfile(){
 	document.location.href = "/profile";
+}
+function seeMyContactList(){
+    document.location.href = "/contactList";
 }

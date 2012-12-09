@@ -60,7 +60,7 @@ a:hover,a:active,a:focus {
 	overflow: none;
 	width: 100%;
 	margin: 0px auto;
-	padding-top: 10px;
+    padding-top: 10px;
 }
 
 /* ~~ верхнему колонтитулу не задана ширина. Он растянется на всю ширину макета. Он содержит заполнитель для изображения, который должен быть заменен логотипом по ссылке ~~ */
@@ -79,9 +79,8 @@ a:hover,a:active,a:focus {
 }
 
 .header .account {
-	width: 15%;
 	height: 70px;
-	float: right;
+	float: left;
 }
 
 .content {
@@ -534,6 +533,7 @@ ul.nav a:hover,ul.nav a:active,ul.nav a:focus {
 }
 #calendarSideBarDatepicker .ui-datepicker{
 	width:97%;
+    display: inline-block !important;
 }
 .owner_name{
 	float: right;
@@ -580,16 +580,17 @@ ul.nav a:hover,ul.nav a:active,ul.nav a:focus {
 	color: grey;
 	font-size: 14px;
 }
-
+#exit{
+    float:left;
+    width: 25px;
+    height: 25px;
+    margin: 5px 15px;
+}
 #exit:hover,#exit:active,#exit:focus {
 	text-decoration:underline;
 	cursor:pointer;
 }
 select{
 	background-color: white;
-}
-
-#addTaskField{
-	
 }
 
