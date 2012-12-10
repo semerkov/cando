@@ -7,7 +7,6 @@
 <%@ page import="java.util.Date" %>
 
 
-<link rel="stylesheet" href="<%= request.getContextPath() %>/CSS/WeekCalendar.css"/>
 
 <%
     final Calendar calendar = (Calendar) request.getAttribute("calendar");

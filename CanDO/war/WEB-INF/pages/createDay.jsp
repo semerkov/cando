@@ -6,8 +6,8 @@
         import="java.text.SimpleDateFormat,java.util.Calendar,java.util.List,java.util.ArrayList, com.appspot.i_can_do.master.model.EventCalendar, com.appspot.i_can_do.master.model.Event, com.google.appengine.api.datastore.KeyFactory"%>
 <%@ page import="java.util.Date" %>
 
-<link rel="stylesheet" href="<%= request.getContextPath() %>/CSS/calendar.css"/>
-<link rel="stylesheet" href="<%= request.getContextPath() %>/CSS/WeekCalendar.css"/>
+
+
 
 <%
     final Calendar calendar = (Calendar) request.getAttribute("calendar");
