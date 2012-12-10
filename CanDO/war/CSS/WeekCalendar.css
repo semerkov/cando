@@ -8,10 +8,10 @@
 #selectable li { margin: 3px; padding: 0.4em; font-size: 1.4em; height: 18px; }
 
 .dayCalendarHeader{
-	width:50px;
+	
 }
 .dayCalendarBody{
-	
+	border:1px solid #09F;
 }
 .hour_element{
 	border: 1px solid #069;

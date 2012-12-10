@@ -21,9 +21,9 @@ $(document).ready(
                 if(str=='radio1'){
                     retrieveCalenderTable($('#currYear').text(), $('#currMonth').text(),"this");
                 }else if(str=='radio2'){
-
+					viewCalenderWeek($('#currYear').text(), $('#currMonth').text(),$('#currDay').text(),"this");
                 }else if(str=='radio3'){
-                    viewDayCalendar($('#currYear').text(), $('#currMonth').text(),"1","this");
+                    viewDayCalendar($('#currYear').text(), $('#currMonth').text(),$('#currDay').text(),"this");
                 }
                 e.stopPropagation();
             });

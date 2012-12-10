@@ -21,23 +21,22 @@
     }
   %>
 
-<table width="90%" height="10%" border="0" cellspacing="" cellpadding="0"
-       rules="all" style="overflow:scroll; border-spacing:0px;"  >
-<tbody style="border:1px solid  #09C;border-spacing:0px;">
-<tr>
-    <td class="dayCalendarHeader">
+
+<div style=" width:100%; height:90%; border:1px solid  #09C;border-spacing:0px; overflow:auto; border-spacing:0px;
+ font-size:13px;">
+    <div class="dayCalendarHeader" style="float:left; width:7%; text-align:center; text-align:center;">
     <%
     for(int i = 0;i<24;i++){
     %>
-    <div class="hour_element ui-widget-content">
-        <div class="hour_first_part_element"><%=i%>:00</div>
+    <div class="hour_element">
+        <div class="hour_first_part_element ui-widget-content"><%=i%>:00</div>
         <div><%=i%>:30</div> 
     </div>
     <%
     }
     %>
-	</td>
-	<td class="dayCalendarBody">
+	</div>
+	<div class="dayCalendarBody">
     <%
         for(int i = 0;i<24;i++){
     %>
@@ -46,11 +45,11 @@
     <%
         }
     %>
-</td>
-</tr>
-</tbody>
+</div>
+</div>
+</div>
 
-</table>
+</div>
 
 
 <div id="currMonth" style="display: none;"><%=calendar.get(Calendar.MONTH)%></div>
