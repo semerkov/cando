@@ -16,7 +16,7 @@ User user = (User) request.getAttribute("user");
 	type="text/css" />
 <link rel="stylesheet" type="text/css" href="CSS/calendar.css" />
 <link rel="stylesheet" type="text/css" href="CSS/warning_events.css" />
-
+<link rel="stylesheet" type="text/css" href="CSS/WeekCalendar.css"/>
 <!-- JQuery Framework -->
 <script src="js/jquery-1.8.2.js" type="text/javascript" charset="utf-8"></script>
 <script src="js/jquery-ui-1.9.1.custom.min.js"></script>
