@@ -21,28 +21,28 @@
     }
   %>
 
-<table width="100%" border="1" cellspacing="" cellpadding="0"
-       rules="all">
-<tbody>
+<table width="90%" height="10%" border="0" cellspacing="" cellpadding="0"
+       rules="all" style="overflow:scroll; border-spacing:0px;"  >
+<tbody style="border:1px solid  #09C;border-spacing:0px;">
 <tr>
-    <td>
+    <td class="dayCalendarHeader">
     <%
     for(int i = 0;i<24;i++){
     %>
-    <div>
-        <div><%=i%>:00</div>
-        <div><%=i%>:30</div>
+    <div class="hour_element ui-widget-content">
+        <div class="hour_first_part_element"><%=i%>:00</div>
+        <div><%=i%>:30</div> 
     </div>
     <%
     }
     %>
 	</td>
-	<td>
+	<td class="dayCalendarBody">
     <%
         for(int i = 0;i<24;i++){
     %>
-    <div class="ui-widget-content"></div>
-    <div class="ui-widget-content"></div>
+    <div class="ui-widget-content">&nbsp;</div>
+    <div class="ui-widget-content">&nbsp;</div>
     <%
         }
     %>
@@ -51,3 +51,8 @@
 </tbody>
 
 </table>
+
+
+<div id="currMonth" style="display: none;"><%=calendar.get(Calendar.MONTH)%></div>
+<div id="currYear" style="display: none;"><%=calendar.get(Calendar.YEAR)%></div>
+<div id="currDay" style="display: none;">1</div>
