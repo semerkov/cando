@@ -14,18 +14,11 @@ public class ContactListServlet extends HttpServlet{
     private static final List<String> SECURITY_ACTIONS = Arrays.asList("addAddress");
     private User user;
 
-    protected boolean isLoginState(HttpServletRequest request) {
-        user = (User) request.getSession().getAttribute("user");
-        return user != null;
-    }
-
-
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        if(!isLoginState(request)){
-            request.getRequestDispatcher("/").forward(request, response);
-        }
+        user = (User)request.getSession().getAttribute("user");
 
+        request.setAttribute("user", user);
         request.getRequestDispatcher("contactList.jsp").forward(request,response);
     }
 

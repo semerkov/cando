@@ -54,18 +54,7 @@
 				<div id="image_container">
 					Picture
 					<div id="image" class="ui-corner-all">
-                        <%
-                            if(user.getProfile().getImageFile() != null){
-                        %>
-                        <img src="/profile?type=showAvatar" />
-                        <%
-                            } else {
-                        %>
-                        <img src="IMG/avatar.jpg" width="300" height="300"
-							alt="your photo">
-                        <%
-                            }
-                        %>
+                        <img src="/image?action=showAvatar" />
 					</div>
                     <form id="imageUploadForm" method="post" enctype="multipart/form-data" action="profile">
                         <input type="file" name="picture" id="picture"
