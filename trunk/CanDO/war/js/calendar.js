@@ -600,7 +600,7 @@ function viewDayCalendar(year, month,day, action) {
     $.ajax({
         url : 'calendar',
         type : 'POST',
-        async: false,
+        async: true,
         data : {
             'action' : 'retrieveDayCalender',
             'currentMonth' : month,
