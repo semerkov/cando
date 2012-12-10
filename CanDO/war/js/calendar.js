@@ -17,7 +17,8 @@ function removeUiSelected()
 }
 
 function dayCalendarClicksInit(){
-	$(function() {
+		//$('#daysNameTable').css('display','none');
+		
         $( ".dayCalendarBody" ).selectable({
 			start: function(){
 				removeUiSelected();
@@ -27,14 +28,42 @@ function dayCalendarClicksInit(){
 				var start_minutes = $( ".ui-selected", this ).first().find('.start_minutes').first().text();
 				var finish_hours = $( ".ui-selected", this ).last().find('.finish_hours').first().text();
 				var finish_minutes = $( ".ui-selected", this ).last().find('.finish_minutes').first().text();
-				alert(start_hours+":"+start_minutes+"-"+finish_hours+":"+finish_minutes);
-            }
+				//alert(start_hours+":"+start_minutes+"-"+finish_hours+":"+finish_minutes);
+
+		
+			initAddEventForm();
+			
+			//set position
+			var s = this.getBoundingClientRect();
+			var top = s.top + (Math.abs(s.top - s.bottom) / 2) - 350;
+			top = top > 0? top : 20;
+			var left = s.left + (Math.abs(s.left - s.right) / 2)- 190;
+			left = left < $(window).width() - 390 ? left : left - 125;
+			// set select calendars
+			var options = "";
+			for(i=0; i < arr_active_calendar_id.length; i++ ){
+				var option = "<option value="+arr_active_calendar_id[i]+">"+arr_active_calendar_name[i]+"</option>";
+				options += option;
+			}
+			//prepare add event form
+			$('#selectEventsCalendar').html(options);
+			$('#eventAddName').css('border-color', 'white');
+			$('#eventAddDateStart').css('border-color', 'white');
+			$('#eventAddName').val("");
+			$('#eventAddDesc').val("");
+			var date = $('#currDay').text()+'.'+ $('#currMonth').text()+'.'+$('#currYear').text();
+			$('#eventAddDateStart').val(date+' '+start_hours+':'+start_minutes);
+			$('#eventAddDateFinish').val(date+' '+finish_hours+':'+finish_minutes);
+			showPopupDialog('addEventsForm', top, left);
+			e.stopPropagation();
+	
+			}
         });
-    });
+ 
 }
 
 function weekCalendarClicksInit(){
-	$(function() {
+		
         $( ".dayCalendarBody" ).selectable({
 			start: function(){
 				removeUiSelected();
@@ -44,10 +73,38 @@ function weekCalendarClicksInit(){
 				var start_minutes = $( ".ui-selected", this ).first().find('.start_minutes').first().text();
 				var finish_hours = $( ".ui-selected", this ).last().find('.finish_hours').first().text();
 				var finish_minutes = $( ".ui-selected", this ).last().find('.finish_minutes').first().text();
-				alert(start_hours+":"+start_minutes+"-"+finish_hours+":"+finish_minutes);
+				//alert(start_hours+":"+start_minutes+"-"+finish_hours+":"+finish_minutes);
+				
+				
+		
+			initAddEventForm();
+			
+			//set position
+			var s = this.getBoundingClientRect();
+			var top = s.top + (Math.abs(s.top - s.bottom) / 2) - 350;
+			top = top > 0? top : 20;
+			var left = s.left + (Math.abs(s.left - s.right) / 2)- 190;
+			left = left < $(window).width() - 390 ? left : left - 125;
+			// set select calendars
+			var options = "";
+			for(i=0; i < arr_active_calendar_id.length; i++ ){
+				var option = "<option value="+arr_active_calendar_id[i]+">"+arr_active_calendar_name[i]+"</option>";
+				options += option;
+			}
+			//prepare add event form
+			$('#selectEventsCalendar').html(options);
+			$('#eventAddName').css('border-color', 'white');
+			$('#eventAddDateStart').css('border-color', 'white');
+			$('#eventAddName').val("");
+			$('#eventAddDesc').val("");
+			var date = $('#currDay').text()+'.'+ $('#currMonth').text()+'.'+$('#currYear').text();
+			$('#eventAddDateStart').val(date+' '+start_hours+':'+start_minutes);
+			$('#eventAddDateFinish').val(date+' '+finish_hours+':'+finish_minutes);
+			showPopupDialog('addEventsForm', top, left);
+			e.stopPropagation();
             }
         });
-    });
+
 }
 
 $(document).ready(

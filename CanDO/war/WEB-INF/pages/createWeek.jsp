@@ -6,7 +6,7 @@
         import="java.text.SimpleDateFormat,java.util.Calendar,java.util.List,java.util.ArrayList, com.appspot.i_can_do.master.model.EventCalendar, com.appspot.i_can_do.master.model.Event, com.google.appengine.api.datastore.KeyFactory"%>
 <%@ page import="java.util.Date" %>
 
-<link rel="stylesheet" href="<%= request.getContextPath() %>/CSS/calendar.css"/>
+
 <link rel="stylesheet" href="<%= request.getContextPath() %>/CSS/WeekCalendar.css"/>
 
 <%
@@ -46,14 +46,14 @@
     <div class="halfHour ui-widget-content">&nbsp;
     		<div class="start_hours" style="display:none;"><%=i%></div>
     		<div class="finish_hours" style="display:none;"><%=i%></div>
-            <div class="start_minutes" style="display:none;">0</div>
+            <div class="start_minutes" style="display:none;">00</div>
             <div class="finish_minutes" style="display:none;">30</div>
     </div>
     <div class="halfHour ui-widget-content">&nbsp;
     		<div class="start_hours" style="display:none;"><%=i%></div>
     		<div class="finish_hours" style="display:none;"><%=(i+1)%></div>
             <div class="start_minutes" style="display:none;">30</div>
-            <div class="finish_minutes" style="display:none;">0</div>
+            <div class="finish_minutes" style="display:none;">00</div>
     </div>
     <%
         }
