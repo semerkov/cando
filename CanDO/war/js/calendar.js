@@ -974,3 +974,6 @@ function removeTaskConfirm(todo_id) {
 function seeMyProfile(){
 	document.location.href = "/profile";
 }
+function seeMyContactList(){
+    document.location.href = "/contactList";
+}
