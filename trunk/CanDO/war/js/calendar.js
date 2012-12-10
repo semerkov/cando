@@ -9,6 +9,47 @@ var curTodoName;
 
 var curSelectedDate = new Date();
 
+function removeUiSelected()
+{
+	$(".dayCalendarBody .ui-selected").each(function(index, element) {
+                    $(element).toggleClass('ui-selected',false);
+              });
+}
+
+function dayCalendarClicksInit(){
+	$(function() {
+        $( ".dayCalendarBody" ).selectable({
+			start: function(){
+				removeUiSelected();
+			},
+            stop: function() {
+                var start_hours = $( ".ui-selected", this ).first().find('.start_hours').first().text();
+				var start_minutes = $( ".ui-selected", this ).first().find('.start_minutes').first().text();
+				var finish_hours = $( ".ui-selected", this ).last().find('.finish_hours').first().text();
+				var finish_minutes = $( ".ui-selected", this ).last().find('.finish_minutes').first().text();
+				alert(start_hours+":"+start_minutes+"-"+finish_hours+":"+finish_minutes);
+            }
+        });
+    });
+}
+
+function weekCalendarClicksInit(){
+	$(function() {
+        $( ".dayCalendarBody" ).selectable({
+			start: function(){
+				removeUiSelected();
+			},
+            stop: function() {
+                var start_hours = $( ".ui-selected", this ).first().find('.start_hours').first().text();
+				var start_minutes = $( ".ui-selected", this ).first().find('.start_minutes').first().text();
+				var finish_hours = $( ".ui-selected", this ).last().find('.finish_hours').first().text();
+				var finish_minutes = $( ".ui-selected", this ).last().find('.finish_minutes').first().text();
+				alert(start_hours+":"+start_minutes+"-"+finish_hours+":"+finish_minutes);
+            }
+        });
+    });
+}
+
 $(document).ready(
 		function() {
 			retrieveEventCalendarMenu();
@@ -600,7 +641,7 @@ function viewDayCalendar(year, month,day, action) {
     $.ajax({
         url : 'calendar',
         type : 'POST',
-        async: true,
+        async: false,
         data : {
             'action' : 'retrieveDayCalender',
             'currentMonth' : month,
@@ -616,6 +657,7 @@ function viewDayCalendar(year, month,day, action) {
                 '#currMonth').text()))
                 + $('#currYear').text();
             $('#currentMonth').html(calendarHeaderText);
+			dayCalendarClicksInit();
         },
         error : function(data) {
             $('#calendarTableWrapper')
@@ -648,7 +690,7 @@ function viewCalenderWeek(year, month,day, action) {
                 + $('#currYear').text();
             $('#currentMonth').html(calendarHeaderText);
 
-
+			weekCalendarClicksInit();
         },
         error : function(data) {
             $('#calendarTableWrapper')
