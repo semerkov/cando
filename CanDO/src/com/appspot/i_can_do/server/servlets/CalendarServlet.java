@@ -194,7 +194,7 @@ public class CalendarServlet extends HttpServlet {
 
             request.setAttribute("calendar", calendar);
             request.setAttribute("calendars", calendars);
-            request.getRequestDispatcher("/WEB-INF/pages/createWeek.jsp")
+            request.getRequestDispatcher("/WEB-INF/pages/createDay.jsp")
                     .forward(request, response);
         }
 
