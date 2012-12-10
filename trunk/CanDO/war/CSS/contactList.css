@@ -16,14 +16,115 @@ body {
     overflow:hidden;
     background: url(images/ui-bg_diagonals-thick_90_eeeeee_40x40.png) repeat 0 center;
 }
-#contactListContainer{
+#contactListForm{
     margin: 0 auto;
     height: 100%;
-    width: 500px;
+    width: 600px;
 }
 #personalInformation{
     border-bottom: 2px solid #696969;
 }
 #avatarArea{
     height: 70px;
+}
+#controlArea{
+    float: right;
+}
+#searchContact{
+    width: 100%;
+    margin: 3px 0;
+    height: 30px;
+    font-size: 14px;
+}
+#contactCount{
+    color:#3C3B3B;
+    font-size: 13px;
+    margin: 5px;
+}
+#myContactListContainer{
+    border-top: 1px solid #d3d3d3;
+}
+.contact{
+    height: 70px;
+    margin: 5px;
+    color: darkslategray;
+    border-bottom: 1px solid #d3d3d3;
+}
+.contact td, .name{
+    color: black;
+    font-size: 14px;
+    position: relative;
+    top: 5px;
+}
+.contact .contactControl{
+    height:inherit;
+}
+.contact .contactControl, .contact .contactControl span{
+    float: right;
+    width: 75px;
+    padding: 2px;
+    font-size: 13px;
+    font-weight: normal;
+    color: #2779AA;
+    cursor: pointer;
+    display: block;
+}
+.contactControl span:hover, #createGroup:hover, li:hover{
+    background-color: #3BAAE3;
+    color: white;
+}
+#fullContactListContainer{
+    border-top: 1px solid #d3d3d3;
+}
+#otherContactsSpan{
+    color:#3C3B3B;
+    font-size: 13px;
+    margin: 5px;
+}
+#contactArea{
+    margin: 5px 0;
+    width: 70%;
+    height: 100%;
+    background-color: white;
+    margin-left: 5px;
+}
+#groupsArea{
+    width: 30%;
+    float: right;
+    height: 100%;
+    margin-top: 5px;
+}
+#groupsSpan{
+    color:#3C3B3B;
+    font-size: 13px;
+    margin: 5px 15px;
+
+}
+#groupsArea>div{
+    border-top: 1px solid #d3d3d3;
+    height: 100%;
+    margin: 0 10px
+}
+#groupsArea ul{
+    list-style-type: none;
+    color: #2779AA;
+    font-size: 14px;
+    margin: 1px;
+    padding: 0 10px;
+    cursor: pointer;
+    display: block;
+}
+ul li{
+    padding: 0 10px
+}
+ul li.active{
+    background-color: #3E73E2;
+    color: white;
+}
+#createGroup{
+    color: #2779AA;
+    font-size: 14px;
+    margin: 1px;
+    padding: 0 10px;
+    cursor: pointer
 }
