@@ -37,8 +37,8 @@ public class CalendarServlet extends HttpServlet {
     private static final Logger log = Logger.getLogger(CalendarServlet.class
             .getName());
     private static final List<String> SECURITY_ACTIONS = Arrays
-            .asList("retrieveCalenderTable", "addCalendar",
-                    "retrieveEventCalendarMenu", "removeCalendar",
+            .asList("retrieveCalenderTable",  "retrieveDayCalender", "retrieveCalenderWeek",
+                    "addCalendar", "retrieveEventCalendarMenu", "removeCalendar",
                     "updateCalendar", "addEvent", "updateEvent", "removeEvent",
                     "viewEvent", "getEvent", "viewTasks", "addTask", "removeTask", "updateTask", "changeTaskState");
     private static SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy HH:mm");
@@ -108,7 +108,96 @@ public class CalendarServlet extends HttpServlet {
             changeTaskState(request, response);
         } else if (action.equals("updateTask")) {
             updateTask(request, response);
+        } else if(action.equals("retrieveCalenderWeek")){
+            retrieveCalenderWeek(request,response);
+        } else if(action.equals("retrieveDayCalender")) {
+            retrieveDayCalender(request,response);
         }
+    }
+
+    private void retrieveCalenderWeek(HttpServletRequest request,
+                                       HttpServletResponse response) throws IOException, ServletException {
+        Integer month = Integer.parseInt(request.getParameter("currentMonth"));
+        Integer year = Integer.parseInt(request.getParameter("currentYear"));
+        Integer day = Integer.parseInt(request.getParameter("currentDay"));
+
+        String action = request.getParameter("weekAction");
+        String calendarKeys = request.getParameter("selectedCalendars");
+        List<EventCalendar> calendars = new ArrayList<EventCalendar>();
+        if (calendarKeys != null) {
+            String[] k = calendarKeys.split(",");
+            for (String key : k) {
+                if (!key.isEmpty()) {
+                    calendars.add(canDOService.getCalendarByKey(key));
+                }
+            }
+        }
+        Calendar calendar = Calendar.getInstance();
+        calendar.setFirstDayOfWeek(Calendar.MONDAY);
+        if (SECURITY_MONTH_ACTIONS.contains(action)
+                && SECURITY_MONTH.contains(month)) {
+
+                calendar.set(Calendar.YEAR, year);
+                calendar.set(Calendar.MONTH, month);
+
+                int offset = 0;
+                if (action.equals("next")) {
+                    offset=7;
+                } else if (action.equals("previous")) {
+                    offset=-7;
+                }
+            //validate
+                calendar.set(Calendar.DATE,day+offset-calendar.get(Calendar.DAY_OF_WEEK));
+
+            request.setAttribute("calendar", calendar);
+            request.setAttribute("calendars", calendars);
+            request.getRequestDispatcher("/WEB-INF/pages/createWeek.jsp")
+                    .forward(request, response);
+        }
+
+    }
+
+    private void retrieveDayCalender(HttpServletRequest request,
+                                      HttpServletResponse response) throws IOException, ServletException {
+        Integer month = Integer.parseInt(request.getParameter("currentMonth")
+                .trim());
+        Integer year = Integer.parseInt(request.getParameter("currentYear")
+                .trim());
+        Integer day = Integer.parseInt(request.getParameter("currentDay").trim());
+
+        String dayAction = request.getParameter("dayAction");
+        String calendarKeys = request.getParameter("selectedCalendars");
+        List<EventCalendar> calendars = new ArrayList<EventCalendar>();
+        if (calendarKeys != null) {
+            String[] k = calendarKeys.split(",");
+            for (String key : k) {
+                if (!key.isEmpty()) {
+                    calendars.add(canDOService.getCalendarByKey(key));
+                }
+            }
+        }
+        //Ok
+        Calendar calendar = Calendar.getInstance();
+        calendar.setFirstDayOfWeek(0);
+        if (SECURITY_MONTH_ACTIONS.contains(dayAction)
+                && SECURITY_MONTH.contains(month)) {
+
+            calendar.set(Calendar.YEAR, year);
+            int offset = 0;
+            if (dayAction.equals("next")) {
+                offset=1;
+            } else if (dayAction.equals("previous")) {
+                offset=-1;
+            }
+            calendar.set(Calendar.MONTH, month);
+            calendar.set(Calendar.DATE,day+offset);
+
+            request.setAttribute("calendar", calendar);
+            request.setAttribute("calendars", calendars);
+            request.getRequestDispatcher("/WEB-INF/pages/createWeek.jsp")
+                    .forward(request, response);
+        }
+
     }
 
     private void retrieveCalenderTable(HttpServletRequest request,

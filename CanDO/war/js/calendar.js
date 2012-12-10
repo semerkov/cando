@@ -21,7 +21,7 @@ $(document).ready(
                 if(str=='radio1'){
                     retrieveCalenderTable($('#currYear').text(), $('#currMonth').text(),"this");
                 }else if(str=='radio2'){
-                    //<<<<<<<<
+
                 }else if(str=='radio3'){
                     viewDayCalendar($('#currYear').text(), $('#currMonth').text(),"1","this");
                 }
@@ -602,7 +602,7 @@ function viewDayCalendar(year, month,day, action) {
         type : 'POST',
         async: false,
         data : {
-            'action' : "viewDayCalendar",
+            'action' : 'retrieveDayCalender',
             'currentMonth' : month,
             'dayAction' : action,
             'currentYear' : year,
