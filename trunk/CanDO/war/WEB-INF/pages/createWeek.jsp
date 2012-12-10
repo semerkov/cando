@@ -43,8 +43,18 @@
     <%
         for(int i = 0;i<24;i++){
     %>
-    <div class="ui-widget-content">&nbsp;</div>
-    <div class="ui-widget-content">&nbsp;</div>
+    <div class="halfHour ui-widget-content">&nbsp;
+    		<div class="start_hours" style="display:none;"><%=i%></div>
+    		<div class="finish_hours" style="display:none;"><%=i%></div>
+            <div class="start_minutes" style="display:none;">0</div>
+            <div class="finish_minutes" style="display:none;">30</div>
+    </div>
+    <div class="halfHour ui-widget-content">&nbsp;
+    		<div class="start_hours" style="display:none;"><%=i%></div>
+    		<div class="finish_hours" style="display:none;"><%=(i+1)%></div>
+            <div class="start_minutes" style="display:none;">30</div>
+            <div class="finish_minutes" style="display:none;">0</div>
+    </div>
     <%
         }
     %>
