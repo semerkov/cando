@@ -10,7 +10,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import com.appspot.i_can_do.master.model.Address;
 import com.appspot.i_can_do.master.model.Email;
@@ -32,7 +31,7 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.io.output.ByteArrayOutputStream;
 
 public class ProfileServlet extends HttpServlet{
-    private Logger log = Logger.getLogger(ImageUpload.class.getName());
+    private Logger log = Logger.getLogger(ImageServlet.class.getName());
 	private static final long serialVersionUID = -178538787888163996L;
 	private static final List<String> SECURITY_ACTIONS = Arrays
 			.asList("addAddress","edit","remove","addEmail","addPhone", "save", "saveProfile","addAvatar");
@@ -40,33 +39,12 @@ public class ProfileServlet extends HttpServlet{
 	private static final PhoneType[] phoneTypes = PhoneType.values();
 	private static final CanDOSecurityService service = CanDOSecurityService.instance();
 	private User user;
-	
-	protected boolean isLoginState(HttpServletRequest request) {
-		user = (User) request.getSession().getAttribute("user");
-		return user != null;
-	}
 
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        if(!isLoginState(request)){
-            request.getRequestDispatcher("/").forward(request, response);
-        }
+        user = (User)request.getSession().getAttribute("user");
 
-
-        String type=request.getParameter("type");
-        if(type == null)
-        {
-            request.setAttribute("user", user);
-            request.getRequestDispatcher("profile.jsp").forward(request, response);
-
-        }else{
-            if(type.equalsIgnoreCase("showAvatar"))
-            {
-                Blob avatar = user.getProfile().getImageFile();
-                response.setContentType(user.getProfile().getMimeType());
-                response.getOutputStream().write(avatar.getBytes());
-            }
-        }
-		
+        request.setAttribute("user", user);
+        request.getRequestDispatcher("profile.jsp").forward(request,response);
 	}
 	
 	@Override
@@ -78,12 +56,7 @@ public class ProfileServlet extends HttpServlet{
         boolean isMultipart = ServletFileUpload.isMultipartContent(request);
 
         if (!isMultipart){
-            if (SECURITY_ACTIONS.contains(action)) {
-                  if (!isLoginState(request)) {
-                  response.sendError(HttpServletResponse.SC_UNAUTHORIZED,
-                  "Only authorized user can perform this action"); return;
-                  }
-            } else {
+            if (!SECURITY_ACTIONS.contains(action)) {
                 response.sendError(HttpServletResponse.SC_METHOD_NOT_ALLOWED,
                         "Not existing action!");
                 return;

@@ -5,7 +5,6 @@
 
 <%
 User user = (User) request.getAttribute("user");
-String name = user.getName();
 %>
 
 <!DOCTYPE html>
@@ -46,20 +45,8 @@ String name = user.getName();
 
 			<div class="calendarWrapper">
                 <div style="display: table-cell; vertical-align: middle;text-align: center; float: left; width: 60px;height: 60px; margin: 5px;">
-
-                    <%
-                        if(user.getProfile().getImageFile() != null){
-                    %>
-                    <img src="/calendar?type=showAvatar" width="60" height="60" alt="your photo"
+                    <img src="/image?action=showAvatar" width="60" height="60" alt="your photo"
                          onclick="seeMyProfile();" style="cursor: pointer;"/>
-                    <%
-                    } else {
-                    %>
-                    <img src="IMG/avatar.jpg" width="60" height="60"
-                         alt="your photo" onclick="seeMyProfile();" style="cursor: pointer;"/>
-                    <%
-                        }
-                    %>
                 </div>
                 <div>
                     <span style="font-size: 120%; cursor: pointer;"
