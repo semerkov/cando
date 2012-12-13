@@ -32,7 +32,7 @@ public class LoginServlet extends HttpServlet {
 	private static final Logger log = Logger.getLogger(LoginServlet.class
 			.getName());
 	private static final List<String> SECURITY_ACTIONS = Arrays
-			.asList(new String[] { "login" });
+			.asList("login","exit" );
 
 	@Override
 	public void init(ServletConfig config) {
@@ -50,50 +50,10 @@ public class LoginServlet extends HttpServlet {
 		String action = request.getParameter("action");
 
 		if (SECURITY_ACTIONS.contains(action)) {
-			String email = request.getParameter("email");
-			String password = request.getParameter("password");
-			String rememberMe = request.getParameter("rememberMe");
-			if (email != null && password != null) {
-				try {
-					User user = security.login(email, password);
-
-					
-
-					Date curDate = new Date();
-					byte[] rememberCookiesHash = null;
-
-					if (rememberMe.equals("1")) {
-						rememberCookiesHash = Crypto.hashPassword(curDate
-								.toString());
-						Cookie c = new Cookie(REMEMBER_COOKIE_USER,
-								user.getEmail());
-						c.setMaxAge(EXISTING_REMEMBER_COOKIE_TIME);
-						response.addCookie(c);
-						c = new Cookie(REMEMBER_COOKIE_HASH,
-							Arrays.toString(rememberCookiesHash));
-						c.setMaxAge(EXISTING_REMEMBER_COOKIE_TIME);
-						response.addCookie(c);
-					}
-					user.setLastEntryDate(curDate);
-					user.setRememberCookiesHash(rememberCookiesHash);
-					user.setRememberIpAdress(request.getRemoteAddr());
-					security.saveUser(user);
-					ServletUtils.writeJson(response, "ready");
-					
-					HttpSession session = request.getSession();
-					log.info("create session: " + session.getId());
-					session.setAttribute("user", user);
-					
-					log.info("login is successful: " + user.getEmail());
-				} catch (LoginNameNotFoundException ex) {
-					ServletUtils.writeJson(response, "LoginNameNotFound");
-				} catch (LoginFailedException ex) {
-					ServletUtils.writeJson(response, "LoginFailed");
-				}
-			} else {
-				response.sendError(HttpServletResponse.SC_METHOD_NOT_ALLOWED,
-						"Do not set parameters to login");
-			}
+            if(action.equals("login"))
+                userLogin(request,response);
+            else if (action.equals("exit"))
+                userExit(request,response);
 		} else {
 			response.sendError(HttpServletResponse.SC_METHOD_NOT_ALLOWED,
 					"Not existing action!");
@@ -117,4 +77,66 @@ public class LoginServlet extends HttpServlet {
 		}
 		return null;
 	}
+
+    private void userLogin(HttpServletRequest request, HttpServletResponse response) throws IOException
+    {
+        String email = request.getParameter("email");
+        String password = request.getParameter("password");
+        String rememberMe = request.getParameter("rememberMe");
+        if (email != null && password != null) {
+            try {
+                User user = security.login(email, password);
+
+                Date curDate = new Date();
+                byte[] rememberCookiesHash = null;
+
+                if (rememberMe.equals("1")) {
+                    rememberCookiesHash = Crypto.hashPassword(curDate
+                            .toString());
+                    Cookie c = new Cookie(REMEMBER_COOKIE_USER,
+                            user.getEmail());
+                    c.setMaxAge(EXISTING_REMEMBER_COOKIE_TIME);
+                    response.addCookie(c);
+                    c = new Cookie(REMEMBER_COOKIE_HASH,
+                            Arrays.toString(rememberCookiesHash));
+                    c.setMaxAge(EXISTING_REMEMBER_COOKIE_TIME);
+                    response.addCookie(c);
+                }
+                user.setLastEntryDate(curDate);
+                user.setRememberCookiesHash(rememberCookiesHash);
+                user.setRememberIpAdress(request.getRemoteAddr());
+                security.saveUser(user);
+                ServletUtils.writeJson(response, "ready");
+
+                HttpSession session = request.getSession();
+                log.info("create session: " + session.getId());
+                session.setAttribute("user", user);
+
+                log.info("login is successful: " + user.getEmail());
+            } catch (LoginNameNotFoundException ex) {
+                ServletUtils.writeJson(response, "LoginNameNotFound");
+            } catch (LoginFailedException ex) {
+                ServletUtils.writeJson(response, "LoginFailed");
+            }
+        } else {
+            response.sendError(HttpServletResponse.SC_METHOD_NOT_ALLOWED,
+                    "Do not set parameters to login");
+        }
+    }
+
+    private void userExit(HttpServletRequest request, HttpServletResponse response)
+            throws IOException {
+        request.getSession().removeAttribute("user");
+        Cookie cookies[] = request.getCookies();
+        for (Cookie c : cookies) {
+            if (c.getName().equals(LoginServlet.REMEMBER_COOKIE_USER)) {
+                c.setMaxAge(0);
+                response.addCookie(c);
+            } else if (c.getName().equals(LoginServlet.REMEMBER_COOKIE_HASH)) {
+                c.setMaxAge(0);
+                response.addCookie(c);
+            }
+        }
+        ServletUtils.writeJson(response, "ready");
+    }
 }
