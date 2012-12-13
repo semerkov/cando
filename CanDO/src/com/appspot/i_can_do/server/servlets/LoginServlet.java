@@ -61,7 +61,7 @@ public class LoginServlet extends HttpServlet {
 		}
 	}
 
-	public User validateRememberCookies(String email, String hash,
+	public static User validateRememberCookies(String email, String hash,
 			String ipAdress) {
 		User user = null;
 		try {
