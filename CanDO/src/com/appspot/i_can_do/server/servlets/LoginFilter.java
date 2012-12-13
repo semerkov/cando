@@ -1,10 +1,11 @@
 package com.appspot.i_can_do.server.servlets;
 
+import com.appspot.i_can_do.master.security.User;
+
 import javax.servlet.*;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.*;
 import java.io.IOException;
+import java.util.logging.Logger;
 
 /**
  * Created with IntelliJ IDEA.
@@ -14,7 +15,9 @@ import java.io.IOException;
  * To change this template use File | Settings | File Templates.
  */
 
-public class LoginFilter implements Filter {
+public class LoginFilter extends HttpServlet implements Filter {
+    private static LoginServlet login = new LoginServlet();
+    private static final Logger log = Logger.getLogger(LoginFilter.class.getName());
 
     @Override
     public void init(FilterConfig config) throws ServletException {
@@ -26,21 +29,56 @@ public class LoginFilter implements Filter {
     public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws ServletException {
         HttpServletRequest request = (HttpServletRequest) req;
         HttpServletResponse response = (HttpServletResponse) res;
-        HttpSession session = request.getSession(false);
+        HttpSession session = request.getSession(true);
         try {
-
-        if(request.getServletPath().contains("/login")){  // this is login page, so just continue request
-            chain.doFilter(req, res);
+            if(request.getServletPath().contains("/login")){  // this is login page, so just continue request
+              chain.doFilter(req, res);
         }
 
-        if (session == null || session.getAttribute("user") == null) {
-            response.sendRedirect("/login"); // No logged-in user found, so redirect to login page.
+        boolean isLogin = false;
+        User user = (User) session.getAttribute("user");
 
-        } else {
-            chain.doFilter(req, res); // Logged-in user found, so just continue request.
-        }
-        }catch (IOException e) {
-           throw new  ServletException(e);
+            if(user!=null)
+            {
+                isLogin=true;
+            }
+            else
+            {
+                String email = "";
+                String hash = "";
+                String ipAdress = request.getRemoteAddr();
+                Cookie cookies[] = request.getCookies();
+                if (cookies != null) {
+                    for (Cookie c : cookies) {
+                        if (c.getName().equals(LoginServlet.REMEMBER_COOKIE_USER)) {
+                            email = c.getValue();
+                        } else if (c.getName().equals(LoginServlet.REMEMBER_COOKIE_HASH)) {
+                            hash = c.getValue();
+                        }
+                    }
+                    log.info("cookies check");
+                    if ((!email.equals("")) && (!hash.equals(""))) {
+                        user = login.validateRememberCookies(email, hash, ipAdress);
+                        if (user != null) {
+                            session.setAttribute("user", user);
+                            isLogin = true;
+                        }
+                    }
+
+                }
+            }
+
+            if(isLogin)
+            {
+                chain.doFilter(req, res); // Logged-in user found, so just continue request.
+            }
+            else
+            {
+                response.sendRedirect("/login");
+            }
+         }
+        catch (IOException ex){
+            throw new ServletException(ex);
         }
     }
 
