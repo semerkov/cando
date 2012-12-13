@@ -7,16 +7,7 @@ import javax.servlet.http.*;
 import java.io.IOException;
 import java.util.logging.Logger;
 
-/**
- * Created with IntelliJ IDEA.
- * User: sergey
- * Date: 10.12.12
- * Time: 11:59
- * To change this template use File | Settings | File Templates.
- */
-
 public class LoginFilter  implements Filter {
-    private static LoginServlet login = new LoginServlet();
     private static final Logger log = Logger.getLogger(LoginFilter.class.getName());
 
     @Override
@@ -58,7 +49,7 @@ public class LoginFilter  implements Filter {
                     }
                     log.info("cookies check");
                     if ((!email.equals("")) && (!hash.equals(""))) {
-                        user = login.validateRememberCookies(email, hash, ipAdress);
+                        user = LoginServlet.validateRememberCookies(email, hash, ipAdress);
                         if (user != null) {
                             session.setAttribute("user", user);
                             isLogin = true;
