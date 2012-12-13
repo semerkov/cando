@@ -29,7 +29,7 @@ public class LoginFilter  implements Filter {
     public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws ServletException {
         HttpServletRequest request = (HttpServletRequest) req;
         HttpServletResponse response = (HttpServletResponse) res;
-        HttpSession session = request.getSession(true);
+        HttpSession session = request.getSession();
         try {
             if(request.getServletPath().contains("/login")){  // this is login page, so just continue request
               chain.doFilter(req, res);
