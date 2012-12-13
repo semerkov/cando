@@ -15,7 +15,7 @@ import java.util.logging.Logger;
  * To change this template use File | Settings | File Templates.
  */
 
-public class LoginFilter extends HttpServlet implements Filter {
+public class LoginFilter  implements Filter {
     private static LoginServlet login = new LoginServlet();
     private static final Logger log = Logger.getLogger(LoginFilter.class.getName());
 
