@@ -54,7 +54,7 @@
 				<div id="image_container">
 					Picture
 					<div id="image" class="ui-corner-all">
-                        <img src="/image?action=showAvatar" />
+                        <img src="/image?action=showAvatar" width="300" height="300"/>
 					</div>
                     <form id="imageUploadForm" method="post" enctype="multipart/form-data" action="profile">
                         <input type="file" name="picture" id="picture"

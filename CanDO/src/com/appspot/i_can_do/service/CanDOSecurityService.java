@@ -17,6 +17,7 @@ import com.appspot.i_can_do.service.exceptions.LoginNameExistException;
 import com.appspot.i_can_do.service.exceptions.LoginNameNotFoundException;
 import com.appspot.i_can_do.service.utils.Crypto;
 import com.google.appengine.api.datastore.Key;
+import com.google.appengine.api.datastore.KeyFactory;
 
 public class CanDOSecurityService implements ICanDOSecurityService {
 	private static final EntityManager em = EMF.get().createEntityManager();
@@ -71,7 +72,12 @@ public class CanDOSecurityService implements ICanDOSecurityService {
 		u = (User) query.getSingleResult();
 		} catch(NoResultException ex){}
 		return u;	
-	}	
+	}
+	
+	public User findUserBykey(String key){
+		Key k = KeyFactory.stringToKey(key);
+		return em.find(User.class, k);
+	}
 
 	@SuppressWarnings("unchecked")
 	@Override

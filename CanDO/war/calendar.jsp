@@ -60,7 +60,6 @@ User user = (User) request.getAttribute("user");
 					<nav>
 					
 						<button class="active">
-							<div id="calendarAdd" class="ui-icon ui-icon-triangle-1-ne"></div>
 							My calendars
 						</button>
 						<div class="myCalendar"></div>
