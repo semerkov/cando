@@ -158,21 +158,7 @@ User user = (User) request.getAttribute("user");
 	</div>
 
 	<div id="popupMask" class="popupMask" onclick="hidePopupDialog();"></div>
-
-	<!-- add new calendar -->
-	<div id="calendarAddForm" class="ui-dialog ui-widget ui-widget-content ui-corner-all ui-draggable ui-resizable">
-		<div class="ui-dialog-titlebar ui-widget-header ui-helper-clearfix ui-corner-all">
-			Add new calendar
-			<div class="form_title ui-dialog-titlebar-close">
-				<span class="ui-icon ui-icon-closethick ui-corner-all" onClick="hidePopupDialog();">close</span>
-			</div>
-		</div>
-		<div class="addForm">
-				<input type="text" name="calendarName" id="calendarName"
-					style="width: 98%;" placeholder="Calendar name" />
-				<button name="addCalendarButton" id="addCalendarSubmit">Create</button>
-		</div>
-	</div>
+	
 	<!-- calendar change pop-up-->
 	<div id="calendarEditForm" class="ui-corner-all">
 		<button onClick="showOnlyThisCalendar();">Show only this

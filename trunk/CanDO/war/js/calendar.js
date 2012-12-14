@@ -271,36 +271,7 @@ $(document).ready(
 			$("#todayButton").click(function(e) {
 				retrieveCalender("this");
 				e.stopPropagation();
-			});
-
-			$('#addCalendarSubmit').click(function(e) {
-				var name = $('#calendarName').val();
-				if (name == "") {
-					$('#calendarName').css('border-color', 'red');
-				} else {
-					$('#calendarName').css('border-color', 'green');
-
-					$.ajax({
-						url : 'calendar',
-						type : 'POST',
-						async : 'false',
-						data : {
-							'action' : 'addCalendar',
-							'calendarName' : name
-						},
-						success : function(data) {
-							retrieveEventCalendarMenu();
-							hidePopupDialog();
-
-						},
-						error : function(data) {
-							alert("Error addCalendar");
-						}
-					});
-				}
-				e.stopPropagation();
-			});	
-			
+			});			
 			
 			$('#editEvent').click(function(e) {
 				alert("edit event");
@@ -917,14 +888,15 @@ function calendarMenuClicks() {
 			calendar.css('width', '77%');
 		}
 	});
-
-	$('#calendarAdd').click(
-			function(e) {
-				var t = $(this);
-				showPopupDialog('calendarAddForm', t.offset().top + t.height(),
-						t.offset().left);
-				e.stopPropagation();
-			});
+	
+	$('#calendarName').blur(function(e){
+		addCalendar();
+		e.stopPropagation();
+	}).keypress(function(e){
+            if ( e.which == 13 ) {
+            addCalendar();
+            }
+            e.stopPropagation()});
 
 	
 	$('.calendarSidebar .item').mouseenter(function(){
@@ -941,6 +913,34 @@ function calendarMenuClicks() {
 						t.offset().top + t.height(), t.offset().left);
 				e.stopPropagation();
 			});
+}
+
+function addCalendar(){
+	var name = $('#calendarName').val();
+	if (name == "") {
+		$('#calendarName').css('border-color', 'red');
+	} else {
+		$('#calendarName').css('border-color', 'green');
+
+		$.ajax({
+			url : 'calendar',
+			type : 'POST',
+			async : 'false',
+			data : {
+				'action' : 'addCalendar',
+				'calendarName' : name
+			},
+			success : function(data) {
+				retrieveEventCalendarMenu();
+				hidePopupDialog();
+
+			},
+			error : function(data) {
+				alert("Error addCalendar");
+			}
+		});
+	}
+	e.stopPropagation();
 }
 
 function todoMenuClicks() {
