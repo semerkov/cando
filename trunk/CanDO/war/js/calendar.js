@@ -681,8 +681,8 @@ function viewDayCalendar(year, month,day, action) {
         success : function(data) {
             $('#calendarTableWrapper').html(data);
 
-            var calendarHeaderText =$('#currDay').text()+getMonthNameByNumber(parseInt($(
-                '#currMonth').text()))
+            var calendarHeaderText =$('#currDay').text()+","+getMonthNameByNumber(parseInt($(
+                '#currMonth').text())) + " "
                 + $('#currYear').text();
             $('#currentMonth').html(calendarHeaderText);
 			dayCalendarClicksInit();
@@ -759,7 +759,7 @@ function retrieveCalenderTable(year, month, monthAction) {
 					}
 					
 					var calendarHeaderText = getMonthNameByNumber(parseInt($(
-							'#currMonth').text()))
+							'#currMonth').text()))+ " "
 							+ $('#currYear').text();
 					$('#currentMonth').html(calendarHeaderText);
 					
@@ -940,7 +940,6 @@ function addCalendar(){
 			}
 		});
 	}
-	e.stopPropagation();
 }
 
 function todoMenuClicks() {

@@ -260,13 +260,14 @@ public class ProfileServlet extends HttpServlet{
                         ImagesService imagesService = ImagesServiceFactory.getImagesService();
 
                         Image oldImage = ImagesServiceFactory.makeImage(imageBytes);
-                        Transform resize = ImagesServiceFactory.makeResize(300, 300);
+                        Transform resize = ImagesServiceFactory.makeResize(400, 400);
                         Image newImage = imagesService.applyTransform(resize, oldImage);
 
                         user.getProfile().setMimeType(item.getContentType());
                         user.getProfile().setImageFile(new Blob(newImage.getImageData()));
 
-                        service.saveUser(user);
+                        user = service.saveUser(user);
+                        log.warning("Profile is: " + user.getProfile());
                         log.warning("User profile image saved");
 
                         request.setAttribute("user",user);
