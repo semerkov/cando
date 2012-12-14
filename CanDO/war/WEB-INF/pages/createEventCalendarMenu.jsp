@@ -30,3 +30,6 @@
 	<div class="calendar_id"></div>
 	<div class="calendar_name">Tasks</div>
 </div>
+
+<input type="text" name="calendarName" id="calendarName" class="ui-corner-all"
+					style="width: 98%;" placeholder="Calendar name" />
