@@ -11,9 +11,7 @@ var curSelectedDate = new Date();
 
 function removeUiSelected()
 {
-	$(".dayCalendarBody .ui-selected").each(function(index, element) {
-                    $(element).toggleClass('ui-selected',false);
-              });
+	$(".dayCalendarBody .ui-selected").toggleClass('ui-selected',false);
 }
 
 function dayCalendarClicksInit(){
@@ -24,10 +22,13 @@ function dayCalendarClicksInit(){
 				removeUiSelected();
 			},
             stop: function() {
-                var start_hours = $( ".ui-selected", this ).first().find('.start_hours').first().text();
-				var start_minutes = $( ".ui-selected", this ).first().find('.start_minutes').first().text();
-				var finish_hours = $( ".ui-selected", this ).last().find('.finish_hours').first().text();
-				var finish_minutes = $( ".ui-selected", this ).last().find('.finish_minutes').first().text();
+				var el = $( ".ui-selected", this );
+				var el_first = el.first();
+				var el_last = el.last();
+                var start_hours = el_first.find('.start_hours').first().text();
+				var start_minutes = el_first.find('.start_minutes').first().text();
+				var finish_hours = el_last.find('.finish_hours').first().text();
+				var finish_minutes = el_last.find('.finish_minutes').first().text();
 				//alert(start_hours+":"+start_minutes+"-"+finish_hours+":"+finish_minutes);
 
 		
@@ -49,6 +50,7 @@ function dayCalendarClicksInit(){
 			$('#selectEventsCalendar').html(options);
 			$('#eventAddName').css('border-color', 'white');
 			$('#eventAddDateStart').css('border-color', 'white');
+			$('#eventAddDateFinish').css('border-color', 'white');
 			$('#eventAddName').val("");
 			$('#eventAddDesc').val("");
 			var date = $('#currDay').text()+'.'+ $('#currMonth').text()+'.'+$('#currYear').text();
@@ -301,7 +303,7 @@ $(document).ready(
 			
 			$('#exit').click(function(e){
 				$.ajax({
-						url : '/',
+						url : '/login',
 						type : 'POST',
 						async : 'false',
 						data : {
