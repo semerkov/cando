@@ -150,6 +150,8 @@ $(document).ready(
 			$( "button" ).button();
 			$("input").addClass('ui-corner-all');
 			$( "#calendarSideBarDatepicker" ).datepicker({
+		        changeMonth: true,
+		        changeYear: true,
 				onSelect: function(dateText,inst){
 					setCalendarDayByClick(dateText,inst);
 				}
@@ -483,8 +485,13 @@ function initAddEventForm(){
 	var eventAddDateFinish = $('#eventAddDateFinish').datetimepicker({
 		dateFormat: 'dd.mm.yy',
 		minDate: new Date(),
-		stepMinute: 5
-		});
+		stepMinute: 5,
+		onClose:function(datetimeText, datepickerInstance){
+			if($(this).datetimepicker('getDate')<eventAddDateStart.datetimepicker('getDate')){
+			$('#eventAddDateStart').val(datetimeText);	
+			}
+		}
+	});
 };
 function initEditEventForm(){
 	var eventEditDateStart = $('#eventEditDateStart').datetimepicker({
@@ -500,7 +507,12 @@ function initEditEventForm(){
 	var eventEditDateFinish = $('#eventEditDateFinish').datetimepicker({
 		dateFormat: 'dd.mm.yy',
 		minDate: new Date(),
-		stepMinute: 5
+		stepMinute: 5,
+		onClose:function(datetimeText, datepickerInstance){
+			if($(this).datetimepicker('getDate')<eventEditDateStart.datetimepicker('getDate')){
+			$('#eventEditDateStart').val(datetimeText);	
+			}
+		}
 		});
 };
 function calendarTableClicks(){
