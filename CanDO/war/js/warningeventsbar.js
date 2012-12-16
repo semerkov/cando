@@ -1,8 +1,5 @@
 $(document).ready(function(e) {
 	loading();
-	$("#warning_events").everyTime(3000, function() {
-		loading();
-	}, 0);
 	$('#warning_events_header').click(function() {
 		$("#warning_events").toggle({
 			'effect' : 'blind',
@@ -10,6 +7,11 @@ $(document).ready(function(e) {
 		});
 	});
 });
+var timer = setTimeout(function run() {
+		loading();
+	    timer = setTimeout(run, 2000);
+		},
+		2000);
 
 function loading() {
 	$.ajax({
