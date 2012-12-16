@@ -470,29 +470,45 @@ function getCurrentCalendarName()
 };
 
 function initAddEventForm(){
-	<!--не доконца работает-->
-	var dateS = new Date();
-	var dateF = new Date();
-	$('#eventAddDateStart').datetimepicker({
+	var eventAddDateStart = $('#eventAddDateStart').datetimepicker({
 		dateFormat: 'dd.mm.yy',
-		minDateTime: dateS,
+		minDate: new Date(),
+		stepHours: 1, 
+		stepMinute: 5,
 		onClose: function(datetimeText, datepickerInstance){
-				var d = $.datepicker.parseDate("dd.mm.yy",datetimeText);
-				//alert(datetimeText);
-                $('#eventAddDateFinish').datetimepicker("option","minDateTime", d);			
+                eventAddDateFinish.datetimepicker('option','minDate', $(this).datetimepicker('getDate'));
+				$('#eventAddDateFinish').val(datetimeText);			
 		}
 	});
-	$('#eventAddDateFinish').datetimepicker({
+	var eventAddDateFinish = $('#eventAddDateFinish').datetimepicker({
 		dateFormat: 'dd.mm.yy',
-		minDateTime: dateS
+		minDate: new Date(),
+		stepMinute: 5
 		});
 };
-
+function initEditEventForm(){
+	var eventEditDateStart = $('#eventEditDateStart').datetimepicker({
+		dateFormat: 'dd.mm.yy',
+		minDate: new Date(),
+		stepHours: 1, 
+		stepMinute: 5,
+		onClose: function(datetimeText, datepickerInstance){
+                eventEditDateFinish.datetimepicker('option','minDate', $(this).datetimepicker('getDate'));
+				$('#eventEditDateFinish').val(datetimeText);			
+		}
+		});
+	var eventEditDateFinish = $('#eventEditDateFinish').datetimepicker({
+		dateFormat: 'dd.mm.yy',
+		minDate: new Date(),
+		stepMinute: 5
+		});
+};
 function calendarTableClicks(){
 	// add new event
 	$('.day.active').click(function(e) {
 		
 		initAddEventForm();
+		
 		
 		$(this).addClass('ui-state-active');
 		//set position
@@ -518,20 +534,10 @@ function calendarTableClicks(){
 		showPopupDialog('addEventsForm', top, left);
 		e.stopPropagation();
 	});
-	
-	<!--не доконца работает-->
-	var dateS = new Date();
-	var dateF = new Date();
-	
-	$('#eventEditDateStart').datetimepicker({
-		dateFormat: 'dd.mm.yy',
-		minDateTime: dateS
-		});
-	$('#eventEditDateFinish').datetimepicker({
-		dateFormat: 'dd.mm.yy',
-		minDateTime: dateS
-		});
-	$('#calendarTableWrapper li').click(function(e){	
+		
+	$('#calendarTableWrapper li').click(function(e){
+		initEditEventForm();
+			
 		var eventKey = $(this).children('div.event_id').text();
 		$.ajax({
 			url : 'calendar',
