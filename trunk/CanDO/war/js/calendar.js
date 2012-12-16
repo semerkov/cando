@@ -55,8 +55,6 @@ function dayCalendarClicksInit(){
 			$('#eventAddDateStart').val(date+' '+start_hours+':'+start_minutes);
 			$('#eventAddDateFinish').val(date+' '+finish_hours+':'+finish_minutes);
 			showPopupDialog('addEventsForm', top, left);
-			e.stopPropagation();
-	
 			}
         });
  
@@ -101,12 +99,29 @@ function weekCalendarClicksInit(){
 			$('#eventAddDateStart').val(date+' '+start_hours+':'+start_minutes);
 			$('#eventAddDateFinish').val(date+' '+finish_hours+':'+finish_minutes);
 			showPopupDialog('addEventsForm', top, left);
-			e.stopPropagation();
             }
         });
 
 }
-
+function fillHeader(type){
+	if(type=="month"||type=="day"){
+		$('#daysNameTable').css('width','93%');
+		$('#daysNameTable').css('margin-left','3%');
+	}else if(type=="week"){
+		$('#daysNameTable').css('width','93%');
+		$('#daysNameTable').css('margin-left','3%');
+	}
+	
+	if(type=="month"){
+		$('#daysNameTable th').css('display','table-cell');
+	}else if(type=="week"){
+		$('#daysNameTable th').css('display','table-cell');
+	}else if(type=="day"){
+		weekDay = curSelectedDate.getDay();
+		$('#daysNameTable th').css('display','none');
+		$('#daysNameTable th:eq('+weekDay+')').css('display','block');
+	}
+}
 $(document).ready(
 		function() {
 			retrieveEventCalendarMenu();
@@ -118,10 +133,13 @@ $(document).ready(
                 var str = $(this).find("label[aria-pressed='true']").attr('for');
                 if(str=='radio1'){
                     retrieveCalenderTable($('#currYear').text(), $('#currMonth').text(),"this");
+                    fillHeader('month');
                 }else if(str=='radio2'){
 					viewCalenderWeek($('#currYear').text(), $('#currMonth').text(),$('#currDay').text(),"this");
+					fillHeader('week');
                 }else if(str=='radio3'){
                     viewDayCalendar($('#currYear').text(), $('#currMonth').text(),$('#currDay').text(),"this");
+                    fillHeader('day');
                 }
                 e.stopPropagation();
             });

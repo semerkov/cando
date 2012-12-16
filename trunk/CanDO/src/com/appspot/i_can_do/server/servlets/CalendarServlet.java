@@ -308,8 +308,7 @@ public class CalendarServlet extends HttpServlet {
                 .getParameter("warningTimeHours"));
         int warningTimeMinutes = Integer.valueOf(request
                 .getParameter("warningTimeMinutes"));
-        if (!("".equals(calendarKey) || "".equals(eventName) || ""
-                .equals(eventFinishDay))) {
+        if (calendarKey != null  && eventName != null  && eventFinishDay != null) {
             EventCalendar calendar = canDOService.getCalendarByKey(calendarKey);
             Event event = new Event();
             event.setName(eventName);
@@ -359,8 +358,7 @@ public class CalendarServlet extends HttpServlet {
                 .getParameter("warningTimeHours"));
         int warningTimeMinutes = Integer.valueOf(request
                 .getParameter("warningTimeMinutes"));
-        if (!("".equals(eventKey) || "".equals(eventName) || ""
-                .equals(eventFinishDay))) {
+        if (eventKey != null  && eventName != null  && eventFinishDay != null) {
             Event event = canDOService.getEventByKey(eventKey);
             event.setName(eventName);
             if (eventDesc != null) {
@@ -409,7 +407,7 @@ public class CalendarServlet extends HttpServlet {
     private void viewEvent(HttpServletRequest request,
                            HttpServletResponse response) throws ServletException, IOException {
         String eventKey = request.getParameter("eventKey");
-        if (!"".equals(eventKey)) {
+        if (eventKey!=null) {
             Event event = canDOService.getEventByKey(eventKey);
             EventCalendar calendar = canDOService.getCalendar(eventKey,
                     user.getKey());
