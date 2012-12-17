@@ -15,7 +15,7 @@
 html {
 	height: 100%;
 	width: 100%;
-	min-width: 1280px;
+	min-width: 1200px;
 }
 
 body {
@@ -178,7 +178,6 @@ a:hover,a:active,a:focus {
 	height: 100%;
 	width: 100%;
 	table-layout: fixed;
-	border:0px;
 }
 
 .calendar #calendarTableWrapper table tr {

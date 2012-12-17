@@ -124,7 +124,7 @@ User user = (User) request.getAttribute("user");
 						<th>Sat</th>
 					</tr>
 				</table>
-				<div id="calendarTableWrapper" class="ui-widget-content ui-corner-all"></div>
+				<div id="calendarTableWrapper"></div>
 			</div>
 
 			<div class="todoWrapper">

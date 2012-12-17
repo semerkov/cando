@@ -164,15 +164,12 @@ $(document).ready(
                 if(str=='radio1'){
                     retrieveCalenderTable($('#currYear').text(), $('#currMonth').text(),"this");
                     calendarType="month";
-                    fillHeader('month');
                 }else if(str=='radio2'){
 					viewCalenderWeek($('#currYear').text(), $('#currMonth').text(),$('#currDay').text(),"this");
 					calendarType="week";
-					fillHeader('week');
                 }else if(str=='radio3'){
                     viewDayCalendar($('#currYear').text(), $('#currMonth').text(),$('#currDay').text(),"this");
                     calendarType="day";
-                    fillHeader('day');
                 }
                 e.stopPropagation();
             });
@@ -314,10 +311,12 @@ $(document).ready(
 			});
 
 			$("#nextMonth").click(function(e) {
+				curSelectedDate = getTomorrow(curSelectedDate);
 				retrieve("next");
 				e.stopPropagation();
 			});
 			$("#prevMonth").click(function(e) {
+				curSelectedDate = getTomorrow(curSelectedDate, -1);
 				retrieve("previous");
 				e.stopPropagation();
 			});
@@ -767,6 +766,7 @@ function viewDayCalendar(year, month,day, action) {
             var calendarHeaderText =$('#currDay').text()+', '+getMonthNameByNumber(parseInt($('#currMonth').text())) +' '+ $('#currYear').text();
             $('#currentMonth').html(calendarHeaderText);
 			
+            fillHeader('day');
             dayCalendarClicksInit();
 			/*calendarTableClicks();*/
         },
@@ -799,6 +799,7 @@ function viewCalenderWeek(year, month,day, action) {
             var calendarHeaderText = getMonthNameByNumber(parseInt($('#currMonth').text()))+ ' '+ $('#currYear').text();
             $('#currentMonth').html(calendarHeaderText);
             
+            fillHeader('week');
 			weekCalendarClicksInit();
 			calendarTableClicks();
         },
@@ -843,6 +844,7 @@ function retrieveCalenderTable(year, month, monthAction) {
 					var calendarHeaderText = getMonthNameByNumber(parseInt($('#currMonth').text()))+' '+ $('#currYear').text();
 					$('#currentMonth').html(calendarHeaderText);
 					
+					fillHeader('month');
 					calendarTableClicks();
 				},
 				error : function(data) {
@@ -1147,6 +1149,11 @@ function removeTaskConfirm(todo_id) {
 			}
 		}
 	});
+}
+
+function getTomorrow(d,offset) {
+    if (!offset) { offset = 1 }
+    return new Date(new Date().setDate(d.getDate() + offset));
 }
 
 function seeMyProfile(){
