@@ -146,9 +146,9 @@ public class CalendarServlet extends HttpServlet {
                 } else if (action.equals("previous")) {
                     offset=-7;
                 }
-            //validate
-                calendar.set(Calendar.DATE,day+offset-calendar.get(Calendar.DAY_OF_WEEK));
 
+            calendar.set(Calendar.DATE,day+offset-calendar.get(Calendar.DAY_OF_WEEK));
+            	
             request.setAttribute("calendar", calendar);
             request.setAttribute("calendars", calendars);
             request.getRequestDispatcher("/WEB-INF/pages/createWeek.jsp")
@@ -157,7 +157,7 @@ public class CalendarServlet extends HttpServlet {
 
     }
 
-    private void retrieveDayCalender(HttpServletRequest request,
+	private void retrieveDayCalender(HttpServletRequest request,
                                       HttpServletResponse response) throws IOException, ServletException {
         Integer month = Integer.parseInt(request.getParameter("currentMonth")
                 .trim());
@@ -177,23 +177,33 @@ public class CalendarServlet extends HttpServlet {
             }
         }
         //Ok
-        Calendar calendar = Calendar.getInstance();
-        calendar.setFirstDayOfWeek(0);
         if (SECURITY_MONTH_ACTIONS.contains(dayAction)
                 && SECURITY_MONTH.contains(month)) {
 
-            calendar.set(Calendar.YEAR, year);
             int offset = 0;
             if (dayAction.equals("next")) {
                 offset=1;
             } else if (dayAction.equals("previous")) {
                 offset=-1;
             }
-            calendar.set(Calendar.MONTH, month);
-            calendar.set(Calendar.DATE,day+offset);
+            Calendar d_start = Calendar.getInstance();
+            d_start.set(year,month,day+offset,0,0);
+            Calendar d_finish = Calendar.getInstance();
+            d_finish.set(year,month,day+offset+1,0,0);
+            log.warning(d_start.getTime().toLocaleString());
+            log.warning(d_finish.getTime().toLocaleString());
+            int dayOfMonth = d_start.get(Calendar.DAY_OF_MONTH);
+            /*SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");*/
+        	
+            ArrayList<Event> events = new ArrayList<Event>();
+            for (EventCalendar c : calendars) {
+                for (Event e : c.getEvents())
+                	if(e.getStart().after(d_start.getTime())&&e.getStart().before(d_finish.getTime()))
+                		events.add(e);
+            }
 
-            request.setAttribute("calendar", calendar);
-            request.setAttribute("calendars", calendars);
+            request.setAttribute("events", events);
+            request.setAttribute("calendar", d_start);
             request.getRequestDispatcher("/WEB-INF/pages/createDay.jsp")
                     .forward(request, response);
         }
