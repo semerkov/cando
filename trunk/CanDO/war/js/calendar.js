@@ -9,6 +9,8 @@ var curTodoName;
 
 var curSelectedDate = new Date();
 
+var calendarType="month";
+
 function removeUiSelected()
 {
 	$(".dayCalendarBody .ui-selected").toggleClass('ui-selected',false);
@@ -52,12 +54,39 @@ function dayCalendarClicksInit(){
 			$('#eventAddDateFinish').css('border-color', 'white');
 			$('#eventAddName').val("");
 			$('#eventAddDesc').val("");
-			var date = $('#currDay').text()+'.'+ $('#currMonth').text()+'.'+$('#currYear').text();
+			var m = 1 + parseInt($('#currMonth').text());
+			var date = $('#currDay').text()+'.'+ m +'.'+$('#currYear').text();
 			$('#eventAddDateStart').val(date+' '+start_hours+':'+start_minutes);
 			$('#eventAddDateFinish').val(date+' '+finish_hours+':'+finish_minutes);
 			showPopupDialog('addEventsForm', top, left);
 			}
         });
+		
+		$('.eventOfDay').click(function(e){
+			alert('eventOfDay');
+			initEditEventForm();
+			var eventKey = $(this).find('.event_id').first().text();
+			alert(eventKey);
+			$.ajax({
+				url : 'calendar',
+				type : 'POST',
+				data : {
+					'action' : 'viewEvent',
+					'eventKey' : eventKey
+				},
+				success : function(data) {
+					$('#viewEventContainer').html(data);
+					var H = $(window).height();
+					var W = $(window).width();
+					var t = $('#viewEventForm');
+					showPopupDialog('viewEventForm',(H - t.height())/2, (W - t.width())/2);
+				},
+				error : function(data) {
+					alert("Error updateCalendar")
+				}
+			});
+		e.stopPropagation();
+		});
  
 }
 
@@ -134,12 +163,15 @@ $(document).ready(
                 var str = $(this).find("label[aria-pressed='true']").attr('for');
                 if(str=='radio1'){
                     retrieveCalenderTable($('#currYear').text(), $('#currMonth').text(),"this");
+                    calendarType="month";
                     fillHeader('month');
                 }else if(str=='radio2'){
 					viewCalenderWeek($('#currYear').text(), $('#currMonth').text(),$('#currDay').text(),"this");
+					calendarType="week";
 					fillHeader('week');
                 }else if(str=='radio3'){
                     viewDayCalendar($('#currYear').text(), $('#currMonth').text(),$('#currDay').text(),"this");
+                    calendarType="day";
                     fillHeader('day');
                 }
                 e.stopPropagation();
@@ -282,15 +314,15 @@ $(document).ready(
 			});
 
 			$("#nextMonth").click(function(e) {
-				retrieveCalender("next");
+				retrieve("next");
 				e.stopPropagation();
 			});
 			$("#prevMonth").click(function(e) {
-				retrieveCalender("previous");
+				retrieve("previous");
 				e.stopPropagation();
 			});
 			$("#todayButton").click(function(e) {
-				retrieveCalender("this");
+				retrieve("this");
 				e.stopPropagation();
 			});			
 			
@@ -351,7 +383,7 @@ function addEvent(){
             'warningTimeMinutes' : $('#warningTimeMinutesAddForm').val()
         },
         success : function(data) {
-            retrieveCalender("this");
+            retrieve("this");
             hidePopupDialog();
 
         },
@@ -546,10 +578,11 @@ function calendarTableClicks(){
 		showPopupDialog('addEventsForm', top, left);
 		e.stopPropagation();
 	});
+	
+	
 		
 	$('#calendarTableWrapper li').click(function(e){
 		initEditEventForm();
-			
 		var eventKey = $(this).children('div.event_id').text();
 		$.ajax({
 			url : 'calendar',
@@ -664,7 +697,17 @@ function removeEventConfirm() {
 		}
 	});
 };
-
+function retrieve(monthAction) {
+		if(calendarType=="month"){
+			retrieveCalender(monthAction);
+		}
+		else if (calendarType=="week"){
+			retrieveCalenderWeek(monthAction);
+		}
+		else if(calendarType=="day"){
+			retrieveCalenderDay(monthAction);
+		}
+};
 function retrieveCalender(monthAction) {
 	if (monthAction == "this") {
 		retrieveCalenderTable((new Date()).getFullYear(), (new Date())
@@ -693,8 +736,10 @@ function retrieveCalenderWeek(action) {
 
 function retrieveCalenderDay(action) {
     if (action == "this") {
-        viewDayCalendar((new Date()).getFullYear(), (new Date())
-            .getMonth(),1, action);
+        /*viewDayCalendar((new Date()).getFullYear(), (new Date())
+            .getMonth(),1, action);*/
+    	viewDayCalendar($('#currYear').text(), $('#currMonth').text(),$('#currDay').text(),
+                action);
     } else if (action == "next") {
         viewDayCalendar($('#currYear').text(), $('#currMonth').text(),$('#currDay').text(),
             action);
@@ -720,6 +765,7 @@ function viewDayCalendar(year, month,day, action) {
             $('#calendarTableWrapper').html(data);
             fillCalendarHeaderText();
 			dayCalendarClicksInit();
+			/*calendarTableClicks();*/
         },
         error : function(data) {
             $('#calendarTableWrapper')
@@ -748,6 +794,7 @@ function viewCalenderWeek(year, month,day, action) {
             $('#calendarTableWrapper').html(data);
             fillCalendarHeaderText();
 			weekCalendarClicksInit();
+			calendarTableClicks();
         },
         error : function(data) {
             $('#calendarTableWrapper')
