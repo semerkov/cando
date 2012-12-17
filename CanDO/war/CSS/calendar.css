@@ -604,3 +604,6 @@ select{
 	background-color: white;
 }
 
+.eventOfDay{
+	cursor:pointer;
+}
