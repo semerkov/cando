@@ -763,8 +763,11 @@ function viewDayCalendar(year, month,day, action) {
         },
         success : function(data) {
             $('#calendarTableWrapper').html(data);
-            fillCalendarHeaderText();
-			dayCalendarClicksInit();
+           
+            var calendarHeaderText =$('#currDay').text()+', '+getMonthNameByNumber(parseInt($('#currMonth').text())) +' '+ $('#currYear').text();
+            $('#currentMonth').html(calendarHeaderText);
+			
+            dayCalendarClicksInit();
 			/*calendarTableClicks();*/
         },
         error : function(data) {
@@ -791,8 +794,11 @@ function viewCalenderWeek(year, month,day, action) {
             'selectedCalendars' : arr_active_calendar_id.join(',')
         },
         success : function(data) {
-            $('#calendarTableWrapper').html(data);
-            fillCalendarHeaderText();
+            $('#calendarTableWrapper').html(data)
+            ;
+            var calendarHeaderText = getMonthNameByNumber(parseInt($('#currMonth').text()))+ ' '+ $('#currYear').text();
+            $('#currentMonth').html(calendarHeaderText);
+            
 			weekCalendarClicksInit();
 			calendarTableClicks();
         },
@@ -833,7 +839,10 @@ function retrieveCalenderTable(year, month, monthAction) {
 						// 6 weeks
 						$('#calendarTableWrapper table tr').css('height','16.6%');
 					}
-					fillCalendarHeaderText();					
+					
+					var calendarHeaderText = getMonthNameByNumber(parseInt($('#currMonth').text()))+' '+ $('#currYear').text();
+					$('#currentMonth').html(calendarHeaderText);
+					
 					calendarTableClicks();
 				},
 				error : function(data) {
@@ -845,11 +854,7 @@ function retrieveCalenderTable(year, month, monthAction) {
 			});
 	$("body").css("cursor", "auto");	
 };
-function fillCalendarHeaderText(){
-	var calendarHeaderText = getMonthNameByNumber(parseInt($(
-	'#currMonth').text()))+ " "+ $('#currYear').text();
-	$('#currentMonth').html(calendarHeaderText);
-}
+
 var showPopupDialog = function(dialogId, topPosition, leftPosition) {
 	var maskHeight = $(document).height();
 	var maskWidth = $(window).width();
