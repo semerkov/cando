@@ -4,7 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <%@ page
-	import="java.text.SimpleDateFormat,java.util.Calendar,java.util.List,java.util.ArrayList, com.appspot.i_can_do.master.model.EventCalendar, com.appspot.i_can_do.master.model.Event, com.google.appengine.api.datastore.KeyFactory"%>
+	import="java.text.SimpleDateFormat,java.util.Calendar,java.util.Date,java.util.List,java.util.ArrayList, com.appspot.i_can_do.master.model.EventCalendar, com.appspot.i_can_do.master.model.Event, com.google.appengine.api.datastore.KeyFactory"%>
 <%
 	final Calendar calendar = (Calendar) request
 			.getAttribute("calendar");
@@ -52,7 +52,22 @@
 	
 
 %>
+<%!
+String getEventDate(Event e){
+	String res = "";
+	if(Math.abs(e.getStart().getTime() - e.getFinish().getTime()) < 24*3600*1000){
+		res =" "+getHours(e.getStart())+":"+getMinutes(e.getStart())+ "-" + getHours(e.getFinish())+":"+getMinutes(e.getFinish());
+	}
+	return res;
+}
 
+String getHours(Date d){
+	return d.getHours()!=0 ? String.valueOf(d.getHours()) : "00";
+}
+String getMinutes(Date d){
+	return d.getMinutes()!=0 ? String.valueOf(d.getMinutes()) : "00";
+}
+%>
 <table width="100%" border="1" cellspacing="" cellpadding="0"
 	rules="all">
 	<tr>
@@ -68,7 +83,7 @@
 				for(Event e : events){
 					if(formatter.format(e.getStart()).equals(formatter.format(calendar.getTime()))){
 						%>
-						<li><%=e.getName()%><div class="event_id"><%=KeyFactory.keyToString(e.getKey())%></div></li>
+						<li title="<%= e.getDescription() %>"><%=e.getName()%><span class="eventDate>"><%=getEventDate(e)%></span> <div class="event_id"><%=KeyFactory.keyToString(e.getKey())%></div></li>
 						<%
 					}
 				}
@@ -88,7 +103,7 @@
 				for(Event e : events){
 					if(formatter.format(e.getStart()).equals(formatter.format(calendar.getTime()))){
 						%>
-						<li><%=e.getName()%><div class="event_id"><%=KeyFactory.keyToString(e.getKey())%></div></li>
+						<li title="<%= e.getDescription() %>"><%=e.getName()%><span class="eventDate>"><%=getEventDate(e)%></span> <div class="event_id"><%=KeyFactory.keyToString(e.getKey())%></div></li>
 						<%
 					}
 				}
@@ -106,7 +121,7 @@
 				for(Event e : events){
 					if(formatter.format(e.getStart()).equals(formatter.format(calendar.getTime()))){
 						%>
-						<li><%=e.getName()%><div class="event_id"><%=KeyFactory.keyToString(e.getKey())%></div></li>
+						<li title="<%= e.getDescription() %>"><%=e.getName()%><span class="eventDate>"><%=getEventDate(e)%></span> <div class="event_id"><%=KeyFactory.keyToString(e.getKey())%></div></li>
 						<%
 					}
 				}
@@ -124,4 +139,4 @@
 </table>
 <div id="currMonth" style="display: none;"><%=calendar.get(Calendar.MONTH)%></div>
 <div id="currYear" style="display: none;"><%=calendar.get(Calendar.YEAR)%></div>
-<div id="currDay" style="display: none;">1</div>
+<div id="currDay" style="display: none;"><%=today %></div>

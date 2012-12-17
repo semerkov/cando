@@ -124,7 +124,7 @@ User user = (User) request.getAttribute("user");
 						<th>Sat</th>
 					</tr>
 				</table>
-				<div id="calendarTableWrapper"></div>
+				<div id="calendarTableWrapper" class="ui-widget-content ui-corner-all"></div>
 			</div>
 
 			<div class="todoWrapper">
@@ -156,7 +156,7 @@ User user = (User) request.getAttribute("user");
 		</div>
 	</div>
 
-	<div id="popupMask" class="popupMask" onclick="hidePopupDialog();"></div>
+	<div id="popupMask" class="popupMask ui-widget-overlay" onclick="hidePopupDialog();"></div>
 	
 	<!-- calendar change pop-up-->
 	<div id="calendarEditForm" class="ui-corner-all">
