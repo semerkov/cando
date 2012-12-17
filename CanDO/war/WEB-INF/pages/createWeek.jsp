@@ -9,15 +9,12 @@
 
 
 <%
-    final Calendar calendar = (Calendar) request.getAttribute("calendar");
-    final List<EventCalendar> calendars = (List<EventCalendar>) request.getAttribute("calendars");
-    final int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
-    
-    ArrayList<Event> events = new ArrayList<Event>();
-    for (EventCalendar c : calendars) {
-        for (Event e : c.getEvents())
-            events.add(e);
-    }
+final Calendar calendar = (Calendar) request.getAttribute("calendar");
+final List<Event> events = (List<Event>) request.getAttribute("events");
+final SimpleDateFormat formatter1 = new SimpleDateFormat("HH:mm");
+final SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy HH:mm");
+
+Date d_start = new Date (calendar.getTimeInMillis());
   %>
 
 
@@ -43,12 +40,32 @@
         for(int i = 0;i<24;i++){
     %>
     <div class="halfHour ui-widget-content">&nbsp;
+      <%
+    for(Event e : events){
+			if(e.getStart().getDate()==d_start.getDate() && e.getStart().getHours()==i&& e.getStart().getMinutes()>=0&& e.getStart().getMinutes()<30){
+				%>
+					<span class="eventOfDay"><%=e.getName()%> (<span class="eventTime"><%= formatter1.format(e.getStart()) %></span>); <span class="event_id">
+					<%=KeyFactory.keyToString(e.getKey())%></span></span>
+					<%
+					}
+				}
+				%>
     		<div class="start_hours" style="display:none;"><%=i%></div>
     		<div class="finish_hours" style="display:none;"><%=i%></div>
             <div class="start_minutes" style="display:none;">00</div>
             <div class="finish_minutes" style="display:none;">30</div>
     </div>
     <div class="halfHour ui-widget-content">&nbsp;
+    <%
+        for(Event e : events){
+			if(e.getStart().getDate()==d_start.getDate() && e.getStart().getHours()==i&& e.getStart().getMinutes()>=30&& e.getStart().getMinutes()<60){
+				%>
+					<span class="eventOfDay"><%=e.getName()%> (<span class="eventTime"><%= formatter1.format(e.getStart()) %></span>); <span class="event_id">
+				<%=KeyFactory.keyToString(e.getKey())%></span></span>
+				<%
+			}
+		}
+		%>
     		<div class="start_hours" style="display:none;"><%=i%></div>
     		<div class="finish_hours" style="display:none;"><%=(i+1)%></div>
             <div class="start_minutes" style="display:none;">30</div>
@@ -57,14 +74,15 @@
     <%
         }
     %>
+   	<div class="dayOfWeek" style="display:none;">i</div>
 	</div>
 	<%
+	d_start.setDate(d_start.getDate()+1);
 	}
 	%>
 </div>
-</div>
 
-</div>
+
 
 
 <div id="currMonth" style="display: none;"><%=calendar.get(Calendar.MONTH)%></div>
