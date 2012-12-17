@@ -53,8 +53,8 @@
 
 %>
 
-<table width="100%" border="1" cellspacing="" cellpadding="0"
-	rules="all">
+<table width="100%" border="1" cellspacing="0" cellpadding="0"
+	class="ui-widget-content ui-corner-all">
 	<tr>
 		<c:forEach var="i" begin="1" end="<%=offset%>" step="1"
 			varStatus="status">
