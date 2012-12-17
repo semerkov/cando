@@ -13,7 +13,6 @@ function removeUiSelected()
 {
 	$(".dayCalendarBody .ui-selected").toggleClass('ui-selected',false);
 }
-
 function dayCalendarClicksInit(){
 		//$('#daysNameTable').css('display','none');
 		
@@ -516,6 +515,7 @@ function initEditEventForm(){
 		});
 };
 function calendarTableClicks(){
+	$( "#calendarTableWrapper li" ).tooltip();
 	// add new event
 	$('.day.active').click(function(e) {
 		
@@ -683,10 +683,10 @@ function retrieveCalenderWeek(action) {
         viewCalenderWeek((new Date()).getFullYear(), (new Date())
             .getMonth(),(new Date()).getDate(), action);
     } else if (action == "next") {
-        viewCalenderWeek($('#currYear').text(), $('#currMonth').text(),$('#currDay'),
+        viewCalenderWeek($('#currYear').text(), $('#currMonth').text(),$('#currDay').text(),
             action);
     } else if (action == "previous") {
-        viewCalenderWeek($('#currYear').text(), $('#currMonth').text(),$('#currDay'),
+        viewCalenderWeek($('#currYear').text(), $('#currMonth').text(),$('#currDay').text(),
             action);
     }
 }
@@ -718,11 +718,7 @@ function viewDayCalendar(year, month,day, action) {
         },
         success : function(data) {
             $('#calendarTableWrapper').html(data);
-
-            var calendarHeaderText =$('#currDay').text()+","+getMonthNameByNumber(parseInt($(
-                '#currMonth').text())) + " "
-                + $('#currYear').text();
-            $('#currentMonth').html(calendarHeaderText);
+            fillCalendarHeaderText();
 			dayCalendarClicksInit();
         },
         error : function(data) {
@@ -750,12 +746,7 @@ function viewCalenderWeek(year, month,day, action) {
         },
         success : function(data) {
             $('#calendarTableWrapper').html(data);
-
-            var calendarHeaderText = getMonthNameByNumber(parseInt($(
-                '#currMonth').text()))
-                + $('#currYear').text();
-            $('#currentMonth').html(calendarHeaderText);
-
+            fillCalendarHeaderText();
 			weekCalendarClicksInit();
         },
         error : function(data) {
@@ -795,12 +786,7 @@ function retrieveCalenderTable(year, month, monthAction) {
 						// 6 weeks
 						$('#calendarTableWrapper table tr').css('height','16.6%');
 					}
-					
-					var calendarHeaderText = getMonthNameByNumber(parseInt($(
-							'#currMonth').text()))+ " "
-							+ $('#currYear').text();
-					$('#currentMonth').html(calendarHeaderText);
-					
+					fillCalendarHeaderText();					
 					calendarTableClicks();
 				},
 				error : function(data) {
@@ -812,7 +798,11 @@ function retrieveCalenderTable(year, month, monthAction) {
 			});
 	$("body").css("cursor", "auto");	
 };
-
+function fillCalendarHeaderText(){
+	var calendarHeaderText = getMonthNameByNumber(parseInt($(
+	'#currMonth').text()))+ " "+ $('#currYear').text();
+	$('#currentMonth').html(calendarHeaderText);
+}
 var showPopupDialog = function(dialogId, topPosition, leftPosition) {
 	var maskHeight = $(document).height();
 	var maskWidth = $(window).width();

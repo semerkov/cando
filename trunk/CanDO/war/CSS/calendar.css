@@ -24,7 +24,7 @@ body {
 	width: 100%;
 	margin: 0px;
 	padding: 0px;
-	font: 100%/1.4 Arial;
+	font: 90%/1.4 Arial;
 	overflow:hidden;
 	background: url(images/ui-bg_diagonals-thick_90_eeeeee_40x40.png) repeat 0 center;
 }
@@ -452,8 +452,6 @@ ul.nav a:hover,ul.nav a:active,ul.nav a:focus {
 }
 
 .popupMask {
-	opacity: 0.5;
-	background-color: #EEEEEE;
 	display: none;
 	left: 0;
 	position: absolute;
