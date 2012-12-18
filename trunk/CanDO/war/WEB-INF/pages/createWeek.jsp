@@ -19,7 +19,7 @@ Date d_start = new Date (calendar.getTimeInMillis());
 
 
 <div style=" width:100%; height:90%; border:1px solid  #09C;border-spacing:0px; overflow:auto; border-spacing:0px;
- font-size:13px;">
+ font-size:11px;">
     <div class="dayCalendarHeader" style="float:left; width:6.5%; text-align:center;">
     <%
     for(int i = 0;i<24;i++){
