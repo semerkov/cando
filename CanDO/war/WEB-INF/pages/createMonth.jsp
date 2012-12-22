@@ -4,7 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <%@ page
-	import="java.text.SimpleDateFormat,java.util.Calendar,java.util.List,java.util.ArrayList, com.appspot.i_can_do.master.model.EventCalendar, com.appspot.i_can_do.master.model.Event, com.google.appengine.api.datastore.KeyFactory"%>
+	import="java.text.SimpleDateFormat,java.util.Calendar,java.util.Date,java.util.List,java.util.ArrayList, com.appspot.i_can_do.master.model.EventCalendar, com.appspot.i_can_do.master.model.Event, com.google.appengine.api.datastore.KeyFactory"%>
 <%
 	final Calendar calendar = (Calendar) request
 			.getAttribute("calendar");
@@ -53,6 +53,15 @@
 
 %>
 
+<%!
+boolean checkForSameDay(Event e){
+	return e.getFinish().getTime() - e.getStart().getTime() < 24*60*60*1000; // 1 day in milliseconds 
+}
+String checkSameDate(Event e){
+	return checkForSameDay(e)? " " + e.getStart().getHours() +"h" + "-" + e.getFinish().getHours() +"h": "";
+}
+%>
+
 <table width="100%" border="1" cellspacing="0" cellpadding="0"
 	class="ui-widget-content ui-corner-all">
 	<tr>
@@ -68,7 +77,7 @@
 				for(Event e : events){
 					if(formatter.format(e.getStart()).equals(formatter.format(calendar.getTime()))){
 						%>
-						<li><%=e.getName()%><div class="event_id"><%=KeyFactory.keyToString(e.getKey())%></div></li>
+						<li title="<%=e.getDescription()%>"><%=e.getName()%> <p class="timeRange"><%=checkSameDate(e)%></p><div class="event_id"><%=KeyFactory.keyToString(e.getKey())%></div></li>
 						<%
 					}
 				}
@@ -88,7 +97,7 @@
 				for(Event e : events){
 					if(formatter.format(e.getStart()).equals(formatter.format(calendar.getTime()))){
 						%>
-						<li><%=e.getName()%><div class="event_id"><%=KeyFactory.keyToString(e.getKey())%></div></li>
+						<li title="<%=e.getDescription()%>"><%=e.getName()%> <p class="timeRange"><%=checkSameDate(e)%></p><div class="event_id"><%=KeyFactory.keyToString(e.getKey())%></div></li>
 						<%
 					}
 				}
@@ -106,7 +115,7 @@
 				for(Event e : events){
 					if(formatter.format(e.getStart()).equals(formatter.format(calendar.getTime()))){
 						%>
-						<li><%=e.getName()%><div class="event_id"><%=KeyFactory.keyToString(e.getKey())%></div></li>
+						<li title="<%=e.getDescription()%>"><%=e.getName()%> <p class="timeRange"><%=checkSameDate(e)%></p><div class="event_id"><%=KeyFactory.keyToString(e.getKey())%></div></li>
 						<%
 					}
 				}

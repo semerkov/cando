@@ -197,6 +197,10 @@ a:hover,a:active,a:focus {
 	font: 12px/1.2 Arial;
 	text-align: left;
 }
+.calendar li .timeRange{
+	-webkit-margin-before: 0;
+	-webkit-margin-after: 0;	
+}
 
 .calendar .day.active {
 }
