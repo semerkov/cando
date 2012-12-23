@@ -2,6 +2,7 @@ package com.appspot.i_can_do.server.servlets;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -48,6 +49,7 @@ public class WarningEventsServlet extends HttpServlet {
 				if (tempDate.before(date) && event.getFinish().after(date)) {
 					events.add(event);
 				}
+				Collections.sort(events, new Event());
 			}
 		}
 		try {
