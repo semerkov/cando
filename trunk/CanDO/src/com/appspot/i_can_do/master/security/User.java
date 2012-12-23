@@ -36,7 +36,15 @@ public class User implements Serializable{
 	private boolean disabled;
 	@Column(nullable = false)
 	private byte[] passwordHash;
+	private byte[] confirmHash;
 
+	public byte[] getConfirmHash() {
+		return confirmHash;
+	}
+	public void setConfirmHash(byte[] confirmHash) {
+		this.confirmHash = confirmHash;
+	}
+	
 	public User(){
 		profile = new Profile();
 	}
