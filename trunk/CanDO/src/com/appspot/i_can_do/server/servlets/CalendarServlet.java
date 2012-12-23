@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
@@ -162,7 +163,7 @@ public class CalendarServlet extends HttpServlet {
                 	if(e.getStart().after(d_start.getTime())&&e.getStart().before(d_finish.getTime()))
                 		events.add(e);
             }
-
+            Collections.sort(events, new Event());
             request.setAttribute("events", events);
             request.setAttribute("calendar", d_start);
             request.getRequestDispatcher("/WEB-INF/pages/createWeek.jsp")
@@ -213,7 +214,7 @@ public class CalendarServlet extends HttpServlet {
                 	if(e.getStart().after(d_start.getTime())&&e.getStart().before(d_finish.getTime()))
                 		events.add(e);
             }
-
+            Collections.sort(events, new Event());
             request.setAttribute("events", events);
             request.setAttribute("calendar", d_start);
             request.getRequestDispatcher("/WEB-INF/pages/createDay.jsp")
