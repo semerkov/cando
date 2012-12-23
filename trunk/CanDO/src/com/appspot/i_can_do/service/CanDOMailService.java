@@ -16,7 +16,7 @@ public class CanDOMailService {
 	private static final Logger log = Logger.getLogger(CanDOSecurityService.class.getName());
 	private static CanDOMailService mailService;
 	
-	private static String adminEmail = "paschenko1992@gmail.com";
+	private static String adminEmail = "i-can-do@appspot.gserviceaccount.com";
 		
 	public static CanDOMailService instance() {
 		if(mailService==null) mailService = new CanDOMailService();

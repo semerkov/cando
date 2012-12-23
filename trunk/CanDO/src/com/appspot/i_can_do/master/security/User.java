@@ -27,7 +27,7 @@ public class User implements Serializable{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Key key;
 	private String email;
-	@OneToOne(cascade=CascadeType.PERSIST)
+	@OneToOne(cascade=CascadeType.ALL)
 	private Profile profile;
 	private Date lastEntryDate;
 	private byte[] rememberCookiesHash;

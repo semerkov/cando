@@ -126,7 +126,6 @@ function tryRegister() {
 		
 		var tEmail = $('#email').val();
 		var tPassword = $('#password').val();
-		alert('Check confirm');
 		$.ajax({
 			url : 'register',
 			type : 'POST',
@@ -142,14 +141,11 @@ function tryRegister() {
 				if (data == "ready") {
 					document.location.href = context;
 				} else {
-					$('#email').val("");
-					$('#password').val("");
-					testEmail();
-					testPassword();
+					alert('Register error');
 				}
 			},
 			error : function(data) {
-				alert('Register error');
+				alert('connection error');
 			}
 		});
 	}

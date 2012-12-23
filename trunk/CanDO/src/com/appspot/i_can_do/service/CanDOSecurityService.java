@@ -101,6 +101,21 @@ public class CanDOSecurityService implements ICanDOSecurityService {
         }
 		return user;
 	}
+	
+	@Override
+	public void removeUser(User user) {
+        EntityTransaction txn = em.getTransaction();
+        txn.begin();
+        try {
+            em.remove(user);
+            txn.commit();
+            }
+        finally {
+            if (txn.isActive()) {
+                txn.rollback();
+            }
+        }
+	}
 
 	@Override
 	public User login(String username, String password)

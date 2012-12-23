@@ -25,7 +25,7 @@ public class RegisterServlet extends HttpServlet {
 	private CanDOSecurityService security;
 	private CanDOMailService mailService;
 	private static final List<String> SECURITY_ACTIONS = Arrays
-			.asList(new String[] { "testEmail", "register", "confirRegister" });
+			.asList(new String[] { "testEmail", "register", "confirm" });
 
 	@Override
 	public void init(ServletConfig config) {
@@ -68,7 +68,25 @@ public class RegisterServlet extends HttpServlet {
 		}
 	}
 	private void confirRegister(HttpServletRequest request,
-			HttpServletResponse response){
+			HttpServletResponse response) throws IOException{
+		String email = request.getParameter("user");
+		String hash = request.getParameter("confirmHash");
+		User user = security.findUser(email);
+		if(user!=null){
+			StringBuilder h = new StringBuilder();
+		    for (byte b : user.getConfirmHash()) {
+		    	h.append(String.format("%02X", b));
+		    }
+		    if(hash.equals(h.toString())){
+		    	user.setDisabled(false);
+		    	user.setConfirmHash(null);
+		    	security.saveUser(user);
+		    	response.sendRedirect("/login");
+		    	return;
+		    }
+		}
+		response.sendError(HttpServletResponse.SC_NOT_ACCEPTABLE,
+				"Not found a confirm key or user");
 		
 	}
 	
@@ -78,17 +96,22 @@ public class RegisterServlet extends HttpServlet {
 		String password = request.getParameter("password");
 		String name = request.getParameter("name");
 		String surname = request.getParameter("surname");
-		
-		if (security.findUser(email) != null) {
-			log.warning("User is exist!");
-			return;
-		}
+		User user = security.findUser(email);
+		if (user!= null){
+			if(user.isDisabled()) 
+				security.removeUser(user);
+			else{
+				ServletUtils.writeJson(response, "error");
+				return;
+				}
+		}		
 		if (password.equals("")||name.equals("")||surname.equals("")){
 			log.warning("Password or name or surname is empty");
+			ServletUtils.writeJson(response, "error");
 			return;
 		}
 		
-		User user = new User();
+		user = new User();
 		user.setEmail(email);
 		user.setName(name);
 	
@@ -99,28 +122,39 @@ public class RegisterServlet extends HttpServlet {
 		user.setDisabled(true);
 		try {
 			security.addNewUser(user, password);
-			String s = "Hello,"+name+
-					"/n/r You are succesfull registred in project CanDO./n/rPlease confirm:/n/r"+
-					"http://localhost:8888/register?action=confirm&user="+email+"&confirmHash="+Arrays.toString(confirmHash);
-			mailService.SendEmailFromAdmin(email, "Confirm registration to CanDO", s);
-			
 		} catch (LoginNameExistException e) {
-			log.warning("Test user exist");
+			log.warning("Add user warning");
+			ServletUtils.writeJson(response, "error");
+			return;
 		}
+		StringBuilder message = new StringBuilder();
+		message.append("Hello,");
+		message.append(name);
+		message.append("! \n\n");
+		message.append("You are successfull registered in project CanDO. \n\n");
+		message.append("Please confirm yours account: \n\n");
+		message.append("http://i-can-do.appspot.com/register?action=confirm&user=");
+		message.append(email);
+		message.append("&confirmHash=");
+	    for (byte b : confirmHash) {
+	    	message.append(String.format("%02X", b));
+	    }
+		boolean b  = mailService.SendEmailFromAdmin(email, "Confirm registration to CanDO", message.toString());
+		ServletUtils.writeJson(response, "ready");
 	}
 
 	private void testEmail(HttpServletRequest request,
 			HttpServletResponse response) throws IOException {
 		String email = request.getParameter("email");
 		if (email != null) {
-			if (security.findUser(email) == null) {
+			User user = security.findUser(email);
+			if (user == null||user.isDisabled()) {
 				ServletUtils.writeJson(response, "free");
-
 			} else {
 				ServletUtils.writeJson(response, "occuped");
 			}
 		}
-
 	}
+	
 
 }

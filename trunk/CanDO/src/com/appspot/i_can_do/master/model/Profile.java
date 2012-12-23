@@ -23,7 +23,7 @@ public class Profile implements Serializable {
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Key key;
-	private String MimeType;  // Useful to store the mime type in case you want to send it back via a servlet.
+	private String MimeType; // Useful to store the mime type in case you want to send it back via a servlet.
 	@Basic(fetch=FetchType.LAZY) // this gets ignored anyway, but it is recommended for blobs
 	private Blob imageFile;
 	private String about;
