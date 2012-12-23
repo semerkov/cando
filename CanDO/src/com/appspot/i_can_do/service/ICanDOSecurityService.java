@@ -13,4 +13,5 @@ public interface ICanDOSecurityService {
 	User saveUser(User user);
 	List<User> getUsers();
 	User login(String username, String password) throws LoginNameNotFoundException, LoginFailedException;
+	void removeUser(User user);
 }

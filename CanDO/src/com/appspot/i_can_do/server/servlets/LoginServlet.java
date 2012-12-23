@@ -19,6 +19,7 @@ import com.appspot.i_can_do.master.security.User;
 import com.appspot.i_can_do.service.CanDOSecurityService;
 import com.appspot.i_can_do.service.exceptions.LoginFailedException;
 import com.appspot.i_can_do.service.exceptions.LoginNameNotFoundException;
+import com.appspot.i_can_do.service.exceptions.LoginUserIsDisabled;
 import com.appspot.i_can_do.service.utils.Crypto;
 import com.appspot.i_can_do.service.utils.ServletUtils;
 
@@ -86,7 +87,9 @@ public class LoginServlet extends HttpServlet {
         if (email != null && password != null) {
             try {
                 User user = security.login(email, password);
-
+                
+                if(user.isDisabled()) throw new LoginUserIsDisabled();
+                
                 Date curDate = new Date();
                 byte[] rememberCookiesHash = null;
 
@@ -117,6 +120,9 @@ public class LoginServlet extends HttpServlet {
                 ServletUtils.writeJson(response, "LoginNameNotFound");
             } catch (LoginFailedException ex) {
                 ServletUtils.writeJson(response, "LoginFailed");
+            } catch (LoginUserIsDisabled ex){
+            	ServletUtils.writeJson(response, "LoginNameNotFound");
+            	//ServletUtils.writeJson(response, "UserIsDisabled");
             }
         } else {
             response.sendError(HttpServletResponse.SC_METHOD_NOT_ALLOWED,

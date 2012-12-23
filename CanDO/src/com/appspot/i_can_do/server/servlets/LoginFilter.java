@@ -24,10 +24,14 @@ public class LoginFilter  implements Filter {
         try {
             if(request.getServletPath().contains("/login")){  // this is login page, so just continue request
               chain.doFilter(req, res);
-        }
+            }
+            if(request.getServletPath().contains("/register")){  // this is register page, so just continue request
+                  chain.doFilter(req, res);
+            }
+        
 
-        boolean isLogin = false;
-        User user = (User) session.getAttribute("user");
+            boolean isLogin = false;
+            User user = (User) session.getAttribute("user");
 
             if(user!=null)
             {
@@ -67,7 +71,7 @@ public class LoginFilter  implements Filter {
             {
                 response.sendRedirect("/login");
             }
-         }
+        }
         catch (IOException ex){
             throw new ServletException(ex);
         }
