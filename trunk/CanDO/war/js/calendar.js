@@ -23,9 +23,8 @@ function dayCalendarClicksInit(){
 				removeUiSelected();
 			},
             stop: function() {
-				var el = $( ".ui-selected", this );
-				var el_first = el.first();
-				var el_last = el.last();
+				var el_first = $( ".ui-selected:first", this );
+				var el_last = $( ".ui-selected:last", this );
                 var start_hours = el_first.find('.start_hours').first().text();
 				var start_minutes = el_first.find('.start_minutes').first().text();
 				var finish_hours = el_last.find('.finish_hours').first().text();
@@ -97,10 +96,12 @@ function weekCalendarClicksInit(){
 				removeUiSelected();
 			},
             stop: function() {
-                var start_hours = $( ".ui-selected", this ).first().find('.start_hours').first().text();
-				var start_minutes = $( ".ui-selected", this ).first().find('.start_minutes').first().text();
-				var finish_hours = $( ".ui-selected", this ).last().find('.finish_hours').first().text();
-				var finish_minutes = $( ".ui-selected", this ).last().find('.finish_minutes').first().text();
+            	var el_first = $( ".ui-selected:first", this );
+				var el_last = $( ".ui-selected:last", this );
+                var start_hours = el_first.find('.start_hours').first().text();
+				var start_minutes = el_first.find('.start_minutes').first().text();
+				var finish_hours = el_last.find('.finish_hours').first().text();
+				var finish_minutes = el_last.find('.finish_minutes').first().text();
 				//alert(start_hours+":"+start_minutes+"-"+finish_hours+":"+finish_minutes);
 				
 				
@@ -125,7 +126,7 @@ function weekCalendarClicksInit(){
 			$('#eventAddDateStart').css('border-color', 'white');
 			$('#eventAddName').val("");
 			$('#eventAddDesc').val("");
-			var date = $('#currDay').text()+'.'+ $('#currMonth').text()+'.'+$('#currYear').text();
+			var date = $('.dayOfMonth',this).text()+'.'+ $('.Month',this).text()+'.'+$('#currYear').text();
 			$('#eventAddDateStart').val(date+' '+start_hours+':'+start_minutes);
 			$('#eventAddDateFinish').val(date+' '+finish_hours+':'+finish_minutes);
 			showPopupDialog('addEventsForm', top, left);
