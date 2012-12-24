@@ -36,15 +36,21 @@
 	</td>
 	<td class="dayCalendarBody" style="table-layout: fixed;">
     <%
+  	int height=100;
+    int half =0;
         for(int i = 0;i<24;i++){
     %>
     <div class="halfHour ui-widget-content">&nbsp;
     <%
     for(Event e : events){
 			if(e.getStart().getHours()==i&& e.getStart().getMinutes()>=0&& e.getStart().getMinutes()<30){
+				half = ((e.getStart().getMinutes()-e.getFinish().getMinutes())>=30)?1:0;
+				height = 100*((e.getStart().getHours()-e.getFinish().getHours())*2+half);
+				if(height<100)height=100;
 				%>
-					<span class="eventOfDay"><%=e.getName()%> <span class="eventTime">(<%= formatter1.format(e.getStart()) %>); </span><span class="event_id">
-					<%=KeyFactory.keyToString(e.getKey())%></span></span>
+					<div class="eventOfDay" style="height:<%=height%>%;"><%=e.getName()%> <span class="eventTime"><%= formatter1.format(e.getStart()) %>-<%= formatter1.format(e.getFinish())%></span>
+					<span class="event_id">
+					<%=KeyFactory.keyToString(e.getKey())%></span></div>
 					<%
 					}
 				}
@@ -58,9 +64,13 @@
         <%
         for(Event e : events){
 			if(e.getStart().getHours()==i&& e.getStart().getMinutes()>=30&& e.getStart().getMinutes()<60){
+				half = ((e.getFinish().getMinutes()-e.getStart().getMinutes())>=30)?1:0;
+				height = 100*((e.getFinish().getHours()-e.getStart().getHours())*2+half);
+				if(height<100)height=100;
 				%>
-				<div class="eventOfDay"><%=e.getName()%> <span class="eventTime">(<%= formatter1.format(e.getStart()) %>);</span> <span class="event_id">
-			<%=KeyFactory.keyToString(e.getKey())%></span></div>
+				<div class="eventOfDay" style="height:<%=height%>%;"><%=e.getName()%> <span class="eventTime"><%= formatter1.format(e.getStart()) %>-<%= formatter1.format(e.getFinish())%></span>
+				 <span class="event_id">
+				<%=KeyFactory.keyToString(e.getKey())%></span></div>
 			<%
 			}
 		}
