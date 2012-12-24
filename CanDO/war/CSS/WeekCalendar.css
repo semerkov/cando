@@ -2,18 +2,33 @@
 
 
 .dayCalendarHeader{
-	
+	width:45px; 
+	text-align:center;
 }
 .dayCalendarBody{
-	border:1px solid #09F;
+
 }
 .dayCalendarBody .ui-selecting { background: #E8F4FF; }
 .dayCalendarBody .ui-selected { background: #DFF3FF; }
 
 .hour_element{
-	border: 1px solid #069;
+
 }
 .hour_first_part_element{
-	border-bottom:1px dotted #0033CC;
+
 }
 
+.eventOfDay{
+	position:absolute;
+	right:15%;
+	top:1px;
+	background:#DFF3FF;
+	width:85%;
+	z-index:2;
+}
+.halfHour{
+	position:relative;
+}
+.eventTime{
+	 display:none;
+}

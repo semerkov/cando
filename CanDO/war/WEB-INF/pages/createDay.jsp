@@ -18,21 +18,23 @@
   %>
 
 
-<div style=" width:100%; height:90%; border:1px solid  #09C;border-spacing:0px; overflow:auto; border-spacing:0px;
- font-size:13px;">
-    <div class="dayCalendarHeader" style="float:left; width:7%; text-align:center; text-align:center;">
+<div style="overflow:auto; border-spacing:0px; width:100%; height:90%;">
+<table class="ui-widget-content ui-corner-all"  border="1" cellspacing="0" cellpadding="0" style="font-size:14px; table-layout: fixed;">
+
+ <tr>
+    <td class="dayCalendarHeader" style="table-layout: fixed;">
     <%
     for(int i = 0;i<24;i++){
     %>
     <div class="hour_element">
         <div class="hour_first_part_element ui-widget-content"><%=i%>:00</div>
-        <div><%=i%>:30</div> 
+        <div class="ui-widget-content"><%=i%>:30</div> 
     </div>
     <%
     }
     %>
-	</div>
-	<div class="dayCalendarBody" style="width:92%; float:left;">
+	</td>
+	<td class="dayCalendarBody" style="table-layout: fixed;">
     <%
         for(int i = 0;i<24;i++){
     %>
@@ -41,7 +43,7 @@
     for(Event e : events){
 			if(e.getStart().getHours()==i&& e.getStart().getMinutes()>=0&& e.getStart().getMinutes()<30){
 				%>
-					<span class="eventOfDay"><%=e.getName()%> (<span class="eventTime"><%= formatter1.format(e.getStart()) %></span>); <span class="event_id">
+					<span class="eventOfDay"><%=e.getName()%> <span class="eventTime">(<%= formatter1.format(e.getStart()) %>); </span><span class="event_id">
 					<%=KeyFactory.keyToString(e.getKey())%></span></span>
 					<%
 					}
@@ -57,9 +59,9 @@
         for(Event e : events){
 			if(e.getStart().getHours()==i&& e.getStart().getMinutes()>=30&& e.getStart().getMinutes()<60){
 				%>
-					<span class="eventOfDay"><%=e.getName()%> (<span class="eventTime"><%= formatter1.format(e.getStart()) %></span>); <span class="event_id">
-				<%=KeyFactory.keyToString(e.getKey())%></span></span>
-				<%
+				<div class="eventOfDay"><%=e.getName()%> <span class="eventTime">(<%= formatter1.format(e.getStart()) %>);</span> <span class="event_id">
+			<%=KeyFactory.keyToString(e.getKey())%></span></div>
+			<%
 			}
 		}
 		%>
@@ -71,10 +73,9 @@
     <%
         }
     %>
-</div>
-</div>
-</div>
-
+	</td>
+	</tr>
+</table>
 </div>
 
 
