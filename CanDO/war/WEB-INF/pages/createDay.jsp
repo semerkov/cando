@@ -44,8 +44,8 @@
     <%
     for(Event e : events){
 			if(e.getStart().getHours()==i&& e.getStart().getMinutes()>=0&& e.getStart().getMinutes()<30){
-				half = ((e.getStart().getMinutes()-e.getFinish().getMinutes())>=30)?1:0;
-				height = 100*((e.getStart().getHours()-e.getFinish().getHours())*2+half);
+				half = ((e.getFinish().getMinutes()-e.getStart().getMinutes())>=30)?1:0;
+				height = 100*((e.getFinish().getHours()-e.getStart().getHours())*2+half);
 				if(height<100)height=100;
 				%>
 					<div class="eventOfDay" style="height:<%=height%>%;"><%=e.getName()%> <span class="eventTime"><%= formatter1.format(e.getStart()) %>-<%= formatter1.format(e.getFinish())%></span>
