@@ -229,6 +229,9 @@ public class CalendarServlet extends HttpServlet {
                 .trim());
         Integer year = Integer.parseInt(request.getParameter("currentYear")
                 .trim());
+        Integer day = Integer.parseInt(request.getParameter("currentDay")
+                .trim());
+        
         String monthAction = request.getParameter("monthAction");
         String calendarKeys = request.getParameter("selectedCalendars");
         List<EventCalendar> calendars = new ArrayList<EventCalendar>();
@@ -266,6 +269,7 @@ public class CalendarServlet extends HttpServlet {
                 }
                 calendar.set(Calendar.MONTH, month + offset);
             }
+            calendar.set(Calendar.DATE, day);
             request.setAttribute("calendar", calendar);
             request.setAttribute("calendars", calendars);
             request.getRequestDispatcher("/WEB-INF/pages/createMonth.jsp")
