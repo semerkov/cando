@@ -1,9 +1,21 @@
 var context = "/";
 
 $(document).ready(function(e) {
-	//$('.accept').bind('change'
+	
+	
+	$('#accept').bind('change',function(e){
+		if($(this).prop("checked")){
+			$('#register_button').prop("disabled", false).css('cursor','pointer');
+		}else{
+			$('#register_button').prop("disabled", true).css('cursor','auto');
+		}
+		e.stopPropogation();
+	});
 	$( "button" ).button();
-	$( ".ui-draggable" ).draggable();
+	//$( ".ui-draggable" ).draggable();
+	
+	$('#register_button').prop("disabled", true).css('cursor','auto');
+	
 	$('#email').bind('focusout', function() {
 		testEmail();
 	});
