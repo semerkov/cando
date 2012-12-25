@@ -717,7 +717,7 @@ function removeEventConfirm() {
 						'eventKey' : $('#selectedViewEventKey').text()
 					},
 					success : function(data) {
-						retrieveCalender("current");
+						retrieve("current");
 						hidePopupDialog();
 
 					},
@@ -734,6 +734,7 @@ function removeEventConfirm() {
 		}
 	});
 };
+
 function retrieve(monthAction) {
 		if(calendarType=="month"){
 			retrieveCalender(monthAction);
