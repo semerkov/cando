@@ -164,6 +164,8 @@ public class CalendarServlet extends HttpServlet {
                 		events.add(e);
             }
             Collections.sort(events, new Event());
+ 
+            request.setAttribute("selectedDate", day);
             request.setAttribute("events", events);
             request.setAttribute("calendar", d_start);
             request.getRequestDispatcher("/WEB-INF/pages/createWeek.jsp")

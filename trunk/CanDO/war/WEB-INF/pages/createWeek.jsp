@@ -9,6 +9,7 @@
 
 
 <%
+final int selectedDate = (Integer) request.getAttribute("selectedDate");
 final Calendar calendar = (Calendar) request.getAttribute("calendar");
 final List<Event> events = (List<Event>) request.getAttribute("events");
 final SimpleDateFormat formatter1 = new SimpleDateFormat("HH:mm");
@@ -100,4 +101,4 @@ Date d_start = new Date (calendar.getTimeInMillis());
 
 <div id="currMonth" style="display: none;"><%=calendar.get(Calendar.MONTH)%></div>
 <div id="currYear" style="display: none;"><%=calendar.get(Calendar.YEAR)%></div>
-<div id="currDay" style="display: none;"><%=calendar.get(Calendar.DATE)%></div>
+<div id="currDay" style="display: none;"><%=selectedDate%></div>
