@@ -115,13 +115,13 @@ User user = (User) request.getAttribute("user");
 				<table id="daysNameTable" width="100%" border="0" cellspacing="0"
 					cellpadding="0">
 					<tr>
-						<th>Sun</th>
-						<th>Mon</th>
-						<th>Tue</th>
-						<th>Wed</th>
-						<th>Thu</th>
-						<th>Fri</th>
-						<th>Sat</th>
+						<th><span class="date"></span>Sun</th>
+						<th><span class="date"></span>Mon</th>
+						<th><span class="date"></span>Tue</th>
+						<th><span class="date"></span>Wed</th>
+						<th><span class="date"></span>Thu</th>
+						<th><span class="date"></span>Fri</th>
+						<th><span class="date"></span>Sat</th>
 					</tr>
 				</table>
 				<div id="calendarTableWrapper"></div>
