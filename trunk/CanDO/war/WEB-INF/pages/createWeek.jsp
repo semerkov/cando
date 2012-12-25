@@ -86,7 +86,7 @@ Date d_start = new Date (calendar.getTimeInMillis());
         }
     %>
    	<div class="dayOfMonth" style="display: none;"><%=d_start.getDate()%></div>
-   	<div class="Month" style="display: none;"><%=d_start.getMonth()+1%></div>
+   	<div class="Month" style="display: none;"><%=d_start.getMonth()%></div>
 	</td>
 	<%
 	d_start.setDate(d_start.getDate()+1);

@@ -126,7 +126,8 @@ function weekCalendarClicksInit(){
 			$('#eventAddDateStart').css('border-color', 'white');
 			$('#eventAddName').val("");
 			$('#eventAddDesc').val("");
-			var date = $('.dayOfMonth',this).text()+'.'+ $('.Month',this).text()+'.'+$('#currYear').text();
+			var m = 1 + parseInt($('#currMonth').text());
+			var date = $('#currDay').text()+'.'+ m +'.'+$('#currYear').text();
 			$('#eventAddDateStart').val(date+' '+start_hours+':'+start_minutes);
 			$('#eventAddDateFinish').val(date+' '+finish_hours+':'+finish_minutes);
 			showPopupDialog('addEventsForm', top, left);
@@ -163,7 +164,7 @@ $(document).ready(
             $('#radioCalendarView').change(function(e){
                 var str = $(this).find("label[aria-pressed='true']").attr('for');
                 if(str=='radio1'){
-                    retrieveCalenderTable($('#currYear').text(), $('#currMonth').text(),"this");
+                    retrieveCalenderTable($('#currYear').text(), $('#currMonth').text(),$('#currDay').text(),"this");
                     calendarType="month";
                 }else if(str=='radio2'){
 					viewCalenderWeek($('#currYear').text(), $('#currMonth').text(),$('#currDay').text(),"this");
@@ -613,19 +614,29 @@ function calendarTableClicks(){
 
 function setCalendarDayByClick(dateText,instance){
 	var selectedDate = new Date(dateText);
-	if($('#currYear').text()!=selectedDate.getFullYear()
-		||$('#currMonth').text()!=selectedDate.getMonth())
-		{
-			retrieveCalenderTable(selectedDate.getFullYear(), selectedDate.getMonth(),"this");
-		}
-	$(".day.active.ui-state-active").removeClass('ui-state-active');
-	$(".day.active").each(function(index, element) {
-        if($(element).text()==selectedDate.getDate()){
-			$(element).addClass('ui-state-active');
-			selectedDate.setDate($(element).text());
-		}
-    });
-		
+	var retrive = false;
+	if(calendarType=="month"){
+		if($('#currYear').text()!=selectedDate.getFullYear()||($('#currMonth').text()!=selectedDate.getMonth()))
+			retrive = true;
+	}else if(calendarType=="week"){
+		retrive = true;
+	}else if(calendarType=="day"){
+		retrive = true;
+	}			
+	$('#currYear').text(selectedDate.getFullYear());
+	$('#currMonth').text(selectedDate.getMonth());
+	$('#currDay').text(selectedDate.getDate());
+	if(retrive) retrieve("current");
+	
+	if(calendarType=="month"){
+		$(".day.active.ui-state-active").removeClass('ui-state-active');
+		$(".day.active").each(function(index, element) {
+			if($(element).text()==selectedDate.getDate()){
+				$(element).addClass('ui-state-active');
+				//selectedDate.setDate($(element).text());
+			}
+		});
+	}	
 	curSelectedDate = selectedDate;
 };
 
@@ -711,15 +722,15 @@ function retrieve(monthAction) {
 function retrieveCalender(monthAction) {
 	if (monthAction == "this") {
 		retrieveCalenderTable((new Date()).getFullYear(), (new Date())
-				.getMonth(), monthAction);
+				.getMonth(),(new Date()).getDate(), monthAction);
 	} else if (monthAction == "next") {
-		retrieveCalenderTable($('#currYear').text(), $('#currMonth').text(),
+		retrieveCalenderTable($('#currYear').text(), $('#currMonth').text(),1,
 				monthAction);
 	} else if (monthAction == "previous") {
-		retrieveCalenderTable($('#currYear').text(), $('#currMonth').text(),
+		retrieveCalenderTable($('#currYear').text(), $('#currMonth').text(),1,
 				monthAction);
 	}else if (monthAction == "current") {
-		retrieveCalenderTable($('#currYear').text(), $('#currMonth').text(),
+		retrieveCalenderTable($('#currYear').text(), $('#currMonth').text(),$('#currDay').text(),
 				"this");
 	}
 };
@@ -822,10 +833,10 @@ function viewCalenderWeek(year, month,day, action) {
 };
 
 function selectedCalendarsChanged(){
-	retrieveCalenderTable((new Date()).getFullYear(), (new Date()).getMonth(), "this");
+	retrieveCalenderTable((new Date()).getFullYear(), (new Date()).getMonth(),(new Date()).getDate(), "this");
 };
 
-function retrieveCalenderTable(year, month, monthAction) {
+function retrieveCalenderTable(year, month, day, monthAction) {
 	$.ajax({
 				url : 'calendar',
 				type : 'POST',
@@ -836,6 +847,7 @@ function retrieveCalenderTable(year, month, monthAction) {
 					'currentMonth' : month,
 					'monthAction' : monthAction,
 					'currentYear' : year,
+					'currentDay': day,
 					'selectedCalendars' : arr_active_calendar_id.join(',')
 				},
 				success : function(data) {

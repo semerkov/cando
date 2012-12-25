@@ -8,6 +8,7 @@
 <%
 	final Calendar calendar = (Calendar) request
 			.getAttribute("calendar");
+	int current = calendar.get(Calendar.DATE);
 	calendar.set(Calendar.DATE, 1);
 	int firstDayOfTheWeek = calendar.get(Calendar.DAY_OF_WEEK);
 	int offset = 0;
@@ -133,4 +134,4 @@ String checkSameDate(Event e){
 </table>
 <div id="currMonth" style="display: none;"><%=calendar.get(Calendar.MONTH)%></div>
 <div id="currYear" style="display: none;"><%=calendar.get(Calendar.YEAR)%></div>
-<div id="currDay" style="display: none;"><%=today%></div>
+<div id="currDay" style="display: none;"><%=current%></div>
