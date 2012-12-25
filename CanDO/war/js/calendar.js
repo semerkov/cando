@@ -261,7 +261,7 @@ $(document).ready(
 						'warningTimeMinutes' : $('#warningTimeMinutesEditForm').val()
 					},
 					success : function(data) {
-						retrieveCalender("this");
+						retrieve("current");
 						hidePopupDialog();
 						//$('#selectEventsCalendarEditForm').html(options);
 						
@@ -383,7 +383,7 @@ function addEvent(){
             'warningTimeMinutes' : $('#warningTimeMinutesAddForm').val()
         },
         success : function(data) {
-            retrieve("this");
+            retrieve("current");
             hidePopupDialog();
 
         },
@@ -680,7 +680,7 @@ function removeEventConfirm() {
 						'eventKey' : $('#selectedViewEventKey').text()
 					},
 					success : function(data) {
-						retrieveCalender("this");
+						retrieveCalender("current");
 						hidePopupDialog();
 
 					},
@@ -718,6 +718,9 @@ function retrieveCalender(monthAction) {
 	} else if (monthAction == "previous") {
 		retrieveCalenderTable($('#currYear').text(), $('#currMonth').text(),
 				monthAction);
+	}else if (monthAction == "current") {
+		retrieveCalenderTable($('#currYear').text(), $('#currMonth').text(),
+				"this");
 	}
 };
 
@@ -731,22 +734,26 @@ function retrieveCalenderWeek(action) {
     } else if (action == "previous") {
         viewCalenderWeek($('#currYear').text(), $('#currMonth').text(),$('#currDay').text(),
             action);
-    }
+    } else if (action == "current") {
+		viewCalenderWeek($('#currYear').text(), $('#currMonth').text(),$('#currDay').text(),
+				"this");
+	}
 }
 
 function retrieveCalenderDay(action) {
     if (action == "this") {
-        /*viewDayCalendar((new Date()).getFullYear(), (new Date())
-            .getMonth(),1, action);*/
-    	viewDayCalendar($('#currYear').text(), $('#currMonth').text(),$('#currDay').text(),
-                action);
+        viewDayCalendar((new Date()).getFullYear(), (new Date())
+            .getMonth(),(new Date()).getDate(), action);
     } else if (action == "next") {
         viewDayCalendar($('#currYear').text(), $('#currMonth').text(),$('#currDay').text(),
             action);
     } else if (action == "previous") {
         viewDayCalendar($('#currYear').text(), $('#currMonth').text(),$('#currDay').text(),
             action);
-    }
+    } else if (action == "current") {
+		viewDayCalendar($('#currYear').text(), $('#currMonth').text(),$('#currDay').text(),
+				"this");
+	}
 };
 function viewDayCalendar(year, month,day, action) {
     $.ajax({

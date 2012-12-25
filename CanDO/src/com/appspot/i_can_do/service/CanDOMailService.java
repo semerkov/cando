@@ -16,7 +16,7 @@ public class CanDOMailService {
 	private static final Logger log = Logger.getLogger(CanDOSecurityService.class.getName());
 	private static CanDOMailService mailService;
 	
-	private static String adminEmail = "i-can-do@appspot.gserviceaccount.com";
+	private static String adminEmail = "serglihoman@gmail.com";
 		
 	public static CanDOMailService instance() {
 		if(mailService==null) mailService = new CanDOMailService();
@@ -35,7 +35,7 @@ public class CanDOMailService {
             Message msg = new MimeMessage(session);
             msg.setFrom(new InternetAddress(adminEmail, "i-can-do.appspot.com Admin"));
             msg.addRecipient(Message.RecipientType.TO,
-                             new InternetAddress(userEmail, "Mr. User"));
+                             new InternetAddress(userEmail, ""));
             msg.setSubject(title);
             msg.setText(message);
             Transport.send(msg);
