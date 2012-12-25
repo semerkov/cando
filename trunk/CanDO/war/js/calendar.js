@@ -19,6 +19,7 @@ function dayCalendarClicksInit(){
 		//$('#daysNameTable').css('display','none');
 		
         $( ".dayCalendarBody" ).selectable({
+			filter: ".halfHour",
 			start: function(){
 				removeUiSelected();
 			},
@@ -92,6 +93,7 @@ function dayCalendarClicksInit(){
 function weekCalendarClicksInit(){
 		
         $( ".dayCalendarBody" ).selectable({
+			filter: ".halfHour",
 			start: function(){
 				removeUiSelected();
 			},
@@ -126,8 +128,8 @@ function weekCalendarClicksInit(){
 			$('#eventAddDateStart').css('border-color', 'white');
 			$('#eventAddName').val("");
 			$('#eventAddDesc').val("");
-			var m = 1 + parseInt($('#currMonth').text());
-			var date = $('#currDay').text()+'.'+ m +'.'+$('#currYear').text();
+			var m = 1 + parseInt($('.Month',this).text());
+			var date = $('.dayOfMonth',this).text()+'.'+ m +'.'+$('#currYear').text();
 			$('#eventAddDateStart').val(date+' '+start_hours+':'+start_minutes);
 			$('#eventAddDateFinish').val(date+' '+finish_hours+':'+finish_minutes);
 			showPopupDialog('addEventsForm', top, left);
