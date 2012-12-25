@@ -148,13 +148,13 @@ public class CalendarServlet extends HttpServlet {
                     offset=-7;
                 }
             Calendar d_start = Calendar.getInstance();
-            d_start.set(year,month,day+offset-calendar.get(Calendar.DAY_OF_WEEK),0,0,0);
+            d_start.set(year,month,day+offset-calendar.get(Calendar.DAY_OF_WEEK)+1,0,0,0);
 		
             Calendar d_finish = Calendar.getInstance();
             d_finish.setTime(d_start.getTime());
             d_finish.set(Calendar.DATE, d_start.get(Calendar.DATE)+7);
             
-            int dayOfMonth = d_start.get(Calendar.DAY_OF_MONTH);
+            //int dayOfMonth = d_start.get(Calendar.DATE);
             /*SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");*/
         	
             ArrayList<Event> events = new ArrayList<Event>();
