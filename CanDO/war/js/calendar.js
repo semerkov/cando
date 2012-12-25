@@ -20,16 +20,17 @@ function dayCalendarClicksInit(){
 		
         $( ".dayCalendarBody" ).selectable({
 			filter: ".halfHour",
+			cancel: '.eventOfDay',
 			start: function(){
 				removeUiSelected();
 			},
             stop: function() {
 				var el_first = $( ".ui-selected:first", this );
 				var el_last = $( ".ui-selected:last", this );
-                var start_hours = el_first.find('.start_hours').first().text();
-				var start_minutes = el_first.find('.start_minutes').first().text();
-				var finish_hours = el_last.find('.finish_hours').first().text();
-				var finish_minutes = el_last.find('.finish_minutes').first().text();
+                var start_hours = el_first.find('.start_hours:first').text();
+				var start_minutes = el_first.find('.start_minutes:first').text();
+				var finish_hours = el_last.find('.finish_hours:first').text();
+				var finish_minutes = el_last.find('.finish_minutes:first').text();
 				//alert(start_hours+":"+start_minutes+"-"+finish_hours+":"+finish_minutes);
 
 		
@@ -63,10 +64,8 @@ function dayCalendarClicksInit(){
         });
 		
 		$('.eventOfDay').click(function(e){
-			alert('eventOfDay');
 			initEditEventForm();
 			var eventKey = $(this).find('.event_id').first().text();
-			alert(eventKey);
 			$.ajax({
 				url : 'calendar',
 				type : 'POST',
@@ -94,16 +93,17 @@ function weekCalendarClicksInit(){
 		
         $( ".dayCalendarBody" ).selectable({
 			filter: ".halfHour",
+			cancel: '.eventOfDay',
 			start: function(){
 				removeUiSelected();
 			},
             stop: function() {
             	var el_first = $( ".ui-selected:first", this );
 				var el_last = $( ".ui-selected:last", this );
-                var start_hours = el_first.find('.start_hours').first().text();
-				var start_minutes = el_first.find('.start_minutes').first().text();
-				var finish_hours = el_last.find('.finish_hours').first().text();
-				var finish_minutes = el_last.find('.finish_minutes').first().text();
+                var start_hours = el_first.find('.start_hours:first').text();
+				var start_minutes = el_first.find('.start_minutes:first').text();
+				var finish_hours = el_last.find('.finish_hours:first').text();
+				var finish_minutes = el_last.find('.finish_minutes:first').text();
 				//alert(start_hours+":"+start_minutes+"-"+finish_hours+":"+finish_minutes);
 				
 				
@@ -135,6 +135,30 @@ function weekCalendarClicksInit(){
 			showPopupDialog('addEventsForm', top, left);
             }
         });
+        
+		$('.eventOfDay').click(function(e){
+			initEditEventForm();
+			var eventKey = $(this).find('.event_id').first().text();
+			$.ajax({
+				url : 'calendar',
+				type : 'POST',
+				data : {
+					'action' : 'viewEvent',
+					'eventKey' : eventKey
+				},
+				success : function(data) {
+					$('#viewEventContainer').html(data);
+					var H = $(window).height();
+					var W = $(window).width();
+					var t = $('#viewEventForm');
+					showPopupDialog('viewEventForm',(H - t.height())/2, (W - t.width())/2);
+				},
+				error : function(data) {
+					alert("Error updateCalendar")
+				}
+			});
+		e.stopPropagation();
+		});
 
 }
 function fillHeader(type){
