@@ -239,10 +239,19 @@ function fillHeader(type){
 	}
 	
 	if(type=="month"){
+		$('#daysNameTable th span').css('display','none');
 		$('#daysNameTable th').css('display','table-cell');
 	}else if(type=="week"){
 		$('#daysNameTable th').css('display','table-cell');
+		$('#daysNameTable th span').css('display','inline');
+		var days = $('.dayOfMonth');
+		var i =0;
+		$('#daysNameTable th span').each(function(index, element) {
+			$(element).text(days.eq(i).text()+', ');
+			i++;
+		});
 	}else if(type=="day"){
+		$('#daysNameTable th span').css('display','none');
 		weekDay = curSelectedDate.getDay();
 		$('#daysNameTable th').css('display','none');
 		$('#daysNameTable th:eq('+weekDay+')').css('display','block');
