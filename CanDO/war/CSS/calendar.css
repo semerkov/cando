@@ -199,7 +199,10 @@ a:hover,a:active,a:focus {
 }
 .calendar li .timeRange{
 	-webkit-margin-before: 0;
-	-webkit-margin-after: 0;	
+	-webkit-margin-after: 0;
+	font-size:10px;	
+	display:'inline';
+	float:right;
 }
 
 .calendar .day.active {

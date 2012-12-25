@@ -15,9 +15,7 @@ function removeUiSelected()
 {
 	$(".dayCalendarBody .ui-selected").toggleClass('ui-selected',false);
 }
-function dayCalendarClicksInit(){
-		//$('#daysNameTable').css('display','none');
-		
+function dayCalendarClicksInit(){		
         $( ".dayCalendarBody" ).selectable({
 			filter: ".halfHour",
 			cancel: '.eventOfDay',
@@ -874,7 +872,7 @@ function viewCalenderWeek(year, month,day, action) {
 };
 
 function selectedCalendarsChanged(){
-	retrieveCalenderTable((new Date()).getFullYear(), (new Date()).getMonth(),(new Date()).getDate(), "this");
+	retrieve("current");
 };
 
 function retrieveCalenderTable(year, month, day, monthAction) {
