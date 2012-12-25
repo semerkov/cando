@@ -48,5 +48,9 @@
 	    <button id="register_button">Register</button>
 	    <br/>
  </div>
+ <div id="dialog-confirm" title="Register successful" style="display:none; height:300px; font-size:13px;">
+    <span class="ui-icon ui-icon-alert" style="float: left; margin: 0 7px 20px 0;"></span>
+    Message is send to your account. Please confirm registration.
+</div>
 </body>
 </html>

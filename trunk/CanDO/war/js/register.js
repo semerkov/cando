@@ -1,6 +1,7 @@
 var context = "/";
 
 $(document).ready(function(e) {
+	//$('.accept').bind('change'
 	$( "button" ).button();
 	$( ".ui-draggable" ).draggable();
 	$('#email').bind('focusout', function() {
@@ -139,7 +140,7 @@ function tryRegister() {
 			dataType : 'json',
 			success : function(data) {
 				if (data == "ready") {
-					document.location.href = context;
+					showConfirmDialog();
 				} else {
 					alert('Register error');
 				}
@@ -149,4 +150,17 @@ function tryRegister() {
 			}
 		});
 	}
+}
+
+function showConfirmDialog(){
+	$(function() {
+        $( "#dialog-confirm" ).dialog({
+            resizable: false,
+            buttons: {
+                OK: function() {
+					document.location.href = context;
+                }
+            }
+        });
+    });
 }
