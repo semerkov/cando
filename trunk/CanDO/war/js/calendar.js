@@ -161,6 +161,74 @@ function weekCalendarClicksInit(){
 		});
 
 }
+
+function calendarTableClicks(){
+	$( "#calendarTableWrapper li" ).tooltip();
+	// add new event
+	$('.day.active').click(function(e) {
+		
+		initAddEventForm();
+		
+		
+		$(this).addClass('ui-state-active');
+		//set position
+		var s = this.getBoundingClientRect();
+		var top = s.top + (Math.abs(s.top - s.bottom) / 2) - 350;
+		top = top > 0? top : 20;
+		var left = s.left + (Math.abs(s.left - s.right) / 2)- 190;
+		left = left < $(window).width() - 390 ? left : left - 125;
+		// set select calendars
+		var options = "";
+		for(i=0; i < arr_active_calendar_id.length; i++ ){
+			var option = "<option value="+arr_active_calendar_id[i]+">"+arr_active_calendar_name[i]+"</option>";
+			options += option;
+		}
+		//prepare add event form
+		$('#selectEventsCalendar').html(options);
+		$('#eventAddName').css('border-color', 'white');
+		$('#eventAddDateStart').css('border-color', 'white');
+		$('#eventAddName').val("");
+		$('#eventAddDesc').val("");
+		var m = 1 + parseInt($('#currMonth').text());
+		var d = parseInt($(this).text());
+		var date = d+'.'+ m +'.'+$('#currYear').text();
+		$('#eventAddDateStart').val(date+' '+'00:00');
+		$('#eventAddDateFinish').val(date+' '+'00:00');
+		showPopupDialog('addEventsForm', top, left);
+		e.stopPropagation();
+	});
+	
+	
+		
+	$('#calendarTableWrapper li').click(function(e){
+		initEditEventForm();
+		var eventKey = $(this).children('div.event_id').text();
+		$.ajax({
+			url : 'calendar',
+			type : 'POST',
+			data : {
+				'action' : 'viewEvent',
+				'eventKey' : eventKey
+			},
+			success : function(data) {
+				$('#viewEventContainer').html(data);
+				var H = $(window).height();
+				var W = $(window).width();
+				var t = $('#viewEventForm');
+				showPopupDialog('viewEventForm',(H - t.height())/2, (W - t.width())/2);
+			},
+			error : function(data) {
+				alert("Error updateCalendar")
+			}
+		});
+		e.stopPropagation();
+	});
+	
+	$('#viewShowOkButton').click(function(e){
+		hidePopupDialog();
+		e.stopPropagation();
+	});
+};
 function fillHeader(type){
 	if(type=="month"||type=="day"){
 		$('#daysNameTable').css('width','93%');
@@ -573,70 +641,7 @@ function initEditEventForm(){
 		}
 		});
 };
-function calendarTableClicks(){
-	$( "#calendarTableWrapper li" ).tooltip();
-	// add new event
-	$('.day.active').click(function(e) {
-		
-		initAddEventForm();
-		
-		
-		$(this).addClass('ui-state-active');
-		//set position
-		var s = this.getBoundingClientRect();
-		var top = s.top + (Math.abs(s.top - s.bottom) / 2) - 350;
-		top = top > 0? top : 20;
-		var left = s.left + (Math.abs(s.left - s.right) / 2)- 190;
-		left = left < $(window).width() - 390 ? left : left - 125;
-		// set select calendars
-		var options = "";
-		for(i=0; i < arr_active_calendar_id.length; i++ ){
-			var option = "<option value="+arr_active_calendar_id[i]+">"+arr_active_calendar_name[i]+"</option>";
-			options += option;
-		}
-		//prepare add event form
-		$('#selectEventsCalendar').html(options);
-		$('#eventAddName').css('border-color', 'white');
-		$('#eventAddDateStart').css('border-color', 'white');
-		$('#eventAddName').val("");
-		$('#eventAddDesc').val("");
-		$('#eventAddDateStart').val("");
-		$('#eventAddDateFinish').val("");
-		showPopupDialog('addEventsForm', top, left);
-		e.stopPropagation();
-	});
-	
-	
-		
-	$('#calendarTableWrapper li').click(function(e){
-		initEditEventForm();
-		var eventKey = $(this).children('div.event_id').text();
-		$.ajax({
-			url : 'calendar',
-			type : 'POST',
-			data : {
-				'action' : 'viewEvent',
-				'eventKey' : eventKey
-			},
-			success : function(data) {
-				$('#viewEventContainer').html(data);
-				var H = $(window).height();
-				var W = $(window).width();
-				var t = $('#viewEventForm');
-				showPopupDialog('viewEventForm',(H - t.height())/2, (W - t.width())/2);
-			},
-			error : function(data) {
-				alert("Error updateCalendar")
-			}
-		});
-		e.stopPropagation();
-	});
-	
-	$('#viewShowOkButton').click(function(e){
-		hidePopupDialog();
-		e.stopPropagation();
-	});
-};
+
 
 function setCalendarDayByClick(dateText,instance){
 	var selectedDate = new Date(dateText);
