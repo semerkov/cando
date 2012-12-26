@@ -13,10 +13,11 @@ body {
 }
 #login_form{
 	width: auto;
+	padding: 5px 5px;
 }
 #email{
-	width:640px;
-	height:50px; 
+	width:400px;
+	height:40px; 
 	font-family:'MS Serif', 'New York', serif;
 	font-size: 2em;
 	-moz-border-radius: 6px;
@@ -25,22 +26,25 @@ body {
 	border-radius: 6px;
 }
 
-#password,#repassword{
-	width:640px;
-	height:50px;
+#password,#repassword,#name,#surname{
+	width:400px;
+	height:40px; 
 	font-family:'MS Serif', 'New York', serif;
-	font-size: 3em;
+	font-size: 2em;
 }
 
 
 #login_button{
-	font-size: 2em;
+	font-size: 22px;
 	border-radius:10px; 
 	margin-left: 38%;
 }
 
 #register_button{
-	font-size: 2em;
+	font-size: 22px;
 	border-radius:10px; 
-	margin-left: 34%;
+	margin-left: 32%;
+}
+#accept{
+	margin:10px 10px;
 }
