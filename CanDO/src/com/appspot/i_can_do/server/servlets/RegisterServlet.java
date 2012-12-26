@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import javax.servlet.ServletConfig;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -34,11 +35,11 @@ public class RegisterServlet extends HttpServlet {
 		log.info("Servlet created");
 	}
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws IOException {
+			throws IOException, ServletException {
 		String action = request.getParameter("action");
 		if (SECURITY_ACTIONS.contains(action)) {
 			if("confirm".equals(action)){
-				confirRegister(request,response);
+				confirmRegister(request,response);
 			}
 		} else {
 			response.sendError(HttpServletResponse.SC_METHOD_NOT_ALLOWED,
@@ -67,8 +68,8 @@ public class RegisterServlet extends HttpServlet {
 			return;
 		}
 	}
-	private void confirRegister(HttpServletRequest request,
-			HttpServletResponse response) throws IOException{
+	private void confirmRegister(HttpServletRequest request,
+			HttpServletResponse response) throws IOException, ServletException{
 		String email = request.getParameter("user");
 		String hash = request.getParameter("confirmHash");
 		User user = security.findUser(email);
@@ -81,7 +82,8 @@ public class RegisterServlet extends HttpServlet {
 		    	user.setDisabled(false);
 		    	user.setConfirmHash(null);
 		    	security.saveUser(user);
-		    	response.sendRedirect("/login");
+		    	request.setAttribute("user", email);
+		    	request.getRequestDispatcher("/login.jsp").forward(request,response);
 		    	return;
 		    }
 		}

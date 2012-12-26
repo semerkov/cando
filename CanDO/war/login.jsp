@@ -1,3 +1,14 @@
+<%@page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
+
+<%
+String email = (String)request.getAttribute("user");
+boolean newUser = true;
+if(email==null){
+	email="";
+	newUser=false;
+}
+%>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -21,9 +32,16 @@
 		<div class="ui-dialog-titlebar ui-widget-header ui-helper-clearfix ui-corner-all">
 			Login to CanDo
 		</div>   
+		<%
+		if(newUser){
+		%>
+		<div style="color:green;">Congratulations to the successful registration</div>
+		<%
+		}
+		%>
 		<label> Email:</label>
 	    <br/>
-	    <input type="text" name="email" id="email"/>
+	    <input type="text" name="email" id="email" value="<%=email%>"></input>
 	    <br/>
 	    <label> Password:</label>
 	    <br/>
