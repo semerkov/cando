@@ -35,11 +35,11 @@
 	    <br/>
 	    <label> Name:</label>
 	    <br/>
-	    <input type="text" name="name" id="name"/>
+	    <input type="text" name="name" id="name" class="ui-corner-all"/>
 	    <br/>
 	    <label> Surname:</label>
 	    <br/>
-	    <input type="text" name="surname" id="surname"/>
+	    <input type="text" name="surname" id="surname" class="ui-corner-all"/>
 	    <br/>
 	    <input type="checkbox" name="accept" id="accept" class="ui-corner-all" value="1"/>
 	    <span>I have read <a href="terms.jsp" style="font-style: oblique">terms
