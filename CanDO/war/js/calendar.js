@@ -972,7 +972,7 @@ function retrieveEventCalendarMenu() {
 			$('.myCalendar').html(data);
 			calendarMenuClicks();
 			getActiveCalendars();
-			retrieveCalender("this");
+			retrieve("this");
 		},
 		error : function(data) {
 			alert("Error retrieve EventCalendarMenu")
