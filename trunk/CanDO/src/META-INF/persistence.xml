@@ -19,6 +19,8 @@
 		<class>com.appspot.i_can_do.master.model.Address</class>
 		<class>com.appspot.i_can_do.master.model.Email</class>
 		<class>com.appspot.i_can_do.master.model.Phone</class>
+		<class>com.appspot.i_can_do.master.model.Group</class>
+		<class>com.appspot.i_can_do.master.model.GroupType</class>
 		<exclude-unlisted-classes />
 		<properties>
 			<property name="datanucleus.NontransactionalRead" value="true" />
