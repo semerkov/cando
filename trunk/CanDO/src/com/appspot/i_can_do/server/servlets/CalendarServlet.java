@@ -62,14 +62,14 @@ public class CalendarServlet extends HttpServlet {
         log.info("Servlet created");
     }
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        user = (User)request.getSession().getAttribute("user");
-
+    	user = (User)request.getSession().getAttribute("user");
         request.setAttribute("user", user);
         request.getRequestDispatcher("calendar.jsp").forward(request,response);
     }
 
     public void doPost(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
+    	user = (User)request.getSession().getAttribute("user");
 
         String action = request.getParameter("action");
 
